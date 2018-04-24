@@ -1,0 +1,49 @@
+@import './theme.less';
+.flex() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-s(@c: #acb5ca) {
+  -webkit-box-shadow: 0 0 10px @c;
+  box-shadow: 0 0 10px @c;
+}
+
+.ellipsis(@sum) {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @sum;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.br(@sum: 5px) {
+  border-radius: @sum;
+}
+
+.b-t(@c: @color2) {
+  border-top: 1px solid @c;
+}
+
+.b-b(@c: @color2) {
+  border-bottom: 1px solid @c;
+}
+
+.b-r(@c: @color2) {
+  border-right: 1px solid @c;
+}
+
+.b-l(@c: @color2) {
+  border-left: 1px solid @c;
+}
+
+.b-d(@c: @color2) {
+  border: 1px solid @c;
+}
+
+.wh(@wh: 100%) {
+  width: @wh;
+  height: @wh;
+}
