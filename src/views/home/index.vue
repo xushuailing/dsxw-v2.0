@@ -27,21 +27,30 @@
       </div>
     </div>
     <div class="home-break">
-      <div>
+      <div class="home-break_start">
         <span>质量大闯关</span>
       </div>
       <img src="./icon_01.png"
            alt="">
     </div>
     <div class="home-dare">
-      <div>
-        <span>倔匠挑战赛</span>
+      <div class="home-dare_wait"
+           v-if="isDare">
+        <span>解锁条件</span>
+        <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
+      </div>
+      <div v-else
+           class="home-dare_start">
+        <div>
+          <span>倔匠挑战赛</span>
         <p>当前挑战池共有挑战
           <u>3</u>
         </p>
+        </div>
+        <img src="./icon_02.png"
+             alt="">
       </div>
-      <img src="./icon_02.png"
-           alt="">
+
     </div>
     <div class="home-footer">
       <div class="home-practice">
@@ -68,6 +77,7 @@ export default {
   data() {
     return {
       star: 1,
+      isDare: false,
     };
   },
   components: {
@@ -174,30 +184,45 @@ export default {
     padding: 20px;
     margin-bottom: 10px;
     background: url('../../assets/images/frame2.png') no-repeat center/cover;
+    color: #fff;
     span {
       font-size: 24px;
-      color: #fff;
     }
     img {
       width: 130px;
       height: 100px;
     }
-    p {
-      font-size: 14px;
-      color: @color1;
+    &_wait {
+      padding-left: 20px;
       display: flex;
-      align-items: center;
-      u {
-        margin-left: 10px;
-        font-size: 38px;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100%;
+      color: #999;
+      p {
+        font-size: 14px;
       }
     }
-    > div {
+    &_start {
+      width: 100%;
+      display: flex;
+        justify-content: space-between;
+      div{
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      height: 100%;
+      }
+      p {
+        font-size: 14px;
+        color: @color1;
+        display: flex;
+        align-items: center;
+        u {
+          margin-left: 10px;
+          font-size: 38px;
+        }
+      }
     }
   }
   &-footer {
