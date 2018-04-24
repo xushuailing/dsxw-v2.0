@@ -31,7 +31,7 @@
 
 <script>
 import { XButton, Toast } from 'vux';
-import axios from 'axios';
+import utils from '../../config/utils.js';
 
 export default {
   data() {
@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     onUserLogin(user) {
-      console.log('this---', this.$http);
       // const r = window.location.href.split('=');
       const r = 'http://saas.zeego.cn/project/ExamGame/dist/index.html?openid=ocpe8wWEY2bB2Cl4LiPmSUTkvpIY#/'.split('=');
       // const r = 'http://saas.zeego.cn/project/ExamGame/dist/index.html?openid=ocpe8wWEY2bB2Cl4LiPmSUTkvpIY&from=singlemessage&isappinstalled=0#/'.split('=');
@@ -57,56 +56,34 @@ export default {
           type: 'warn',
         });
       } else {
-        axios({
-          method: 'post',
-          url: URL,
-          data: {
-            useridcard: this.user.cardId,
-            username: this.user.name,
-            userpass: this.user.password,
+        this.$http
+          .get(URL, {
+            useridcard: user.cardId,
+            username: user.name,
+            userpass: user.password,
             openid: open,
-          },
-        }).then(response => {
-          console.log(response);
-        });
-        // axios
-        //   .post(URL, {
-        //     useridcard: user.cardId,
-        //     username: user.name,
-        //     userpass: user.password,
-        //     openid: open,
-        //   })
-        //   .then(response => {
-        //     console.log(response);
-        //   })
-        //   .catch(error => {
-        //     console.log(error);
-        //   });
-
-        // this.$http
-        //   .POST(URL, {})
-        //   .then(res => {
-        //     console.log('res---', res);
-        //   })
-        //   .catch(err => {
-        //     console.log('err---', err);
-        //   });
-        //       var data = res.data;
-        //       if (data.status == 1) {
-        //         _this.login(data);
-        //         _this.localStorage(data);
-        //         Toast({
-        //           message: data.msg,
-        //           position: 'center',
-        //           duration: 500,
-        //         });
-        //       } else if (data.status == 0) {
-        //         Toast({
-        //           message: data.msg,
-        //           position: 'center',
-        //           duration: 500,
-        // });
-        //
+          })
+          .then(res => {
+            const data = res.data;
+            if (data.status === 1) {
+              utils._Storage.set('userInfo', data, () => {
+                this.$router.push({
+                  path: '/rule',
+                });
+              });
+            } else {
+              this.$vux.toast.show({
+                text: data.msg,
+                type: 'warn',
+              });
+            }
+          })
+          .catch(err => {
+            this.$vux.toast.show({
+              text: err,
+              type: 'warn',
+            });
+          });
       }
     },
   },
@@ -114,45 +91,6 @@ export default {
     XButton,
     Toast,
   },
-  // data() {
-  //   return {
-  //     useridcard: '',
-  //     username: '',
-  //     userpass: '',
-  //     userid: '',
-  //     usertype: '',
-  //     bombnum: '',
-  //     gamelevels: '',
-  //     uid: '',
-  //   };
-  // },
-  // methods: {
-  //   /* 传递数据 */
-  //   login(data) {
-  //     this.$router.push({
-  //       path: '/rule',
-  //       query: {
-  //         userid: data.userid, // 用户ID
-  //         usertype: data.usertype, // 用户类型
-  //         starnum: data.starnum, // 炸弹数
-  //         bombnum: data.bombnum, // 星星数
-  //         gamelevels: data.gamelevels, // 用户级别
-  //         uid: data.uid, // 系统用户
-  //       },
-  //     });
-  //   },
-  //   /* 存储数据 */
-  //   localStorage(data) {
-  //     window.localStorage.setItem('userid', data.userid);
-  //     window.localStorage.setItem('usertype', data.usertype);
-  //     window.localStorage.setItem('starnum', data.starnum);
-  //     window.localStorage.setItem('bombnum', data.bombnum);
-  //     window.localStorage.setItem('gamelevels', data.gamelevels);
-  //     window.localStorage.setItem('uid', data.uid);
-  //   },
-  // },
-  // computed: {},
-  // mounted() {},
 };
 </script>
 
