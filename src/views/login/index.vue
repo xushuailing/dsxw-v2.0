@@ -16,12 +16,9 @@
         <span>密码</span>
         <input type="password" v-model="user.password" placeholder="身份证后六为">
       </label>
-      <div class="login-form_submit" @click="onUserLogin(user)"><x-button>登录</x-button></div>
-    <!-- <Group label-align="center">
-      <x-input class="login-form_input" title="工号" label-width="1" v-model="user.cardId" placeholder="请输入工号"></x-input>
-      <x-input class="login-form_input" title="姓名" label-width="1" v-model="user.name" placeholder="请输入姓名"></x-input>
-      <x-input class="login-form_input" title="密码" label-width="1" type="password" v-model="user.password" placeholder="身份证后六为"></x-input>
-    </Group> -->
+      <div class="login-form_submit" @click="onUserLogin(user)">
+        <c-button width="72%" text="登录"></c-button>
+      </div>
     </div>
     <div class="login-footer">
       <img src="/src/assets/images/logo.png" alt="">
@@ -30,8 +27,8 @@
 </template>
 
 <script>
-import { XButton, Toast } from 'vux';
 import utils from '../../config/utils.js';
+import CButton from '../../components/comment/button';
 
 export default {
   data() {
@@ -88,8 +85,7 @@ export default {
     },
   },
   components: {
-    XButton,
-    Toast,
+    CButton,
   },
 };
 </script>
@@ -134,13 +130,6 @@ export default {
       margin-top: 0.7rem;
       text-align: center;
       width: 100%;
-      button {
-        padding: 0.1rem 0;
-        width: 72%;
-        background: url('/src/assets/images/frame1.png') no-repeat center/cover;
-        color: #fff;
-        font-size: 0.36rem;
-      }
     }
   }
   &-footer {
@@ -157,14 +146,7 @@ export default {
 }
 </style>
 <style lang="less">
-// .login {
-//   .weui-cells ,.weui-cell{
-//     background: transparent;
-//     &::before,&::after{
-//       border:none;
-//     }
-//   }
-// }
+
 </style>
 
 
