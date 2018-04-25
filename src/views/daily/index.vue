@@ -11,7 +11,7 @@
       <div class="daily-content_money">
         <div><img src="../../assets/images/money.png" alt=""></div>
         <div>每日首次登陆获得5金币</div>
-        <div class="daily-content_btn">
+        <div @click="toRule" class="daily-content_btn">
           <c-button text="领取"></c-button>
         </div>
       </div>
@@ -27,7 +27,20 @@ export default {
     return {};
   },
   components: { CButton },
-  methods: {},
+  methods: {
+    toRule() {
+      this.$utils._Storage.get('tipShow', data => {
+        let toPath;
+        if (data) {
+          toPath = '/home';
+        } else {
+          toPath = '/rule';
+        }
+        this.$router.push({ path: toPath });
+      });
+    },
+  },
+  mounted() {},
 };
 </script>
 <style lang="less" scoped>
