@@ -2,23 +2,23 @@
   <div class="home">
     <div class="home-top">
       <div class="home-top_pic">
-        <img src="../../assets/images/icon_girl.png" alt="">
-        <!-- <img :src="`../../assets/images/icon_${user.sex?'girl':'man'}.png`" alt=""> -->
+        <img v-if="user.sex===1" src="../../assets/images/icon_man.png" alt="">
+        <img v-else src="../../assets/images/icon_girl.png" alt="">
         <span>😂小西</span>
       </div>
       <div class="home-top_info info">
         <div class="info-tool">
-          <div><img src="./red.png"
-                 alt=""></div>
-          <div><img src="./help.png"
-                 alt=""></div>
+          <div @click="onSetMoney">
+            <i class="iconfont icon-hongbao"></i>
+            <!-- <img src="./red.png" alt=""> -->
+          </div>
+          <div @click="onHelp">
+            <i class="iconfont icon-help"></i>
+            <!-- <img src="../../assets/images/icon_help.png" alt=""> -->
+          </div>
         </div>
         <div class="info-lv">顽强青铜</div>
-        <div class="info-star">
-          <span v-for="v in 3"
-                :key="v"
-                :class="{'active':star < v}"></span>
-        </div>
+        <c-star :number="3" :star="star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png"
                alt="">
@@ -26,20 +26,18 @@
         </div>
       </div>
     </div>
-    <div class="home-break">
+    <div class="home-break" @click="onBeginBreak">
       <div class="home-break_start">
         <span>质量大闯关</span>
       </div>
-      <img src="./icon_01.png"
-           alt="">
+      <img src="./icon_01.png" alt="">
     </div>
-    <div class="home-dare">
-      <div class="home-dare_wait"
-           v-if="isDare">
+    <div :class="['home-dare',{'active':!isDare || !isChallengeBegins}]" @click="onBeginDare">
+      <div class="home-dare_wait" v-if="!isDare">
         <span>解锁条件</span>
         <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
       </div>
-      <div v-else :class="['home-dare_start',{'active':!isChallengeBegins}]">
+      <div v-else class="home-dare_start" >
         <div>
           <span>倔匠挑战赛</span>
           <p>当前挑战池共有挑战<u>3</u></p>
@@ -47,17 +45,16 @@
         <img src="./icon_02.png"
              alt="">
       </div>
-
     </div>
-    <div class="home-footer">
-      <div class="home-practice">
+    <div class="home-footer" >
+      <div class="home-practice" @click="onBeginPractice">
         <span>练习赢金币</span>
         <p>今日已获得
           <u>15</u>金币</p>
         <img src="./icon_03.png"
              alt="">
       </div>
-      <div class="home-rank">
+      <div class="home-rank" @click="onLookrank">
         <span>排行榜</span>
         <img src="./icon_04.png"
              alt="">
@@ -68,21 +65,51 @@
 </template>
 <script>
 import { Rater } from 'vux';
+import CStar from '../../components/comment/star';
 
 export default {
   name: 'home',
   data() {
     return {
       user: {
-        sxe: 1,
+        sex: 1,
       },
       star: 1, // 星星数
-      isDare: true, // 显示解锁条件
+      isDare: false, // 显示解锁条件
       isChallengeBegins: false, // 未开始挑战
     };
   },
+  methods: {
+    /* 闯关 */
+    onBeginBreak() {
+      this.$router.push('break');
+    },
+    /* 挑战赛 */
+    onBeginDare() {
+      if (!this.isChallengeBegins && this.isDare) {
+        this.$vux.toast.show({
+          text: '未开始挑战~',
+          type: 'warn',
+        });
+      }
+      this.isDare = true;
+    },
+    onBeginPractice() {
+      console.log('练习');
+    },
+    onLookrank() {
+      console.log('排行');
+    },
+    onSetMoney() {
+      console.log(11111111);
+    },
+    onHelp() {
+      console.log(11111111);
+    },
+  },
   components: {
     Rater,
+    CStar,
   },
 };
 </script>
@@ -136,22 +163,9 @@ export default {
         div + div {
           border-left: 1px solid #323d6e;
         }
-        img {
-          width: 25px;
-          height: 25px;
-        }
-      }
-      &-star {
-        display: flex;
-        margin-top: 13px;
-        margin-bottom: 7px;
-        span {
-          width: 28px;
-          height: 28px;
-          background: url('./star1.jpg') no-repeat center/cover;
-          &.active {
-            background: url('./star2.jpg') no-repeat center/cover;
-          }
+        i {
+          color: #fff;
+          font-size: 20px;
         }
       }
       &-lv {
@@ -226,22 +240,15 @@ export default {
     }
   }
   &-dare {
+    &.active {
+      .grayscale();
+      span,
+      p {
+        color: #999;
+      }
+    }
     &_start {
       width: 100%;
-      &.active {
-        span,
-        p {
-          color: #999;
-        }
-        img {
-          -webkit-filter: grayscale(100%);
-          -moz-filter: grayscale(100%);
-          -ms-filter: grayscale(100%);
-          -o-filter: grayscale(100%);
-          filter: grayscale(100%);
-          filter: gray;
-        }
-      }
     }
   }
   &-footer {

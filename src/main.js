@@ -8,6 +8,7 @@ import http from './config/http';
 import './config/rem';
 import './config/vux';
 import './assets/css/base.less';
+import './assets/fonts/iconfont.css';
 
 FastClick.attach(document.body);
 

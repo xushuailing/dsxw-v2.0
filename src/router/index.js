@@ -4,6 +4,7 @@ import Home from '../views/home';
 import Login from '../views/login';
 import Rule from '../views/rule';
 import Daily from '../views/daily';
+import Break from '../views/break';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/daily',
       name: 'daily',
       component: Daily,
+    },
+    {
+      path: '/break',
+      name: 'break',
+      component: Break,
     },
   ],
 });
