@@ -12,7 +12,7 @@
             <i class="iconfont icon-hongbao"></i>
             <!-- <img src="./red.png" alt=""> -->
           </div>
-          <div @click="onHelp">
+          <div @click="onHelpShow">
             <i class="iconfont icon-help"></i>
             <!-- <img src="../../assets/images/icon_help.png" alt=""> -->
           </div>
@@ -61,11 +61,13 @@
       </div>
 
     </div>
+    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="isHelpShow"></c-help>
   </div>
 </template>
 <script>
 import { Rater } from 'vux';
 import CStar from '../../components/comment/star';
+import CHelp from '../../components/comment/help';
 
 export default {
   name: 'home',
@@ -73,6 +75,11 @@ export default {
     return {
       user: {
         sex: 1,
+      },
+      isHelpShow: false,
+      helpData: {
+        title: '闯关规则',
+        center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
       },
       star: 1, // 星星数
       isDare: false, // 显示解锁条件
@@ -94,6 +101,10 @@ export default {
       }
       this.isDare = true;
     },
+
+    onHelpShow() {
+      this.isHelpShow = !this.isHelpShow;
+    },
     onBeginPractice() {
       console.log('练习');
     },
@@ -110,6 +121,7 @@ export default {
   components: {
     Rater,
     CStar,
+    CHelp,
   },
 };
 </script>

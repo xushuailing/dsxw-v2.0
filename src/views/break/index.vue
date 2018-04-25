@@ -1,9 +1,17 @@
 <template>
   <div class="break">
     <c-header title="质量大闯关" :isHelp="true" @onHelp="onHelpShow"></c-header>
-    <c-star :number="3" :star="star"></c-star>
-    <c-button></c-button>
-    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpHide" :isShow="isHelpShow"></c-help>
+    <ul class="break-grade">
+      <li @click="onStartBreak(item)" :class="{'active':!item.isOpen}" v-for="item in gradeData" :key="item.id">
+        <div class="break-grade_name" >
+          <h4>{{item.title}}</h4>
+          <span>金币<u>{{item.gold}}</u></span>
+        </div>
+        <div class="break-grade_star"><c-star :number="item.allStar" :star="0"></c-star></div>
+      </li>
+    </ul>
+    <p class="break-p">每通过完整一关才可获得相应的奖励</p>
+    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="isHelpShow"></c-help>
   </div>
 </template>
 <script>
@@ -18,6 +26,43 @@ export default {
     return {
       star: 1,
       isHelpShow: false,
+      gradeData: [
+        {
+          id: 1,
+          title: '坚韧黑铁',
+          allStar: 1,
+          gold: 40,
+          isOpen: true,
+        },
+        {
+          id: 2,
+          title: '顽强青铜',
+          allStar: 2,
+          gold: 100,
+          isOpen: false,
+        },
+        {
+          id: 3,
+          title: '傲气白银',
+          allStar: 2,
+          gold: 300,
+          isOpen: false,
+        },
+        {
+          id: 4,
+          title: '无暇钻石',
+          allStar: 3,
+          gold: 700,
+          isOpen: false,
+        },
+        {
+          id: 5,
+          title: '倔匠王者',
+          allStar: 3,
+          gold: 1000,
+          isOpen: false,
+        },
+      ],
       helpData: {
         title: '闯关规则',
         center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
@@ -26,10 +71,21 @@ export default {
   },
   methods: {
     onHelpShow() {
-      this.isHelpShow = true;
+      this.isHelpShow = !this.isHelpShow;
     },
-    onHelpHide() {
-      this.isHelpShow = false;
+    onStartBreak(item) {
+      if (item.isOpen) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '开始游戏',
+        });
+      } else {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '未开放',
+        });
+        console.log(item);
+      }
     },
   },
   components: {
@@ -46,6 +102,51 @@ export default {
 .break {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  &-grade {
+    padding: 10px 0;
+    li {
+      .bgurl('../../assets/images/frame11.png');
+      height: 172px/2;
+      padding: 14px 75px/2;
+      display: flex;
+      &.active {
+        .grayscale();
+        h4,
+        span {
+          color: #999;
+        }
+      }
+    }
+    &_name {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 60%;
+
+      h4 {
+        font-size: 22px;
+        color: #fff;
+      }
+      span {
+        font-size: 14px;
+        color: #ffe02e;
+        display: flex;
+        align-items: center;
+        u {
+          margin-left: 10px;
+          font-size: 20px;
+        }
+      }
+    }
+    &_star {
+    }
+  }
+  &-p{
+    color: #979faf;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 10px;
+  }
 }
 </style>
 
