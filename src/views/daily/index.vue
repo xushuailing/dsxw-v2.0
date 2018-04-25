@@ -11,15 +11,23 @@
       <div class="daily-content_money">
         <div><img src="../../assets/images/money.png" alt=""></div>
         <div>每日首次登陆获得5金币</div>
+        <div class="daily-content_btn">
+          <c-button text="领取"></c-button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import CButton from '../../components/comment/button';
+
 export default {
+  name: 'c-daily',
   data() {
     return {};
   },
+  components: { CButton },
+  methods: {},
 };
 </script>
 <style lang="less" scoped>
@@ -64,10 +72,14 @@ export default {
       text-align: center;
       color: #fff;
       font-size: 0.36rem;
-      img{
+      img {
         width: 3rem;
         height: 3rem;
       }
+    }
+    &_btn {
+      width: 100%;
+      margin-top: 2.28rem / 2;
     }
   }
 }
