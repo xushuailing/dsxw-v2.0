@@ -2,8 +2,8 @@
   <div class="home">
     <div class="home-top">
       <div class="home-top_pic">
-        <img src="http://placehold.it/150x150"
-             alt="">
+        <img src="../../assets/images/icon_girl.png" alt="">
+        <!-- <img :src="`../../assets/images/icon_${user.sex?'girl':'man'}.png`" alt=""> -->
         <span>😂小西</span>
       </div>
       <div class="home-top_info info">
@@ -39,13 +39,10 @@
         <span>解锁条件</span>
         <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
       </div>
-      <div v-else
-           class="home-dare_start">
+      <div v-else :class="['home-dare_start',{'active':!isChallengeBegins}]">
         <div>
           <span>倔匠挑战赛</span>
-        <p>当前挑战池共有挑战
-          <u>3</u>
-        </p>
+          <p>当前挑战池共有挑战<u>3</u></p>
         </div>
         <img src="./icon_02.png"
              alt="">
@@ -76,8 +73,12 @@ export default {
   name: 'home',
   data() {
     return {
-      star: 1,
-      isDare: false,
+      user: {
+        sxe: 1,
+      },
+      star: 1, // 星星数
+      isDare: true, // 显示解锁条件
+      isChallengeBegins: false, // 未开始挑战
     };
   },
   components: {
@@ -91,16 +92,16 @@ export default {
 .home {
   height: 100%;
   padding: 20px 10px;
-  background: url('../../assets/images/gb.jpg') no-repeat center/cover;
+  background: url('./bg.jpg') no-repeat center/cover;
   &-top {
     height: 340px/2;
     display: flex;
     &_pic {
-      width: 50%;
+      width: 160px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 55px/2;
+      padding-top: 26px;
       img {
         border-radius: 50%;
         width: 75px;
@@ -142,8 +143,8 @@ export default {
       }
       &-star {
         display: flex;
-        margin-top: 10px;
-        margin-bottom: 14px;
+        margin-top: 13px;
+        margin-bottom: 7px;
         span {
           width: 28px;
           height: 28px;
@@ -204,14 +205,13 @@ export default {
       }
     }
     &_start {
-      width: 100%;
       display: flex;
-        justify-content: space-between;
-      div{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
+      justify-content: space-between;
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
       }
       p {
         font-size: 14px;
@@ -221,6 +221,25 @@ export default {
         u {
           margin-left: 10px;
           font-size: 38px;
+        }
+      }
+    }
+  }
+  &-dare {
+    &_start {
+      width: 100%;
+      &.active {
+        span,
+        p {
+          color: #999;
+        }
+        img {
+          -webkit-filter: grayscale(100%);
+          -moz-filter: grayscale(100%);
+          -ms-filter: grayscale(100%);
+          -o-filter: grayscale(100%);
+          filter: grayscale(100%);
+          filter: gray;
         }
       }
     }
