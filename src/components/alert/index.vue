@@ -48,7 +48,7 @@ export default {
     .bgurl('/src/components/alert/top.png');
   }
   &-center {
-    padding: 20px 30px;
+    padding: 20px;
     flex: 1;
     background: url('./center.png');
     background-repeat: initial;
