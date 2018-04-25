@@ -5,14 +5,16 @@
     </div>
     <div class="rule-content">
       <div class="rule-content_msg">
-        <p v-for="(item, index) in 50" :key="index"><span>{{index+1}}.</span>{{item}}11111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+        <p v-for="(item, index) in 30" :key="index"><span>{{index+1}}.</span>{{item}}最终解释权归赛德西威质量月组委会所有</p>
       </div>
       <div class="rule-content_copyright">
         最终解释权归赛德西威质量月组委会所有
       </div>
     </div>
     <div class="rule-bottom">
-      <c-button text="我知道了"></c-button>
+      <div @click="toDaily">
+        <c-button text="我知道了"></c-button>
+      </div>
       <div @click="handleTip" class="rule-bottom_tip">
         <img class="tip-check" :src="checkedSrc ? '/static/images/rule/checked.png' : '/static/images/rule/check.png'" alt="">
         下次不再提示
@@ -31,9 +33,21 @@ export default {
     };
   },
   components: { CButton },
+  mounted() {
+    this.tipInit();
+  },
   methods: {
     handleTip() {
       this.checkedSrc = !this.checkedSrc;
+      this.tipInit();
+    },
+    toDaily() {
+      this.$router.push({
+        path: '/home',
+      });
+    },
+    tipInit() {
+      this.$utils._Storage.set('tipShow', this.checkedSrc);
     },
   },
 };

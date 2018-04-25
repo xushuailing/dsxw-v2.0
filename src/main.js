@@ -9,10 +9,12 @@ import './config/rem';
 import './config/vux';
 import './assets/css/base.less';
 import './assets/fonts/iconfont.css';
+import utils from './config/utils';
 
 FastClick.attach(document.body);
 
 Vue.prototype.$http = http;
+Vue.prototype.$utils = utils;
 
 Vue.config.productionTip = false;
 
