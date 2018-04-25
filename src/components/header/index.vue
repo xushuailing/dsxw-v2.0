@@ -1,8 +1,8 @@
 <template>
   <div class="c-header">
-    <a href="#" class="c-header-back" v-if="isBack" @click="onBack"><i class="iconfont icon-left"></i></a>
+    <i v-if="isBack" @click="onBack" class="c-header-back iconfont icon-left"></i>
     <h4 class="c-header-title">{{title}}</h4>
-    <a href="#" class="c-header-help" v-if="isHelp" @click="onHelp"><i class="iconfont icon-help"></i></a>
+    <i v-if="isHelp" @click="onHelp" class="c-header-help iconfont icon-help"></i>
   </div>
 </template>
 <script>
@@ -38,21 +38,13 @@ export default {
   display: flex;
   align-items: center;
   padding: 15px;
-  a {
+  i {
     color: #fff;
-    i {
-      font-size: 20px;
-    }
-    // width: 45px/2;
-    // height: 45px/2;
-    // img {
-    //   width: 100%;
-    //   height: 100%;
-    // }
+    font-size: 20px;
   }
   &-title {
     flex: 1;
-    font-size: 24px;
+    font-size: 22px;
     margin-left: 25px/2;
     color: #fff;
   }
