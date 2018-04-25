@@ -87,14 +87,15 @@ export default {
   &-bottom {
     height: 2.5rem;
     text-align: center;
+    padding-top: 0.2rem;
     &_tip {
-      height: 1rem;
-      line-height: 1rem;
+      height: 1.2rem;
+      line-height: 1.2rem;
       color: #38e7ff;
       font-size: 20px;
       .tip-check {
-        width: 0.7rem;
-        height: 0.7rem;
+        width: 1.34rem/2;
+        height: 1.34rem/2;
         vertical-align: middle;
         margin-right: 0.2rem;
       }
