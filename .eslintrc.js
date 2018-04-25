@@ -50,5 +50,6 @@ module.exports = {
     'no-new-wrappers': 'off',
     'linebreak-style': 'off',
     'no-underscore-dangle': 'off',
+    'global-require': 'off',
   },
 };

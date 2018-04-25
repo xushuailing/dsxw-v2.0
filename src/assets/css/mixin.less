@@ -5,6 +5,13 @@
   justify-content: center;
 }
 
+.bgurl(@url) {
+  background: url(@url);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
 .box-s(@c: #acb5ca) {
   -webkit-box-shadow: 0 0 10px @c;
   box-shadow: 0 0 10px @c;
@@ -46,4 +53,13 @@
 .wh(@wh: 100%) {
   width: @wh;
   height: @wh;
+}
+
+.grayscale() {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
 }
