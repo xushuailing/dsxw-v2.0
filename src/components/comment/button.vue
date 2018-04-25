@@ -11,7 +11,7 @@
   width: 100%;
   button {
     border: none;
-    padding: 5px 0;
+    padding: 15px;
     .bgurl('/src/assets/images/frame1.png');
     color: #fff;
     font-size: 18px;
@@ -32,7 +32,7 @@ export default {
     },
     height: {
       type: String,
-      default: '1.4rem',
+      default: 'initial',
     },
   },
 };

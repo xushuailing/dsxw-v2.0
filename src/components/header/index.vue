@@ -27,7 +27,7 @@ export default {
       this.$router.go(-1);
     },
     onHelp() {
-      console.log('返回');
+      this.$emit('onHelp', true);
     },
   },
 };
