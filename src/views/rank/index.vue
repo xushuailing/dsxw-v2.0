@@ -23,7 +23,7 @@
           </div>
           <div class="rank-grade_btn">
             <div>顽强青铜</div>
-            <div class="rank-grade_btn_star"><star star=3></star></div>
+            <div class="rank-grade_btn_star"><star :star='3' wh='0.5rem'></star></div>
           </div>
         </li>
       </ul>
