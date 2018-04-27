@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="info-lv">顽强青铜</div>
-        <c-star :number="3" :star="star"></c-star>
+        <c-star :number="3" :star="star" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png"
                alt="">
@@ -198,6 +198,10 @@ export default {
           text-shadow: 3px 2px 5px #333;
           color: #ffe02e;
         }
+      }
+      &-star {
+        margin-top: 13px;
+        margin-bottom: 7px;
       }
     }
   }

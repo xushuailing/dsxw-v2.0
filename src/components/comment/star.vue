@@ -2,7 +2,7 @@
 <div class="c-star">
   <span v-for="v in number"
         :key="v"
-        :class="{'active':star < v}"></span>
+        :class="{'active':star < v}" :style="{width:wh ,height: wh}"></span>
 </div>
 </template>
 <script>
@@ -19,6 +19,10 @@ export default {
       type: Number,
       default: 0,
     },
+    wh: {
+      type: String,
+      default: '0.56rem',
+    },
   },
 };
 </script>
@@ -26,8 +30,6 @@ export default {
 .c-star {
   display: flex;
   span {
-    width: 28px;
-    height: 28px;
     background: url('../../assets/images/star1.jpg') no-repeat center/cover;
     &.active {
       background: url('../../assets/images/star2.jpg') no-repeat center/cover;
