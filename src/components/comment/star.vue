@@ -25,8 +25,6 @@ export default {
 <style lang="less" scoped>
 .c-star {
   display: flex;
-  margin-top: 13px;
-  margin-bottom: 7px;
   span {
     width: 28px;
     height: 28px;

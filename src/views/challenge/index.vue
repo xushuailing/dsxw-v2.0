@@ -3,7 +3,7 @@
     <div class="challenge_item_header"><c-header title="质量大闯关" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
     <div class="challenge_item_content">
       <ul class="challenge-grade">
-        <li @click="onStartchallenge(item)" v-for="(item, index) in gradeData" :key="item.id">
+        <li v-for="(item, index) in gradeData" :key="item.id">
           <div class="challenge-grade_num" >
             {{index+1}}. 发起者
           </div>
@@ -11,9 +11,9 @@
             <a href="javascript:;"><img src="http://placehold.it/35x35" alt=""></a>
           </div>
           <div class="challenge-grade_name" >
-            昵称{{index}}
+            昵称{{index}}{{item.title}}
           </div>
-          <div class="challenge-grade_btn">挑战</div>
+          <div @click="onStartchallenge(item)" class="challenge-grade_btn">挑战</div>
         </li>
       </ul>
     </div>
@@ -113,7 +113,7 @@ export default {
       if (item.isOpen) {
         this.$vux.toast.show({
           type: 'warn',
-          text: '开始游戏',
+          text: '开始挑战',
         });
       } else {
         this.$vux.toast.show({
@@ -144,17 +144,16 @@ export default {
   flex-direction: column;
   &_item_header{
     height: 1.2rem;
+    margin-bottom: 0.3rem;
   }
   &_item_content{
     flex: 1;
     overflow-x: scroll;
-    padding: 0.2rem 0 0 0;
   }
   &_item_footer{
     height: 2.4rem;
   }
   &-grade {
-    // margin: 10px 0 0 0;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
@@ -194,13 +193,22 @@ export default {
     }
     &_btn{
       width: 3.48rem/2;
+      height: 1.32rem/2;
+      line-height: 1.32rem/2;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+      background: url('../../assets/images/frame4.png');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
     }
   }
   &-p {
     color: #979faf;
     font-size: 14px;
     text-align: center;
-    padding-top: 0.2rem;
+    padding: 0.2rem 0 0.4rem;
   }
 }
 </style>
