@@ -13,7 +13,7 @@
       <ul class="rank-grade">
         <li v-for="(item, index) in gradeData" :key="item.id">
           <div class="rank-grade_num" >
-            {{index+1}}. 发起者
+            {{index+1}}
           </div>
           <div class="rank-grade_img" >
             <a href="javascript:;"><img src="http://placehold.it/35x35" alt=""></a>
@@ -168,9 +168,10 @@ export default {
       margin-top: 5px;
     }
     &_num {
-      width: 1.4rem;
-      color: #ffe02e;
-      font-size: 12px;
+      padding-left: 10px;
+      padding-right: 15px;
+      color: #fff;
+      font-size: 18px;
     }
     &_img {
       width: 1.2rem;
@@ -189,7 +190,7 @@ export default {
     &_name {
       flex: 1;
       overflow: hidden;
-      color: #fff;
+      color: #ffe02e;
       font-size: 16px;
     }
     &_btn {
