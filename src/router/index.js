@@ -8,6 +8,7 @@ import Break from '../views/break';
 import Redpacket from '../views/redpacket';
 import Rank from '../views/rank';
 import Challenge from '../views/challenge';
+import Practice from '../views/practice';
 
 Vue.use(Router);
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/challenge',
       name: 'challenge',
       component: Challenge,
+    },
+    {
+      path: '/practice',
+      name: 'practice',
+      component: Practice,
     },
   ],
 });
