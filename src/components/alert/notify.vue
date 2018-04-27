@@ -24,7 +24,7 @@
 /**
  * <c-notify :visiable.sync="shownotify" showType="success2" @handleClose="onClose" @clickbtn="clickTest"></c-notify>
  * @param{Boolean} visiable 控制显示隐藏 默认为false
- * @param{String} showType 默认success1， success1: '闯关成功',success2: '挑战成功',fail1: '闯关失败',fail2: '挑战失败',
+ * @param{String} showType 默认success1， success1: '继续闯关',success2: '继续挑战',fail1: '继续闯关',fail2: '继续挑战',
  */
 import CAlert from './index';
 
@@ -50,10 +50,10 @@ export default {
         fail2: '/static/images/notify/fail2.png',
       },
       btnText: {
-        success1: '闯关成功',
-        success2: '挑战成功',
-        fail1: '闯关失败',
-        fail2: '挑战失败',
+        success1: '继续闯关',
+        success2: '继续挑战',
+        fail1: '继续闯关',
+        fail2: '继续挑战',
       },
     };
   },
