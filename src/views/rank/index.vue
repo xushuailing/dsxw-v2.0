@@ -23,7 +23,7 @@
           </div>
           <div class="rank-grade_btn">
             <div>顽强青铜</div>
-            <div class="rank-grade_btn_star"><star :star='3' wh='0.5rem'></star></div>
+            <div class="rank-grade_btn_star"><star :star='3' wh='0.4rem'></star></div>
           </div>
         </li>
       </ul>
@@ -125,17 +125,16 @@ export default {
     overflow: hidden;
   }
   &_item_footer {
-    margin-top: 0.4rem;
-    height: 2.4rem/2;
+    margin: 0.2rem 0;
     display: flex;
     justify-content: space-around;
     padding: 0 0.4rem;
     &_top {
-      height: 2.08rem/2;
-      line-height: 2.08rem/2;
+      height: 95px/2;
+      line-height: 95px/2;
       text-align: center;
       width: 50%;
-      font-size: 20px;
+      font-size: 18px;
     }
     .white {
       background: url('../../assets/images/frame4.png');
@@ -153,6 +152,7 @@ export default {
     }
   }
   &-grade {
+    margin-top: 10px;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
@@ -160,10 +160,12 @@ export default {
       background-position: center;
       display: flex;
       height: 1.6rem;
-      margin: 0.2rem 0;
       padding: 0 0.4rem;
       justify-content: flex-start;
       align-items: center;
+    }
+    li + li {
+      margin-top: 5px;
     }
     &_num {
       width: 1.4rem;
