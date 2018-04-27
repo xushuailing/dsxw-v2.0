@@ -106,7 +106,7 @@ export default {
       this.isHelpShow = !this.isHelpShow;
     },
     onBeginPractice() {
-      console.log('练习');
+      this.$router.push('/practice');
     },
     onLookrank() {
       console.log('排行');
