@@ -6,6 +6,8 @@ import Rule from '../views/rule';
 import Daily from '../views/daily';
 import Break from '../views/break';
 import Redpacket from '../views/redpacket';
+import Rank from '../views/rank';
+import Challenge from '../views/challenge';
 
 Vue.use(Router);
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/redpack',
       name: 'redpacket',
       component: Redpacket,
+    },
+    {
+      path: '/rank',
+      name: 'rank',
+      component: Rank,
+    },
+    {
+      path: '/challenge',
+      name: 'challenge',
+      component: Challenge,
     },
   ],
 });

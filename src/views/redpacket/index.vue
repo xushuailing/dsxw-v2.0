@@ -1,30 +1,32 @@
 <template>
-  <div class="redpack">
+  <!-- <div class="redpack"> -->
     <c-dialog :visiable.sync="isShow">
       <template>
-        <div class="redpack-top">
-          <img src="/static/images/redpack/title.png" alt="">
-        </div>
-        <div class="redpack-content">
-          <div v-for="item in 5" :key="item" class="redpack-content_item">
-            <div class="redpack-content_item_top">
-              <div><img src="../../assets/images/money.png" alt=""></div>
-              <div><span>{{item*50}}</span></div>
-            </div>
-            <div class="redpack-content_item_img">
-              <img src="/static/images/redpack/redpack.png" alt="">
-            </div>
-            <div class="redpack-content_item_btn">
-              {{`剩余${item*100}`}}
+        <div class="redpack">
+          <div class="redpack-top">
+            <img src="/static/images/redpack/title.png" alt="">
+          </div>
+          <div class="redpack-content">
+            <div v-for="item in 5" :key="item" class="redpack-content_item">
+              <div class="redpack-content_item_top">
+                <div><img src="../../assets/images/money.png" alt=""></div>
+                <div><span>{{item*50}}</span></div>
+              </div>
+              <div class="redpack-content_item_img">
+                <img src="/static/images/redpack/redpack.png" alt="">
+              </div>
+              <div class="redpack-content_item_btn">
+                {{`剩余${item*100}`}}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="redpack-msg">
-          可根据个人所得金币，点击兑换的红包，兑换后会扣除相应的金币数.
+          <div class="redpack-msg">
+            可根据个人所得金币，点击兑换的红包，兑换后会扣除相应的金币数.
+          </div>
         </div>
       </template>
     </c-dialog>
-  </div>
+  <!-- </div> -->
 </template>
 <script>
 import CDialog from '../../components/alert/dialog';
