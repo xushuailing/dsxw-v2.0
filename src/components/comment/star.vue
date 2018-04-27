@@ -29,6 +29,8 @@ export default {
 <style lang="less" scoped>
 .c-star {
   display: flex;
+  justify-content: center;
+  align-items: center;
   span {
     background: url('../../assets/images/star1.jpg') no-repeat center/cover;
     &.active {
