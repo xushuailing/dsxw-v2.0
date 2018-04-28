@@ -9,6 +9,7 @@ import Redpacket from '../views/redpacket';
 import Rank from '../views/rank';
 import Challenge from '../views/challenge';
 import Practice from '../views/practice';
+import Pkview from '../views/pkview';
 
 Vue.use(Router);
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/practice',
       name: 'practice',
       component: Practice,
+    },
+    {
+      path: '/pk',
+      name: 'pkview',
+      component: Pkview,
     },
   ],
 });
