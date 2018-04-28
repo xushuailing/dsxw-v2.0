@@ -1,21 +1,19 @@
 <template>
-<div class="c-option">
-  <div class="c-option-subject">
-    {{data.title}}
+  <div class="c-option">
+    <div class="c-option-subject">
+      {{data.title}}
+    </div>
+    <ul class="c-option-select">
+      <li @click="onSelect(item,index)"
+          v-for="(item,index) in data.select"
+          :key="item.id"
+          :class="['c-option-select_item',userSelect[index]]">
+        {{item.name}} {{index}}
+      </li>
+    </ul>
   </div>
-  <ul class="c-option-select">
-    <li
-    @click="onSelect(item,index)"
-    v-for="(item,index) in data.select"
-    :key="item.id"
-    :class="['c-option-select_item',]" >
-      {{item.name}}
-    </li>
-  </ul>
-</div>
 </template>
 <script>
-// TODO 逻辑有问题没走通
 export default {
   name: 'c-option',
   props: {
@@ -26,34 +24,28 @@ export default {
   },
   data() {
     return {
-      userSelect: [],
+      userSelect: new Array(this.data.select.length),
       type: 1, // 单选题
       // result
-      // type.indexOf(userSelect)>'-1'?'correct':'error'
-      // item.id==0?'error':'',item.id==1?'correct':
     };
   },
   methods: {
     initData() {
-      this.data.yes = [];
-      this.data.no = [];
+      // this.userSelect = ['', '', '', ''];
     },
     onSelect(item, index) {
-      if (this.userSelect.indexOf(index) <= -1) {
-        // this.userSelect.push(index);
-        this.userSelect[index] = index;
-      }
-
-      // if (index === this.data.result) {
-      //   // type
-      // }
-      // console.log(item);
-
+      this.data.result.forEach(e => {
+        if (e === index) {
+          console.log(e);
+          this.$set(this.userSelect, e, 'correct');
+        } else {
+          this.$set(this.userSelect, e, 'correct');
+          this.$set(this.userSelect, index, 'error');
+        }
+      });
       console.log(this.userSelect);
     },
-    isJudge() {
-
-    },
+    isJudge() {},
   },
   mounted() {
     this.initData();
@@ -84,7 +76,7 @@ export default {
       color: #fff;
       margin-top: 10px;
       &.active {
-        .bgurl('/src/assets/images/frame11.png');
+        .bgurl('/src/assets/images/select.png');
       }
       &.error {
         .bgurl('/src/components/option/error.png');

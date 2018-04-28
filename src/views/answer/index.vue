@@ -28,7 +28,7 @@ export default {
       subject: {
         title: '公司的Logo的颜色是什么颜色?是什么颜色?是什么颜色?是什么颜色?么颜色么颜色么颜色',
         select: [{ name: '红色', id: 0 }, { name: '橙色', id: 1 }, { name: '蓝色', id: 2 }, { name: '绿色', id: 3 }],
-        result: [0],
+        result: [0, 2],
       },
     };
   },
