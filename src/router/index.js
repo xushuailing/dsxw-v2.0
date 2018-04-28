@@ -10,6 +10,7 @@ import Rank from '../views/rank';
 import Challenge from '../views/challenge';
 import Practice from '../views/practice';
 import Pkview from '../views/pkview';
+import Answer from '../views/answer';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/pk',
       name: 'pkview',
       component: Pkview,
+    },
+    {
+      path: '/answer',
+      name: 'answer',
+      component: Answer,
     },
   ],
 });

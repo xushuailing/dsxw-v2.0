@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import utils from '../../config/utils.js';
 import CButton from '../../components/comment/button';
 
 export default {
@@ -41,12 +40,17 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userAccount') || {};
+    },
     onUserLogin(user) {
       // const r = window.location.href.split('=');
-      const r = 'http://saas.zeego.cn/project/ExamGame/dist/index.html?openid=ocpe8wWEY2bB2Cl4LiPmSUTkvpIY#/'.split('=');
+      // const r = 'http://saas.zeego.cn/project/ExamGame/dist/index.html?openid=ocpe8wWEY2bB2Cl4LiPmSUTkvpIY#/'.split('=');
       // const r = 'http://saas.zeego.cn/project/ExamGame/dist/index.html?openid=ocpe8wWEY2bB2Cl4LiPmSUTkvpIY&from=singlemessage&isappinstalled=0#/'.split('=');
-      const open = r[1].split('&')[0].split('#')[0];
-      const URL = 'http://saas.zeego.cn/Interface/WJApp/WJ_UserService.ashx?pagetype=UserLogin';
+      // const open = r[1].split('&')[0].split('#')[0];
+
+      // const open = this.$utils._GetUrlParam('openid');
+
       if (!user.cardId || !user.name || !user.password) {
         this.$vux.toast.show({
           text: '请填写信息~',
@@ -54,20 +58,20 @@ export default {
         });
       } else {
         this.$http
-          .get(URL, {
+          .get(this.$api.login, {
             useridcard: user.cardId,
             username: user.name,
             userpass: user.password,
-            openid: open,
+            // openid: open,
+            openid: 'ocpe8wWEY2bB2Cl4LiPmSUTkvpIY',
           })
           .then(res => {
             const data = res.data;
             if (data.status === 1) {
-              utils._Storage.set('userInfo', data, () => {
-                this.$router.push({
-                  path: '/rule',
-                });
+              this.$utils._Storage.set('userInfo', data, () => {
+                this.$router.push({ path: this.goToRouter() });
               });
+              this.$utils._Storage.set('userAccount', { cardId: this.user.cardId, name: this.user.name });
             } else {
               this.$vux.toast.show({
                 text: data.msg,
@@ -83,6 +87,24 @@ export default {
           });
       }
     },
+    getTipInfo() {
+      // 后台获取是否领取
+      return this.$utils._Storage.get('tipShow');
+    },
+    goToRouter() {
+      // const route = this.$utils._Storage.get('tipShow') ? '/home' : 'rule';
+      // const path = this.getTipInfo() ? route : '/daily';
+      let path = '';
+      if (!this.getTipInfo()) {
+        path = '/daily';
+      } else {
+        path = this.$utils._Storage.get('ruleShow') ? '/home' : '/rule';
+      }
+      return path;
+    },
+  },
+  mounted() {
+    // this.init();
   },
   components: {
     CButton,

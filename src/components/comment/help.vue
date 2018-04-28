@@ -1,8 +1,8 @@
 <template>
   <CAlert v-if="isShow">
     <div class="c-help" >
-      <div class="c-help-title">{{title}}</div>
-      <div class="c-help-conter" v-html="center"></div>
+      <div :class="['c-help-title',{'alert':!center}]" v-if="title">{{title}}</div>
+      <div class="c-help-conter" v-if="center" v-html="center"></div>
       <div @click="onClose" class="c-help-footer">
         <CButton :text="text"></CButton>
       </div>
@@ -22,14 +22,15 @@ export default {
     },
     title: {
       type: String,
-      default: 'title',
+      default: '',
     },
     text: {
       type: String,
+      default: '确定',
     },
     center: {
       type: String,
-      default: 'center',
+      default: '',
     },
   },
   methods: {
@@ -56,6 +57,11 @@ export default {
   width: 100%;
   &-title {
     font-size: 20px;
+    &.alert {
+      margin-top: 10px;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
   }
   &-conter {
     margin-top: 20px;
@@ -69,10 +75,11 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-bottom: -10px;
+
     &::before {
       margin-bottom: 15px;
       content: '';
-      width: 110%;
+      width: 100%;
       height: 1px;
       background: rgb(41, 57, 95);
     }

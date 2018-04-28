@@ -6,7 +6,7 @@
     <div class="daily-content">
       <div class="daily-content_top">
         <div><img src="../../assets/images/money.png" alt=""></div>
-        <div><span>5000</span></div>
+        <div><span>{{gold}}</span></div>
       </div>
       <div class="daily-content_money">
         <div><img src="../../assets/images/money.png" alt=""></div>
@@ -16,28 +16,45 @@
         </div>
       </div>
     </div>
+    <c-help :isShow="isHelp" :title="title" @onHelpFun="onHelpShow"></c-help>
   </div>
 </template>
 <script>
 import CButton from '../../components/comment/button';
+import CHelp from '../../components/comment/help';
 
 export default {
   name: 'c-daily',
   data() {
-    return {};
+    return {
+      gold: 0,
+      isHelp: false,
+      title: '领取成功',
+    };
   },
-  components: { CButton },
+  components: { CButton, CHelp },
   methods: {
+    init() {
+      this.gold = this.$utils._Storage.get('userInfo').bombnum;
+    },
     toRule() {
-      this.$utils._Storage.get('tipShow', data => {
-        let toPath;
-        if (data) {
-          toPath = '/home';
-        } else {
-          toPath = '/rule';
-        }
-        this.$router.push({ path: toPath });
-      });
+      this.$utils._Storage.set('tipShow', true);
+
+      this.isHelp = true;
+
+      // this.$utils._Storage.get('ruleShow', data => {
+      //   let toPath;
+      //   if (data) {
+      //     toPath = '/home';
+      //   } else {
+      //     toPath = '/rule';
+      //   }
+      // });
+    },
+    onHelpShow() {
+      const path = this.$utils._Storage.get('ruleShow') ? '/home' : '/rule';
+      this.$router.push({ path });
+      this.isHelp = false;
     },
   },
   mounted() {},

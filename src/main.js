@@ -10,10 +10,12 @@ import './config/vux';
 import './assets/css/base.less';
 import './assets/fonts/iconfont.css';
 import utils from './config/utils';
+import api from './config/api';
 
 FastClick.attach(document.body);
 
 Vue.prototype.$http = http;
+Vue.prototype.$api = api;
 Vue.prototype.$utils = utils;
 
 Vue.config.productionTip = false;

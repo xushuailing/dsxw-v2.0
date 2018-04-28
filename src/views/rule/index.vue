@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="rule-bottom">
-      <div @click="toDaily">
+      <div @click="toHome">
         <c-button text="我知道了"></c-button>
       </div>
       <div @click="handleTip" class="rule-bottom_tip">
@@ -34,20 +34,19 @@ export default {
   },
   components: { CButton },
   mounted() {
-    this.tipInit();
+    // this.tipInit();
   },
   methods: {
     handleTip() {
       this.checkedSrc = !this.checkedSrc;
-      this.tipInit();
+      this.$utils._Storage.set('ruleShow', this.checkedSrc);
+      // this.tipInit();
     },
-    toDaily() {
-      this.$router.push({
-        path: '/home',
-      });
+    toHome() {
+      this.$router.push({ path: '/home' });
     },
     tipInit() {
-      this.$utils._Storage.set('tipShow', this.checkedSrc);
+      // this.$utils._Storage.set('ruleShow', this.checkedSrc);
     },
   },
 };

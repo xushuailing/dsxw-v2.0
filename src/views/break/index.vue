@@ -7,7 +7,7 @@
           <h4>{{item.title}}</h4>
           <span>金币<u>{{item.gold}}</u></span>
         </div>
-        <div class="break-grade_star"><c-star :number="item.allStar" :star="0"></c-star></div>
+        <div class="break-grade_star"><c-star wh="0.5rem" :number="item.allStar" :star="0"></c-star></div>
       </li>
     </ul>
     <p class="break-p">每通过完整一关才可获得相应的奖励</p>
@@ -75,10 +75,7 @@ export default {
     },
     onStartBreak(item) {
       if (item.isOpen) {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '开始游戏',
-        });
+        this.$router.push('/answer');
       } else {
         this.$vux.toast.show({
           type: 'warn',
@@ -103,7 +100,7 @@ export default {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   &-grade {
-    padding: 10px 0;
+    padding: 10px 15px;
     li {
       .bgurl('../../assets/images/frame11.png');
       height: 172px/2;
@@ -139,9 +136,10 @@ export default {
       }
     }
     &_star {
+      .flex();
     }
   }
-  &-p{
+  &-p {
     color: #979faf;
     font-size: 14px;
     text-align: center;
