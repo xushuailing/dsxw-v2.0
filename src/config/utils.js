@@ -21,9 +21,9 @@ class Storage {
     let value = this.storage.getItem(this.prefix + key);
     try {
       value = JSON.parse(value);
-      if (value === null) value = {};
+      if (value === null) value = null;
     } catch (e) {
-      value = {};
+      value = null;
     }
     return typeof fun === 'function' ? fun.call(this, value) : value;
   }
@@ -64,7 +64,41 @@ class Storage {
     this.storage.removeItem(this.prefix + key);
   }
 }
-
+// 获取url指定参数
+const _GetUrlParam = function(name) {
+  var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+  var r = window.location.search.substr(1).match(reg);
+  return r ? decodeURIComponent(r[2]) : null;
+};
+const _LvType = function(num) {
+  switch (Number(num)) {
+    case 0:
+      0;
+      break;
+    case 1:
+      1;
+      break;
+    case 2:
+      2;
+      break;
+    case 3:
+      3;
+      break;
+    case 4:
+      4;
+      break;
+    case 5:
+      5;
+      break;
+    case 6:
+      6;
+      break;
+    case 7:
+      7;
+      break;
+  }
+};
 export default {
   _Storage: new Storage(),
+  _GetUrlParam,
 };

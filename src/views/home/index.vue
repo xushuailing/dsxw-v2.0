@@ -18,11 +18,11 @@
           </div>
         </div>
         <div class="info-lv">顽强青铜</div>
-        <c-star :number="3" :star="star" class="info-star"></c-star>
+        <c-star :number="3" :star="Number(user.starnum)" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png"
                alt="">
-          <span>50</span>
+          <span>{{user.bombnum}}</span>
         </div>
       </div>
     </div>
@@ -49,8 +49,7 @@
     <div class="home-footer" >
       <div class="home-practice" @click="onBeginPractice">
         <span>练习赢金币</span>
-        <p>今日已获得
-          <u>15</u>金币</p>
+        <p>今日已获得<u>15</u>金币</p>
         <img src="./icon_03.png"
              alt="">
       </div>
@@ -65,23 +64,27 @@
   </div>
 </template>
 <script>
-import { Rater } from 'vux';
 import CStar from '../../components/comment/star';
 import CHelp from '../../components/comment/help';
 
+// TODO ...
 export default {
   name: 'home',
   data() {
     return {
       user: {
-        sex: 1,
+        bombnum: null,
+        gamelevels: null,
+        starnum: null,
+        uid: null,
+        userid: null,
+        usertype: null,
       },
       isHelpShow: false,
       helpData: {
         title: '闯关规则',
         center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
       },
-      star: 1, // 星星数
       isDare: false, // 显示解锁条件
       isChallengeBegins: false, // 未开始挑战
     };
@@ -91,6 +94,7 @@ export default {
     onBeginBreak() {
       this.$router.push('break');
     },
+
     /* 挑战赛 */
     onBeginDare() {
       if (!this.isChallengeBegins && this.isDare) {
@@ -117,9 +121,18 @@ export default {
     onHelp() {
       console.log(11111111);
     },
+    getUserInfo() {
+      this.$http.get(this.$api.userInfo, { userid: this.user.userid });
+    },
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+      console.log('this.user---', this.user);
+    },
+  },
+  mounted() {
+    this.init();
   },
   components: {
-    Rater,
     CStar,
     CHelp,
   },

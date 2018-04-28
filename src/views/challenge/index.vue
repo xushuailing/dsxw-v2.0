@@ -1,6 +1,6 @@
 <template>
   <div class="challenge">
-    <div class="challenge_item_header"><c-header title="质量大闯关" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
+    <div class="challenge_item_header"><c-header title="倔匠挑战赛" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
     <div class="challenge_item_content">
       <ul class="challenge-grade">
         <li v-for="(item, index) in gradeData" :key="item.id">
@@ -142,18 +142,19 @@ export default {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  &_item_header{
+  &_item_header {
     height: 1.2rem;
     margin-bottom: 0.3rem;
   }
-  &_item_content{
+  &_item_content {
     flex: 1;
     overflow-x: scroll;
   }
-  &_item_footer{
+  &_item_footer {
     height: 2.4rem;
   }
   &-grade {
+    padding: 0 15px;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
@@ -162,36 +163,36 @@ export default {
       display: flex;
       height: 1.6rem;
       margin: 0.2rem 0;
-      padding: 0 0.4rem;
+      padding: 0 20px;
       justify-content: flex-start;
       align-items: center;
     }
-    &_num{
+    &_num {
       width: 70px;
       color: #ffe02e;
       font-size: 12px;
     }
-    &_img{
+    &_img {
       width: 1.2rem;
-      a{
+      a {
         width: 0.84rem;
         height: 0.84rem;
         display: inline-block;
         border-radius: 100%;
         overflow: hidden;
       }
-      img{
+      img {
         width: 0.84rem;
         height: 0.84rem;
       }
     }
-    &_name{
+    &_name {
       flex: 1;
       overflow: hidden;
       color: #fff;
       font-size: 16px;
     }
-    &_btn{
+    &_btn {
       width: 3.48rem/2;
       height: 1.32rem/2;
       line-height: 1.32rem/2;

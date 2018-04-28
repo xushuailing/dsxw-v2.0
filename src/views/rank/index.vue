@@ -128,7 +128,7 @@ export default {
     margin: 0.2rem 0;
     display: flex;
     justify-content: space-around;
-    padding: 0 0.4rem;
+    padding: 0 20px;
     &_top {
       height: 95px/2;
       line-height: 95px/2;
@@ -152,6 +152,7 @@ export default {
     }
   }
   &-grade {
+    padding: 0 15px;
     margin-top: 10px;
     li {
       background: url('../../assets/images/frame11.png');
@@ -160,7 +161,7 @@ export default {
       background-position: center;
       display: flex;
       height: 1.6rem;
-      padding: 0 0.4rem;
+      padding: 0 20px;
       justify-content: flex-start;
       align-items: center;
     }
