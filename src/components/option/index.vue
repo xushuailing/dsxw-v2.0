@@ -1,8 +1,8 @@
 <template>
   <div class="c-option">
-    <div class="c-option-subject">
+    <!-- <div class="c-option-subject">
       {{data.title}}
-    </div>
+    </div> -->
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
           v-for="(item,index) in data.select"
@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     initData() {
-
       // this.userSelect = ['', '', '', ''];
     },
     onSelect(item, index) {
@@ -81,8 +80,8 @@ export default {
   watch: {
     /* eslint-disable */
     isTimeEnd() {
-   console.log(this);
-      
+      console.log(this);
+
       this.data.result.forEach(e => {
         this.$set(this.userSelect, e, 'correct');
       });
@@ -99,26 +98,31 @@ export default {
 <style lang='less'>
 @import '../../assets/css/mixin.less';
 .c-option {
+  width: 100%;
+  height: 100%;
   &-subject {
-    padding: 0 15px;
-    margin-top: 10px;
-    font-size: 18px;
+    padding: 0 0.3rem;
+    margin-top: 0.2rem;
+    font-size: 0.36rem;
     color: #fff;
-    min-height: 160px;
+    min-height: 3.2rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   &-select {
-    padding: 0 30px;
+    padding: 0 0.6rem;
     &_item {
-      height: 132px/2;
+      height: 2.64rem/2;
       .bgurl('/src/assets/images/frame11.png');
       background-size: 100% 100%;
       .flex();
-      font-size: 18px;
+      font-size: 0.36rem;
       color: #fff;
-      margin-top: 10px;
+      & + & {
+        margin-top: 0.2rem;
+      }
       &.active {
         .bgurl('/src/components/option/select.png');
       }
