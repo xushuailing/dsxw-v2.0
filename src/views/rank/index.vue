@@ -23,7 +23,7 @@
           </div>
           <div class="rank-grade_btn">
             <div>{{item.GameName}}</div>
-            <div class="rank-grade_btn_star"><star :star='3' wh='0.4rem'></star></div>
+            <div class="rank-grade_btn_star"><c-star :star='3' wh='0.4rem'></c-star></div>
           </div>
         </li>
       </ul>
@@ -32,7 +32,7 @@
 </template>
 <script>
 import CButton from '../../components/comment/button';
-import Star from '../../components/comment/star';
+import CStar from '../../components/star';
 import CHeader from '../../components/header';
 
 export default {
@@ -87,7 +87,7 @@ export default {
   components: {
     CHeader,
     CButton,
-    Star,
+    CStar,
   },
 };
 </script>
@@ -178,7 +178,7 @@ export default {
     &_name {
       flex: 1;
       overflow: hidden;
-      color: #ffe02e;
+      color: @color3;
       font-size: 16px;
     }
     &_btn {

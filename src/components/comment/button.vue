@@ -11,10 +11,10 @@
   width: 100%;
   button {
     border: none;
-    padding: 15px;
+    padding: 0.3rem;
     .bgurl('/src/assets/images/frame1.png');
     color: #fff;
-    font-size: 18px;
+    font-size: 0.36rem;
   }
 }
 </style>

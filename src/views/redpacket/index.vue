@@ -73,7 +73,7 @@ export default {
         span {
           margin-left: 3px;
           font-size: 14px;
-          color: #ffe02e;
+          color: @color3;
         }
       }
       &_img {

@@ -78,7 +78,7 @@ export default {
     flex: 1;
     overflow: hidden;
     padding: 0 0.45rem;
-    font-size: 14px;
+    font-size: 0.28rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

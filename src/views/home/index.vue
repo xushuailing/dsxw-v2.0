@@ -34,16 +34,15 @@
     </div>
     <div :class="['home-dare',{'active':!isDare || !isChallengeBegins}]" @click="onBeginDare">
       <div class="home-dare_wait" v-if="!isDare">
-        <span>解锁条件</span>
-        <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
+        <span>{{condition.title}}</span>
+        <p>{{condition.center}}</p>
       </div>
       <div v-else class="home-dare_start" >
         <div>
           <span>倔匠挑战赛</span>
           <p>当前挑战池共有挑战<u>3</u></p>
         </div>
-        <img src="./icon_02.png"
-             alt="">
+        <img src="./icon_02.png" alt="">
       </div>
     </div>
     <div class="home-footer" >
@@ -64,7 +63,7 @@
   </div>
 </template>
 <script>
-import CStar from '../../components/comment/star';
+import CStar from '../../components/star';
 import CHelp from '../../components/comment/help';
 
 // TODO ...
@@ -77,7 +76,11 @@ export default {
       isHelpShow: false,
       helpData: {
         title: '闯关规则',
-        center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
+        center: '',
+      },
+      condition: {
+        title: '解锁条件',
+        center: '',
       },
       isDare: false, // 显示解锁条件
       isChallengeBegins: false, // 未开始挑战
@@ -88,8 +91,9 @@ export default {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.userName = this.$utils._Storage.get('userAccount').name || '姓名';
+      this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
+      this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
     },
-
 
     /* 闯关 */
     onBeginBreak() {
@@ -140,26 +144,26 @@ export default {
 
 .home {
   height: 100%;
-  padding: 20px 10px;
+  padding: 0.4rem 0.2rem;
   background: url('./bg.jpg') no-repeat center/cover;
   &-top {
-    height: 340px/2;
+    height: 6.8rem/2;
     display: flex;
     &_pic {
-      width: 160px;
+      width: 3.2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 26px;
+      padding-top: 0.52rem;
       img {
         border-radius: 50%;
-        width: 75px;
-        height: 75px;
+        width: 1.5rem;
+        height: 1.5rem;
       }
       span {
-        font-size: 18px;
+        font-size: 0.36rem;
         color: #fff;
-        margin-top: 54px/2;
+        margin-top: 1.08rem/2;
       }
     }
     .info {
@@ -168,14 +172,14 @@ export default {
       flex-direction: column;
       align-items: center;
       &-tool {
-        margin-top: -10px;
+        margin-top: -0.2rem;
         margin-left: auto;
-        height: 34px;
-        width: 265px/2;
-        border: 1px solid #323d6e;
-        border-radius: 20px;
+        height: 0.68rem;
+        width: 5.3rem/2;
+        border-radius: 0.4rem;
         display: flex;
-        padding: 0 5px;
+        padding: 0 0.1rem;
+        .b-d(#323d6e);
         > div {
           flex: 1;
           display: flex;
@@ -183,35 +187,35 @@ export default {
           align-items: center;
         }
         div + div {
-          border-left: 1px solid #323d6e;
+          .b-l(#323d6e);
         }
         i {
           color: #fff;
-          font-size: 20px;
+          font-size: 0.4rem;
         }
       }
       &-lv {
-        font-size: 22px;
+        font-size: 0.44rem;
         color: #fff;
-        margin-top: 20px;
+        margin-top: 0.4rem;
       }
       &-integral {
         display: flex;
         align-items: center;
         img {
-          width: 33px;
-          height: 33px;
+          width: 0.66rem;
+          height: 0.66rem;
         }
         span {
-          margin-left: 15px;
-          font-size: 28px;
-          text-shadow: 3px 2px 5px #333;
-          color: #ffe02e;
+          margin-left: 0.3rem;
+          font-size: 0.56rem;
+          text-shadow: 0.06rem 0.04rem 0.1rem #333;
+          color: @color3;
         }
       }
       &-star {
-        margin-top: 13px;
-        margin-bottom: 7px;
+        margin-top: 0.26rem;
+        margin-bottom: 0.14rem;
       }
     }
   }
@@ -221,27 +225,27 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 245px/2;
-    padding: 20px;
-    margin-bottom: 10px;
+    height: 4.9rem/2;
+    padding: 0.4rem;
+    margin-bottom: 0.2rem;
     background: url('../../assets/images/frame2.png') no-repeat center/cover;
     color: #fff;
     span {
-      font-size: 24px;
+      font-size: 0.48rem;
     }
     img {
-      width: 130px;
-      height: 100px;
+      width: 2.6rem;
+      height: 2rem;
     }
     &_wait {
-      padding-left: 20px;
+      padding-left: 0.4rem;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       height: 100%;
       color: #999;
       p {
-        font-size: 14px;
+        font-size: 0.28rem;
       }
     }
     &_start {
@@ -254,13 +258,13 @@ export default {
         align-items: center;
       }
       p {
-        font-size: 14px;
+        font-size: 0.28rem;
         color: @color1;
         display: flex;
         align-items: center;
         u {
-          margin-left: 10px;
-          font-size: 38px;
+          margin-left: 0.2rem;
+          font-size: 0.76rem;
         }
       }
     }
@@ -282,42 +286,42 @@ export default {
   }
   &-practice,
   &-rank {
-    padding: 15px;
+    padding: 0.3rem;
     background: url('../../assets/images/frame3.png') no-repeat center/cover;
     flex: 1;
-    height: 250px/2;
+    height: 5rem/2;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     color: #fff;
-    font-size: 16px;
+    font-size: 0.32rem;
   }
   &-rank {
     img {
-      width: 162px/2;
-      height: 154px/2;
+      width: 3.24rem/2;
+      height: 3.08rem/2;
       position: absolute;
-      right: 5px;
-      bottom: 5px;
+      right: 0.1rem;
+      bottom: 0.1rem;
     }
   }
   &-practice {
-    margin-right: 10px;
+    margin-right: 0.2rem;
     p {
-      font-size: 12px;
+      font-size: 0.24rem;
       color: @color1;
     }
     u {
-      font-size: 24px;
-      margin: 0 7px;
+      font-size: 0.48rem;
+      margin: 0 0.14rem;
     }
     img {
       position: absolute;
-      right: 5px;
-      bottom: 4px;
-      width: 140px/2;
-      height: 94px/2;
+      right: 0.1rem;
+      bottom: 0.08rem;
+      width: 2.8rem/2;
+      height: 1.88rem/2;
     }
   }
 }

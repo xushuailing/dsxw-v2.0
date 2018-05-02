@@ -169,7 +169,7 @@ export default {
     width: 100%;
     .flex();
     font-size: 22px;
-    color: #ffe02e;
+    color: @color3;
     margin-top: 10px;
   }
   .type1 {

@@ -11,11 +11,12 @@
       </li>
     </ul>
     <p class="break-p">每通过完整一关才可获得相应的奖励</p>
-    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="isHelpShow"></c-help>
+    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="helpData.isShow"></c-help>
+    <c-help :center="alert.center" :title="alert.title" @onHelpFun="onAlertShow" :isShow="alert.isShow"></c-help>
   </div>
 </template>
 <script>
-import CStar from '../../components/comment/star';
+import CStar from '../../components/star';
 import CButton from '../../components/comment/button';
 import CHelp from '../../components/comment/help';
 import CHeader from '../../components/header';
@@ -26,7 +27,11 @@ export default {
     return {
       user: null,
       star: 1,
-      isHelpShow: false,
+      alert: {
+        center: '下一卡关未到开启状态~',
+        title: '敬请期待',
+        isShow: false,
+      },
       gradeData: [
         {
           id: 1,
@@ -67,13 +72,13 @@ export default {
       helpData: {
         title: '闯关规则',
         center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
+        isShow: false,
       },
     };
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      console.log('this.user---', { ...this.user });
       this.getBreakInfo();
     },
     getBreakInfo() {
@@ -90,17 +95,16 @@ export default {
         });
     },
     onHelpShow() {
-      this.isHelpShow = !this.isHelpShow;
+      this.helpData.isShow = !this.helpData.isShow;
+    },
+    onAlertShow() {
+      this.alert.isShow = !this.alert.isShow;
     },
     onStartBreak(item) {
       if (item.isOpen) {
         this.$router.push('/answer');
       } else {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '未开放',
-        });
-        console.log(item);
+        this.onAlertShow();
       }
     },
   },
@@ -122,11 +126,11 @@ export default {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   &-grade {
-    padding: 10px 15px;
+    padding: 0.2rem 0.3rem;
     li {
       .bgurl('../../assets/images/frame11.png');
-      height: 172px/2;
-      padding: 14px 75px/2;
+      height: 3.44rem/2;
+      padding: 0.28rem 1.5rem/2;
       display: flex;
       &.active {
         .grayscale();
@@ -143,17 +147,17 @@ export default {
       width: 60%;
 
       h4 {
-        font-size: 22px;
+        font-size: 0.44rem;
         color: #fff;
       }
       span {
-        font-size: 14px;
-        color: #ffe02e;
+        font-size: 0.28rem;
+        color: @color3;
         display: flex;
         align-items: center;
         u {
-          margin-left: 10px;
-          font-size: 20px;
+          margin-left: 0.2rem;
+          font-size: 0.4rem;
         }
       }
     }
@@ -163,9 +167,9 @@ export default {
   }
   &-p {
     color: #979faf;
-    font-size: 14px;
+    font-size: 0.28rem;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 0.2rem;
   }
 }
 </style>

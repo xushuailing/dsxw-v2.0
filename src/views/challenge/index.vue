@@ -169,7 +169,7 @@ export default {
     }
     &_num {
       width: 70px;
-      color: #ffe02e;
+      color: @color3;
       font-size: 12px;
     }
     &_img {

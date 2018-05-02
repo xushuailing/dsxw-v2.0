@@ -34,18 +34,18 @@ export default {
 </script>
 <style lang="less" scoped>
 .c-header {
-  height: 60px;
+  height: 1.2rem;
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 0.3rem;
   i {
     color: #fff;
-    font-size: 20px;
+    font-size: 0.4rem;
   }
   &-title {
     flex: 1;
-    font-size: 22px;
-    margin-left: 25px/2;
+    font-size: 0.44rem;
+    margin-left: 0.5rem/2;
     color: #fff;
   }
 }

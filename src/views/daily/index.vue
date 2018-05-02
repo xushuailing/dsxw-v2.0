@@ -86,6 +86,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/index.less';
+
 .daily {
   position: relative;
   width: 100%;
@@ -115,7 +117,7 @@ export default {
       span {
         margin-left: 0.2rem;
         font-size: 0.56rem;
-        color: #ffe02e;
+        color: @color3;
       }
     }
     &_money {
