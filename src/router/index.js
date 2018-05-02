@@ -11,6 +11,7 @@ import Challenge from '../views/challenge';
 import Practice from '../views/practice';
 import Pkview from '../views/pkview';
 import Answer from '../views/answer';
+import StartView from '../views/practice/start.vue';
 
 Vue.use(Router);
 
@@ -70,6 +71,11 @@ export default new Router({
       path: '/answer',
       name: 'answer',
       component: Answer,
+    },
+    {
+      path: '/start',
+      name: 'start',
+      component: StartView,
     },
   ],
 });
