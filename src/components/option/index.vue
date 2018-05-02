@@ -8,7 +8,7 @@
           v-for="(item,index) in data.select"
           :key="item.id"
           :class="['c-option-select_item',userSelect[index]]">
-        {{item.name}} {{index}}
+        {{item.name}}
       </li>
     </ul>
   </div>
@@ -21,31 +21,75 @@ export default {
       type: Object,
       default: () => {},
     },
+    isTimeEnd: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       userSelect: new Array(this.data.select.length),
-      type: 1, // 单选题
+      // type: 1, // 1=单选题,2=判断,3=多项
       // result
+      click: 0,
     };
   },
   methods: {
     initData() {
+
       // this.userSelect = ['', '', '', ''];
     },
     onSelect(item, index) {
-      this.data.result.forEach(e => {
-        if (e === index) {
-          console.log(e);
-          this.$set(this.userSelect, e, 'correct');
+      const data = this.data;
+      if (this.data.type === 1 || this.data.type === 2) {
+        data.result.forEach(e => {
+          if (e === index) {
+            this.$set(this.userSelect, index, 'correct');
+            this.gameOver(true);
+            console.log('过关');
+          } else {
+            this.$set(this.userSelect, e, 'correct');
+            this.$set(this.userSelect, index, 'error');
+            this.gameOver(false);
+            console.log('失败');
+          }
+        });
+      } else if (data.type === 3) {
+        if (data.result.indexOf(index) > -1) {
+          this.$set(this.userSelect, index, 'active');
+          this.click++;
+          if (this.click === data.result.length) {
+            console.log('过关');
+            this.gameOver(true);
+          }
         } else {
-          this.$set(this.userSelect, e, 'correct');
-          this.$set(this.userSelect, index, 'error');
+          data.result.forEach(e => {
+            this.$set(this.userSelect, e, 'correct');
+            this.$set(this.userSelect, index, 'error');
+            this.gameOver(false);
+          });
+          console.log('失败');
         }
-      });
-      console.log(this.userSelect);
+      }
+    },
+    gameOver(type) {
+      this.$emit('isSuccess', type);
     },
     isJudge() {},
+  },
+
+  watch: {
+    /* eslint-disable */
+    isTimeEnd() {
+   console.log(this);
+      
+      this.data.result.forEach(e => {
+        this.$set(this.userSelect, e, 'correct');
+      });
+
+      this.gameOver(false);
+      console.log('❌');
+    },
   },
   mounted() {
     this.initData();
@@ -76,7 +120,7 @@ export default {
       color: #fff;
       margin-top: 10px;
       &.active {
-        .bgurl('/src/assets/images/select.png');
+        .bgurl('/src/components/option/select.png');
       }
       &.error {
         .bgurl('/src/components/option/error.png');
