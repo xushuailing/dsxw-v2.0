@@ -73,19 +73,30 @@ const _GetUrlParam = function(name) {
 const _LvType = function(num) {
   switch (Number(num)) {
     case 1:
-      return '白铁质量';
+      return {
+        title: '坚韧黑铁',
+        star: 1,
+      };
     case 2:
-      return '青铜质量';
+      return {
+        title: '顽强青铜',
+        star: 2,
+      };
     case 3:
-      return '水晶质量';
+      return {
+        title: '傲气白银',
+        star: 3,
+      };
     case 4:
-      return '白银质量';
+      return {
+        title: '无暇钻石',
+        star: 3,
+      };
     case 5:
-      return '黄金质量';
-    case 6:
-      return '铂金质量';
-    case 7:
-      return '钻石质量';
+      return {
+        title: '倔强王者',
+        star: 3,
+      };
   }
 };
 export default {

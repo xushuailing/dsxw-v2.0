@@ -80,10 +80,12 @@ export default {
     };
   },
   methods: {
-    init() {},
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+    },
     getTopList() {
       this.$http
-        .get(this.$api.a, {})
+        .get(this.$api.topList, { pagesize: 5, Usertype: 1, UID: 107 })
         .then(res => {
           console.log(res);
         })
