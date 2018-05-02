@@ -5,4 +5,5 @@ export default {
   userInfo: `${url}WJ_UserService.ashx?pagetype=UserView`,
   daily: `${url}WJ_UserService.ashx?pagetype=GetJIfen`,
   topList: `${url}WJ_UserService.ashx?pagetype=toplist`,
+  breakInfo: `${url}View_Active_VipLevelService.ashx?pagetype=list`,
 };

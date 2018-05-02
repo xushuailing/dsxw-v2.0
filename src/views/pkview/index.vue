@@ -15,11 +15,11 @@
   </div>
 </template>
 <script>
-import CButton from "../../components/comment/button";
-import CHeader from "../../components/header";
+import CButton from '../../components/comment/button';
+import CHeader from '../../components/header';
 
 export default {
-  name: "c-challenge",
+  name: 'c-challenge',
   data() {
     return {};
   },
@@ -27,13 +27,13 @@ export default {
     onStartchallenge(item) {
       if (item.isOpen) {
         this.$vux.toast.show({
-          type: "warn",
-          text: "开始挑战",
+          type: 'warn',
+          text: '开始挑战',
         });
       } else {
         this.$vux.toast.show({
-          type: "warn",
-          text: "未开放",
+          type: 'warn',
+          text: '未开放',
         });
       }
     },
@@ -45,11 +45,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "../../assets/css/mixin.less";
+@import '../../assets/css/mixin.less';
 
 .challenge {
   height: 100%;
-  background: url("../../assets/images/bg.jpg");
+  background: url('../../assets/images/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -66,7 +66,7 @@ export default {
     justify-content: space-between;
     &_left {
       width: 226px/2;
-      background: url("/static/images/pk/left.png");
+      background: url('/static/images/pk/left.png');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -88,7 +88,7 @@ export default {
     }
     &_right {
       width: 226px/2;
-      background: url("/static/images/pk/right.png");
+      background: url('/static/images/pk/right.png');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;

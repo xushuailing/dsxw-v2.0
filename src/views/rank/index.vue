@@ -19,10 +19,10 @@
             <a href="javascript:;"><img src="http://placehold.it/35x35" alt=""></a>
           </div>
           <div class="rank-grade_name" >
-            昵称{{index}}{{item.title}}
+            {{item.UserName}}
           </div>
           <div class="rank-grade_btn">
-            <div>顽强青铜</div>
+            <div>{{item.GameName}}</div>
             <div class="rank-grade_btn_star"><star :star='3' wh='0.4rem'></star></div>
           </div>
         </li>
@@ -41,53 +41,36 @@ export default {
     return {
       isChecked: true,
       gradeData: [
-        {
-          id: 1,
-          title: '坚韧黑铁',
-          allStar: 1,
-          gold: 40,
-          isOpen: true,
-        },
-        {
-          id: 2,
-          title: '顽强青铜',
-          allStar: 2,
-          gold: 100,
-          isOpen: false,
-        },
-        {
-          id: 3,
-          title: '傲气白银',
-          allStar: 2,
-          gold: 300,
-          isOpen: false,
-        },
-        {
-          id: 4,
-          title: '无暇钻石',
-          allStar: 3,
-          gold: 700,
-          isOpen: false,
-        },
-        {
-          id: 5,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
-        },
+        // {
+        //   id: 1,
+        //   title: '坚韧黑铁',
+        //   allStar: 1,
+        //   gold: 40,
+        //   isOpen: true,
+        // },
       ],
     };
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      console.log('this.user---', this.user);
     },
     getTopList() {
       this.$http
-        .get(this.$api.topList, { pagesize: 5, Usertype: 1, UID: 107 })
+        .get(this.$api.topList, {
+          pagesize: 5,
+          Usertype: this.user.usertype,
+          UID: this.user.uid,
+        })
         .then(res => {
-          console.log(res);
+          if (res.data.status) {
+            const data = res.data.data;
+            console.log(data);
+            this.gradeData = data;
+          } else {
+            console.log('res---', res);
+          }
         })
         .catch(err => {
           console.log(err);
@@ -96,22 +79,10 @@ export default {
     handleClick() {
       this.isChecked = !this.isChecked;
     },
-    onStartrank(item) {
-      if (item.isOpen) {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '开始挑战',
-        });
-      } else {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '未开放',
-        });
-      }
-    },
   },
   mounted() {
     this.init();
+    this.getTopList();
   },
   components: {
     CHeader,

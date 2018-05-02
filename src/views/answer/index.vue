@@ -27,17 +27,18 @@ export default {
     };
   },
   methods: {
+    init() {},
     isSuccess(type) {
       console.log(type);
     },
   },
   mounted() {
-    const interval = setInterval(() => {
-      this.time--;
-      if (this.time === 0) {
-        clearInterval(interval);
-      }
-    }, 100);
+    // const interval = setInterval(() => {
+    //   this.time--;
+    //   if (this.time === 0) {
+    //     clearInterval(interval);
+    //   }
+    // }, 100);
   },
   components: {
     CHeader,

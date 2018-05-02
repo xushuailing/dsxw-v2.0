@@ -1,8 +1,8 @@
 <template>
   <div class="c-option">
-    <div class="c-option-subject">
+    <!-- <div class="c-option-subject">
       {{data.title}}
-    </div>
+    </div> -->
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
           v-for="(item,index) in data.select"
@@ -82,7 +82,7 @@ export default {
     /* eslint-disable */
     isTimeEnd() {
    console.log(this);
-      
+
       this.data.result.forEach(e => {
         this.$set(this.userSelect, e, 'correct');
       });
@@ -99,16 +99,16 @@ export default {
 <style lang='less'>
 @import '../../assets/css/mixin.less';
 .c-option {
-  &-subject {
-    padding: 0 15px;
-    margin-top: 10px;
-    font-size: 18px;
-    color: #fff;
-    min-height: 160px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  // &-subject {
+  //   padding: 0 15px;
+  //   margin-top: 10px;
+  //   font-size: 18px;
+  //   color: #fff;
+  //   min-height: 160px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
   &-select {
     padding: 0 30px;
     &_item {

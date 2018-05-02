@@ -24,6 +24,7 @@ export default {
   name: 'break',
   data() {
     return {
+      user: null,
       star: 1,
       isHelpShow: false,
       gradeData: [
@@ -70,6 +71,22 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+      this.getBreakInfo();
+    },
+    getBreakInfo() {
+      this.$http
+        .get(this.$api.breakInfo, {
+          Userid: this.user.userid,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     onHelpShow() {
       this.isHelpShow = !this.isHelpShow;
     },
@@ -84,6 +101,9 @@ export default {
         console.log(item);
       }
     },
+  },
+  mounted() {
+    this.init();
   },
   components: {
     CHeader,
