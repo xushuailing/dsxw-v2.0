@@ -7,9 +7,10 @@
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
       <div class="pkview_item_content_time">
-        <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#38e7ff">
+        <!-- <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
           <span>{{ percent / 100 }}</span>
-        </x-circle>
+        </x-circle> -->
+        <c-circle :percent="percent"></c-circle>
       </div>
       <div class="pkview_item_content_img">
         <div class="pkview_item_content_img_top"><a href="javascript:;"><img src="/static/images/pk/icon_girl.png" alt=""></a></div>
@@ -39,10 +40,11 @@
   </div>
 </template>
 <script>
-import { XCircle } from 'vux';
+// import { XCircle } from 'vux';
 import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
+import CCircle from '../../components/circle';
 
 export default {
   name: 'c-pkview',
@@ -77,8 +79,9 @@ export default {
   components: {
     CHeader,
     CButton,
-    XCircle,
+    // XCircle,
     COption,
+    CCircle,
   },
 };
 </script>
@@ -143,24 +146,25 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      .vux-circle {
-        width: 1.1rem;
-        height: 1.1rem;
-        margin-bottom: 0.2rem;
-        .vux-circle-content {
-          span {
-            display: inline-block;
-            width: 0.8rem;
-            height: 0.8rem;
-            line-height: 0.8rem;
-            color: #fff;
-            font-size: 0.44rem;
-            // font-weight: 600;
-            border-radius: 100%;
-            border: 1px solid #38e7ff;
-          }
-        }
-      }
+      // .vux-circle {
+      //   width: 1.1rem;
+      //   height: 1.1rem;
+      //   margin-bottom: 0.2rem;
+      //   .vux-circle-content {
+      //     span {
+      //       display: inline-block;
+      //       width: 0.8rem;
+      //       height: 0.8rem;
+      //       line-height: 0.8rem;
+      //       color: #fff;
+      //       font-size: 0.44rem;
+      //       // font-weight: 600;
+      //       border-radius: 100%;
+      //       border: 1px solid #01d2f4;
+      //       box-shadow: 0 0 5px #01d2f4 inset;
+      //     }
+      //   }
+      // }
     }
   }
   &_item_question {

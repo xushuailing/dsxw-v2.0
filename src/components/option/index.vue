@@ -100,6 +100,9 @@ export default {
 .c-option {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &-subject {
     padding: 0 0.3rem;
     margin-top: 0.2rem;
@@ -112,6 +115,7 @@ export default {
     align-items: center;
   }
   &-select {
+    width: 100%;
     padding: 0 0.6rem;
     &_item {
       height: 2.64rem/2;
