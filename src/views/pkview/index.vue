@@ -2,8 +2,13 @@
   <div class="challenge">
     <div class="challenge_item_header"><c-header title="来自xx的挑战"></c-header></div>
     <div class="challenge_item_content">
-    </div>
-    <div class="challenge_item_title">
+      <div class="challenge_item_content_left">
+        <a href="javascript:;"><img src="https://placehold.it/60x60" alt=""></a>
+      </div>
+      <div class="challenge_item_content_time">2</div>
+      <div class="challenge_item_content_right">
+        <a href="javascript:;"><img src="https://placehold.it/60x60" alt=""></a>
+      </div>
     </div>
     <div class="challenge_item_footer">
     </div>
@@ -56,13 +61,52 @@ export default {
     margin-bottom: 0.3rem;
   }
   &_item_content {
-    flex: 1;
-  }
-  &_item_ {
-    height: 2.4rem;
+    height: 220px/2;
+    display: flex;
+    justify-content: space-between;
+    &_left {
+      width: 226px/2;
+      background: url("/static/images/pk/left.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      a {
+        display: inline-block;
+        border-radius: 100%;
+        overflow: hidden;
+        width: 120px/2;
+        height: 120px/2;
+      }
+      img {
+        width: 120px/2;
+        height: 120px/2;
+      }
+    }
+    &_time {
+      flex: 1;
+      text-align: center;
+    }
+    &_right {
+      width: 226px/2;
+      background: url("/static/images/pk/right.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      a {
+        display: inline-block;
+        border-radius: 100%;
+        overflow: hidden;
+        width: 120px/2;
+        height: 120px/2;
+      }
+      img {
+        width: 120px/2;
+        height: 120px/2;
+      }
+    }
   }
   &_item_footer {
-    height: 2.4rem;
+    flex: 1;
   }
 }
 </style>
