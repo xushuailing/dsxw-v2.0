@@ -1,8 +1,5 @@
 <template>
   <div class="c-option">
-    <!-- <div class="c-option-subject">
-      {{data.title}}
-    </div> -->
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
           v-for="(item,index) in data.select"
@@ -99,21 +96,10 @@ export default {
 @import '../../assets/css/mixin.less';
 .c-option {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  &-subject {
-    padding: 0 0.3rem;
-    margin-top: 0.2rem;
-    font-size: 0.36rem;
-    color: #fff;
-    min-height: 3.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
   &-select {
     width: 100%;
     padding: 0 0.6rem;

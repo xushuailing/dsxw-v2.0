@@ -1,0 +1,73 @@
+<template>
+  <div class="start">
+      <c-header :title="title"></c-header>
+      <div class="start-time">
+        <c-circle :percent="time"></c-circle>
+      </div>
+      <div class="start-subject">
+        {{subject.title}}
+      </div>
+      <c-option :data="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
+  </div>
+</template>
+<script>
+import CHeader from '../../components/header';
+import COption from '../../components/option';
+import CCircle from '../../components/circle';
+
+export default {
+  name: 'c-start',
+  data() {
+    return {
+      title: '质量大闯关',
+      time: 1000,
+      subject: {
+        title: '公司的Logo的颜色是什么颜色?是什么颜色?是什么颜色?是什么颜色?么颜色么颜色么颜色',
+        select: [{ name: '红色', id: 0 }, { name: '橙色', id: 1 }, { name: '蓝色', id: 2 }, { name: '绿色', id: 3 }],
+        result: [0, 1],
+        type: 3,
+      },
+    };
+  },
+  methods: {
+    isSuccess(type) {
+      console.log(type);
+    },
+  },
+  mounted() {
+    const interval = setInterval(() => {
+      this.time = this.time - 100;
+      if (this.time <= 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+  },
+  components: {
+    CHeader,
+    CCircle,
+    COption,
+  },
+};
+</script>
+<style lang='less'>
+@import '../../assets/css/mixin.less';
+.start {
+  height: 100%;
+  .bgurl('../../assets/images/bg.jpg');
+  &-time {
+    display: flex;
+    justify-content: center;
+  }
+  &-subject {
+    padding: 0 0.3rem;
+    margin-top: 0.2rem;
+    font-size: 0.36rem;
+    color: #fff;
+    min-height: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>

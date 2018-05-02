@@ -208,6 +208,7 @@ export default {
     &_middle {
       flex: 1;
       overflow: hidden;
+      display: flex;
     }
   }
 }
