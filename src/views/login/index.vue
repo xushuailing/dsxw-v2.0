@@ -37,6 +37,7 @@ export default {
         name: 'test',
         password: '1111',
       },
+      tipShow: null,
     };
   },
   methods: {
@@ -68,6 +69,8 @@ export default {
           .then(res => {
             const data = res.data;
             if (data.status === 1) {
+              console.log('data---', data);
+              this.tipShow = Number(data.isget);
               this.$utils._Storage.set('userInfo', data, () => {
                 this.$router.push({ path: this.goToRouter() });
               });
@@ -87,15 +90,11 @@ export default {
           });
       }
     },
-    getTipInfo() {
-      // 后台获取是否领取
-      return this.$utils._Storage.get('tipShow');
-    },
     goToRouter() {
       // const route = this.$utils._Storage.get('tipShow') ? '/home' : 'rule';
       // const path = this.getTipInfo() ? route : '/daily';
       let path = '';
-      if (!this.getTipInfo()) {
+      if (this.tipShow) {
         path = '/daily';
       } else {
         path = this.$utils._Storage.get('ruleShow') ? '/home' : '/rule';

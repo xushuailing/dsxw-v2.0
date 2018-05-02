@@ -72,30 +72,20 @@ const _GetUrlParam = function(name) {
 };
 const _LvType = function(num) {
   switch (Number(num)) {
-    case 0:
-      0;
-      break;
     case 1:
-      1;
-      break;
+      return '白铁质量';
     case 2:
-      2;
-      break;
+      return '青铜质量';
     case 3:
-      3;
-      break;
+      return '水晶质量';
     case 4:
-      4;
-      break;
+      return '白银质量';
     case 5:
-      5;
-      break;
+      return '黄金质量';
     case 6:
-      6;
-      break;
+      return '铂金质量';
     case 7:
-      7;
-      break;
+      return '钻石质量';
   }
 };
 export default {

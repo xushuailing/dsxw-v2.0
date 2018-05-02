@@ -80,6 +80,17 @@ export default {
     };
   },
   methods: {
+    init() {},
+    getTopList() {
+      this.$http
+        .get(this.$api.a, {})
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleClick() {
       this.isChecked = !this.isChecked;
     },
@@ -96,6 +107,9 @@ export default {
         });
       }
     },
+  },
+  mounted() {
+    this.init();
   },
   components: {
     CHeader,

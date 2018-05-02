@@ -35,12 +35,35 @@ export default {
   components: { CButton, CHelp },
   methods: {
     init() {
-      this.gold = this.$utils._Storage.get('userInfo').bombnum;
+      this.user = this.$utils._Storage.get('userInfo');
+      this.gold = Number(this.user.jiFen);
+      this.userId = this.user.userid;
     },
     toRule() {
-      this.$utils._Storage.set('tipShow', true);
-
-      this.isHelp = true;
+      this.$http
+        .get(this.$api.daily, {
+          userid: this.userId,
+        })
+        .then(res => {
+          const data = res.data;
+          if (data.status === 1) {
+            this.isHelp = true;
+            this.gold += Number(data.jifen);
+            this.user.jiFen = this.gold;
+            this.$utils._Storage.set('userInfo', this.user);
+          } else {
+            this.$vux.toast.show({
+              text: data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
 
       // this.$utils._Storage.get('ruleShow', data => {
       //   let toPath;
@@ -57,7 +80,9 @@ export default {
       this.isHelp = false;
     },
   },
-  mounted() {},
+  mounted() {
+    this.init();
+  },
 };
 </script>
 <style lang="less" scoped>
