@@ -89,6 +89,8 @@ export default {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.userName = this.$utils._Storage.get('userAccount').name || '姓名';
     },
+
+
     /* 闯关 */
     onBeginBreak() {
       this.$router.push('break');

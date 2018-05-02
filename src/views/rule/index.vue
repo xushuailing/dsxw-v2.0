@@ -5,7 +5,9 @@
     </div>
     <div class="rule-content">
       <div class="rule-content_msg">
-        <p v-for="(item, index) in 30" :key="index"><span>{{index+1}}.</span>{{item}}最终解释权归赛德西威质量月组委会所有</p>
+        <p v-for="item in rule" :key="item.id">
+          {{item.Game_rules}}
+        </p>
       </div>
       <div class="rule-content_copyright">
         最终解释权归赛德西威质量月组委会所有
@@ -30,23 +32,28 @@ export default {
   data() {
     return {
       checkedSrc: false,
+      rule: '',
     };
   },
   components: { CButton },
   mounted() {
-    // this.tipInit();
+    this.getRule();
   },
   methods: {
+    getRule() {
+      this.$http.get(this.$api.rule, {}).then(res => {
+        if (res.data.status === 1) {
+          this.rule = res.data.data;
+          this.$utils._Storage.set('rule', res.data.data);
+        }
+      });
+    },
     handleTip() {
-      this.checkedSrc = !this.checkedSrc;
+      this.checkedSrc = true;
       this.$utils._Storage.set('ruleShow', this.checkedSrc);
-      // this.tipInit();
     },
     toHome() {
       this.$router.push({ path: '/home' });
-    },
-    tipInit() {
-      // this.$utils._Storage.set('ruleShow', this.checkedSrc);
     },
   },
 };

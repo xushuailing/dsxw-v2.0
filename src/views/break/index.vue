@@ -73,12 +73,14 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      console.log('this.user---', { ...this.user });
       this.getBreakInfo();
     },
     getBreakInfo() {
       this.$http
         .get(this.$api.breakInfo, {
           Userid: this.user.userid,
+          UID: this.user.uid,
         })
         .then(res => {
           console.log(res);
