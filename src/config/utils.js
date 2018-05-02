@@ -72,30 +72,31 @@ const _GetUrlParam = function(name) {
 };
 const _LvType = function(num) {
   switch (Number(num)) {
-    case 0:
-      0;
-      break;
     case 1:
-      1;
-      break;
+      return {
+        title: '坚韧黑铁',
+        star: 1,
+      };
     case 2:
-      2;
-      break;
+      return {
+        title: '顽强青铜',
+        star: 2,
+      };
     case 3:
-      3;
-      break;
+      return {
+        title: '傲气白银',
+        star: 3,
+      };
     case 4:
-      4;
-      break;
+      return {
+        title: '无暇钻石',
+        star: 3,
+      };
     case 5:
-      5;
-      break;
-    case 6:
-      6;
-      break;
-    case 7:
-      7;
-      break;
+      return {
+        title: '倔强王者',
+        star: 3,
+      };
   }
 };
 export default {

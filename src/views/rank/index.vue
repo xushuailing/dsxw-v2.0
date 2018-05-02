@@ -80,6 +80,19 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+    },
+    getTopList() {
+      this.$http
+        .get(this.$api.topList, { pagesize: 5, Usertype: 1, UID: 107 })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleClick() {
       this.isChecked = !this.isChecked;
     },
@@ -96,6 +109,9 @@ export default {
         });
       }
     },
+  },
+  mounted() {
+    this.init();
   },
   components: {
     CHeader,

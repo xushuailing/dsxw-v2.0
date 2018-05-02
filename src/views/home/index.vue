@@ -4,7 +4,7 @@
       <div class="home-top_pic">
         <img v-if="user.sex===1" src="../../assets/images/icon_man.png" alt="">
         <img v-else src="../../assets/images/icon_girl.png" alt="">
-        <span>😂小西</span>
+        <span>{{userName}}</span>
       </div>
       <div class="home-top_info info">
         <div class="info-tool">
@@ -18,11 +18,11 @@
           </div>
         </div>
         <div class="info-lv">顽强青铜</div>
-        <c-star :number="3" :star="Number(user.starnum)" class="info-star"></c-star>
+        <c-star :number="1" :star="Number(user.starnum)" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png"
                alt="">
-          <span>{{user.bombnum}}</span>
+          <span>{{user.jiFen}}</span>
         </div>
       </div>
     </div>
@@ -72,14 +72,8 @@ export default {
   name: 'home',
   data() {
     return {
-      user: {
-        bombnum: null,
-        gamelevels: null,
-        starnum: null,
-        uid: null,
-        userid: null,
-        usertype: null,
-      },
+      userName: null,
+      user: {},
       isHelpShow: false,
       helpData: {
         title: '闯关规则',
@@ -90,6 +84,11 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+      this.user = this.$utils._Storage.get('userInfo') || {};
+      this.userName = this.$utils._Storage.get('userAccount').name || '姓名';
+    },
     /* 闯关 */
     onBeginBreak() {
       this.$router.push('break');
@@ -113,7 +112,7 @@ export default {
       this.$router.push('/practice');
     },
     onLookrank() {
-      console.log('排行');
+      this.$router.push('/rank');
     },
     onSetMoney() {
       console.log(11111111);
@@ -123,10 +122,6 @@ export default {
     },
     getUserInfo() {
       this.$http.get(this.$api.userInfo, { userid: this.user.userid });
-    },
-    init() {
-      this.user = this.$utils._Storage.get('userInfo') || {};
-      console.log('this.user---', this.user);
     },
   },
   mounted() {
