@@ -2,10 +2,10 @@
   <div class="c-option">
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
-          v-for="(item,index) in data.select"
-          :key="item.id"
+          v-for="(item,index) in subjectData.ItemContent"
+          :key="index"
           :class="['c-option-select_item',userSelect[index]]">
-        {{item.name}}
+        {{item}}
       </li>
     </ul>
   </div>
@@ -14,9 +14,21 @@
 export default {
   name: 'c-option',
   props: {
-    data: {
+    subjectData: {
       type: Object,
-      default: () => {},
+      default() {
+        return {
+          ItemContent: [], // 选项
+          Answer: [], // 答案
+          ItemType: null, // 题目类型
+        };
+      },
+      // const obj = {
+      //   ItemContent: [], // 选项
+      //   Answer: [], // 答案
+      //   ItemType: null, // 题目类型
+      // };
+      // return obj;
     },
     isTimeEnd: {
       type: Boolean,
@@ -25,15 +37,15 @@ export default {
   },
   data() {
     return {
-      userSelect: new Array(this.data.select.length),
-      // type: 1, // 1=单选题,6=判断,2=多项
-      // result
+      userSelect: new Array(this.data.ItemContent.length),
+      // ItemType: 1, // 1=单选题,6=判断,2=多项
+      // Answer
       click: 0,
     };
   },
   methods: {
     initData() {
-      console.log(this.data);
+      console.log('this.subjectData', this.subjectData);
 
       // this.userSelect = ['', '', '', ''];
     },

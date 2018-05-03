@@ -8,7 +8,7 @@
         <div class="answer_subject">
           {{subject.ItemTitle}}
         </div>
-        <c-option :data="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
+        <c-option :subjectData="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
       </div>
   </div>
 </template>
@@ -16,7 +16,9 @@
 import CHeader from '../../components/header';
 import COption from '../../components/option';
 import CCircle from '../../components/circle';
-// TODO ...
+/** TODO
+ *  数据不能传到子组件
+ */
 export default {
   name: 'answer',
   data() {
@@ -25,14 +27,14 @@ export default {
       title: '错题库',
       time: 1000,
       number: 1,
-      subject: {
-        title: '', // 题目
-        ItemContent: [], // 选项
-        Answer: [], // 答案
-        ItemType: '', // 类型 1单选|2多项|6判断
-        ItemTypeName: '', // 类型名
-        id: '',
-      },
+      subject: {},
+      // {
+      // ItemTitle: '', // 题目
+      // ItemContent: [], // 选项
+      // Answer: [], // 答案
+      // ItemType: '', // 类型 1单选|2多项|6判断
+      // ItemTypeName: '', // 类型名
+      // },
     };
   },
   methods: {
@@ -71,35 +73,41 @@ export default {
           Userid: this.user.userid,
         })
         .then(res => {
-          console.log('res.data', res.data);
-
           if (res.data.status === 1) {
-            const data = JSON.parse(JSON.stringify(res.data.data));
-            this.subject = JSON.parse(JSON.stringify(res.data.data));
-            this.subject.Answer = [];
-            this.subject.ItemContent = [];
-
-            if (data.ItemType === '1' || data.ItemType === '2') {
-              const arr = 'ABCDEF';
-              this.$utils._arrEmpty(data.Answer, '').forEach(e => {
-                const index = arr.indexOf(e);
-                this.subject.Answer.push(index);
-                console.log('index---', index);
-              });
-              this.$utils._arrEmpty(data.ItemContent, ',').forEach(e => {
-                this.subject.ItemContent.push(e);
-              });
-            } else {
-              console.log('判断题');
-            }
+            this.handleData(res.data.data);
           } else {
             console.log('111---', 111);
           }
-          console.log(' this.subject', this.subject);
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    handleData(data) {
+      console.log('data---', data);
+      const obj = JSON.parse(JSON.stringify(data));
+      obj.ItemContent = [];
+      obj.Answer = [];
+
+      if (data.ItemType === '1' || data.ItemType === '2') {
+        const arr = 'ABCD';
+        this.$utils._arrEmpty(data.Answer, '').forEach(e => {
+          const index = arr.indexOf(e);
+          obj.Answer.push(index);
+        });
+        this.$utils._arrEmpty(data.ItemContent, ',').forEach(e => {
+          obj.ItemContent.push(e);
+        });
+      } else {
+        if (data.Answer === '对') {
+          obj.Answer.push(1);
+        } else {
+          obj.Answer.push(0);
+        }
+        obj.ItemContent.push(['错', '对']);
+      }
+      this.subject = obj;
+      console.log('---obj', obj);
     },
     setTime() {
       const interval = setInterval(() => {
