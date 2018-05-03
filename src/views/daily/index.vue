@@ -48,13 +48,17 @@ export default {
           const data = res.data;
           if (data.status === 1) {
             this.isHelp = true;
+
             this.gold += Number(data.jifen);
             this.user.jiFen = this.gold;
             this.$utils._Storage.set('userInfo', this.user);
           } else {
             this.$vux.toast.show({
-              text: data.msg,
+              text: '今日已领取~~~',
               type: 'warn',
+              onHide: () => {
+                this.$router.push('/');
+              },
             });
           }
         })

@@ -9,7 +9,8 @@ import Redpacket from '../views/redpacket';
 import Rank from '../views/rank';
 import Challenge from '../views/challenge';
 import Practice from '../views/practice';
-import Pkview from '../views/pkview';
+import Pk from '../views/challenge/pk';
+import NewPk from '../views/challenge/newPk';
 import Answer from '../views/answer';
 import StartView from '../views/practice/start.vue';
 
@@ -58,14 +59,19 @@ export default new Router({
       component: Challenge,
     },
     {
-      path: '/practice',
-      name: 'practice',
-      component: Practice,
+      path: '/newPk',
+      name: 'newPk',
+      component: NewPk,
     },
     {
       path: '/pk',
-      name: 'pkview',
-      component: Pkview,
+      name: 'pk',
+      component: Pk,
+    },
+    {
+      path: '/practice',
+      name: 'practice',
+      component: Practice,
     },
     {
       path: '/answer',

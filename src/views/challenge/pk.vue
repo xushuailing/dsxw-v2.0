@@ -47,7 +47,7 @@ import COption from '../../components/option';
 import CCircle from '../../components/circle';
 
 export default {
-  name: 'c-pkview',
+  name: 'pkview',
   data() {
     return {
       percent: 1000,

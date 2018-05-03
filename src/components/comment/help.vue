@@ -1,5 +1,5 @@
 <template>
-  <CAlert v-if="isShow">
+  <CAlert v-if="show">
     <div class="c-help" >
       <div :class="['c-help-title',{'alert':!center}]" v-if="title">{{title}}</div>
       <div class="c-help-conter" v-if="center" v-html="center"></div>
@@ -33,8 +33,22 @@ export default {
       default: '',
     },
   },
+  data() {
+    return {
+      show: this.isShow,
+    };
+  },
+  watch: {
+    isShow(val) {
+      this.show = val;
+    },
+    show(val) {
+      this.$emit('update:isShow', val);
+    },
+  },
   methods: {
     onClose() {
+      this.show = false;
       this.$emit('onHelpFun', false);
     },
   },

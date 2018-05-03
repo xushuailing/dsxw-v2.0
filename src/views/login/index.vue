@@ -37,7 +37,7 @@ export default {
         name: 'test',
         password: '1111',
       },
-      tipShow: null,
+      isDaily: null,
     };
   },
   methods: {
@@ -68,9 +68,10 @@ export default {
           })
           .then(res => {
             const data = res.data;
+            console.log('res---', res);
             if (data.status === 1) {
               console.log('data---', data);
-              this.tipShow = Number(data.isget);
+              this.isDaily = Number(data.isget);
               this.$utils._Storage.set('userInfo', data, () => {
                 this.$router.push({ path: this.goToRouter() });
               });
@@ -91,13 +92,14 @@ export default {
       }
     },
     goToRouter() {
-      // const route = this.$utils._Storage.get('tipShow') ? '/home' : 'rule';
+      // const route = this.$utils._Storage.get('isDaily') ? '/home' : 'rule';
       // const path = this.getTipInfo() ? route : '/daily';
       let path = '';
-      if (this.tipShow) {
-        path = '/daily';
-      } else {
+      console.log('this.isDaily---', this.isDaily);
+      if (this.isDaily) {
         path = this.$utils._Storage.get('ruleShow') ? '/home' : '/rule';
+      } else {
+        path = '/daily';
       }
       return path;
     },

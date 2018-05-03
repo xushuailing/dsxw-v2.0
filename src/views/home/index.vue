@@ -2,7 +2,7 @@
   <div class="home">
     <div class="home-top">
       <div class="home-top_pic">
-        <img v-if="user.sex===1" src="../../assets/images/icon_man.png" alt="">
+        <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
         <img v-else src="../../assets/images/icon_girl.png" alt="">
         <span>{{userName}}</span>
       </div>
@@ -10,18 +10,15 @@
         <div class="info-tool">
           <div @click="onSetMoney">
             <i class="iconfont icon-hongbao"></i>
-            <!-- <img src="./red.png" alt=""> -->
           </div>
           <div @click="onHelpShow">
             <i class="iconfont icon-help"></i>
-            <!-- <img src="../../assets/images/icon_help.png" alt=""> -->
           </div>
         </div>
         <div class="info-lv">顽强青铜</div>
-        <c-star :number="1" :star="Number(user.starnum)" class="info-star"></c-star>
+        <c-star :number="user.starnum" :star="user.activenum" class="info-star"></c-star>
         <div class="info-integral">
-          <img src="../../assets/images/money.png"
-               alt="">
+          <img src="../../assets/images/money.png" alt="">
           <span>{{user.jiFen}}</span>
         </div>
       </div>
@@ -32,8 +29,8 @@
       </div>
       <img src="./icon_01.png" alt="">
     </div>
-    <div :class="['home-dare',{'active':!isDare || !isChallengeBegins}]" @click="onBeginDare">
-      <div class="home-dare_wait" v-if="!isDare">
+    <div :class="['home-dare',{'active':!pk.isDare || !pk.isChallengeBegins}]" @click="onBeginDare">
+      <div class="home-dare_wait" v-if="!pk.isDare">
         <span>{{condition.title}}</span>
         <p>{{condition.center}}</p>
       </div>
@@ -48,7 +45,7 @@
     <div class="home-footer" >
       <div class="home-practice" @click="onBeginPractice">
         <span>练习赢金币</span>
-        <p>今日已获得<u>15</u>金币</p>
+        <p>今日已获得<u>{{user.todayjifen}}</u>金币</p>
         <img src="./icon_03.png"
              alt="">
       </div>
@@ -59,12 +56,25 @@
       </div>
 
     </div>
-    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="isHelpShow"></c-help>
+    <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
+    <c-dialog :visiable.sync="pk.isInputName" class="home-pk">
+      <div class="home-pk_rule">
+        {{pk.center}}
+      </div>
+      <div class="home-pk_input">
+        <input v-model="pk.nickname" type="text" maxlength="6" placeholder="请输入昵称">
+      </div>
+      <div class="home-pk_btn">
+        <c-button @click.native="onSubmitName" fs="0.32rem" text="确定"></c-button>
+      </div>
+    </c-dialog>
   </div>
 </template>
 <script>
 import CStar from '../../components/star';
 import CHelp from '../../components/comment/help';
+import CDialog from '../../components/alert/dialog';
+import CButton from '../../components/comment/button';
 
 // TODO ...
 export default {
@@ -73,8 +83,8 @@ export default {
     return {
       userName: null,
       user: {},
-      isHelpShow: false,
       helpData: {
+        isShow: false,
         title: '闯关规则',
         center: '',
       },
@@ -82,17 +92,26 @@ export default {
         title: '解锁条件',
         center: '',
       },
-      isDare: false, // 显示解锁条件
-      isChallengeBegins: false, // 未开始挑战
+      pk: {
+        isChallengeBegins: !false, // 未开始挑战
+        isDare: !false, // 显示解锁条件
+        center: '',
+        isInputName: false,
+        nickname: null,
+      },
     };
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.user = this.$utils._Storage.get('userInfo') || {};
-      this.userName = this.$utils._Storage.get('userAccount').name || '姓名';
+      this.userName = this.user.nickname || this.$utils._Storage.get('userAccount').name;
+
       this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
       this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
+      this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
+
+      this.user.starnum = Number(this.user.starnum);
+      this.user.activenum = Number(this.user.activenum);
     },
 
     /* 闯关 */
@@ -102,17 +121,37 @@ export default {
 
     /* 挑战赛 */
     onBeginDare() {
-      if (!this.isChallengeBegins && this.isDare) {
+      if (!this.pk.isChallengeBegins) {
+        if (this.pk.isDare) {
+          this.$vux.toast.show({
+            text: '未开始挑战~',
+            type: 'warn',
+          });
+        }
+        this.isDare = true;
+      } else if (!this.user.nickname) {
+        this.pk.isInputName = true;
+      } else {
+        this.$router.push('/challenge');
+      }
+    },
+    /* 提交名字 */
+    onSubmitName() {
+      console.log('this.pk---', this.pk);
+      // http
+      if (!this.pk.nickname) {
         this.$vux.toast.show({
-          text: '未开始挑战~',
+          text: '请输入挑战昵称~',
           type: 'warn',
         });
+      } else {
+        this.pk.isInputName = false;
+        this.$router.push('/challenge');
       }
-      this.isDare = true;
     },
-
+    // 显示弹框
     onHelpShow() {
-      this.isHelpShow = !this.isHelpShow;
+      this.helpData.isShow = !this.helpData.isShow;
     },
     onBeginPractice() {
       this.$router.push('/practice');
@@ -136,6 +175,8 @@ export default {
   components: {
     CStar,
     CHelp,
+    CDialog,
+    CButton,
   },
 };
 </script>
@@ -146,6 +187,7 @@ export default {
   height: 100%;
   padding: 0.4rem 0.2rem;
   background: url('./bg.jpg') no-repeat center/cover;
+
   &-top {
     height: 6.8rem/2;
     display: flex;
@@ -296,8 +338,6 @@ export default {
     position: relative;
     color: #fff;
     font-size: 0.32rem;
-  }
-  &-rank {
     img {
       width: 3.24rem/2;
       height: 3.08rem/2;
@@ -322,6 +362,25 @@ export default {
       bottom: 0.08rem;
       width: 2.8rem/2;
       height: 1.88rem/2;
+    }
+  }
+  &-pk {
+    &_rule {
+      padding: 0.2rem;
+      color: #fff;
+      font-size: 0.32rem;
+    }
+    &_input {
+      text-align: center;
+      input {
+        color: #fff;
+        .bgurl('/src/assets/images/frame1.png');
+        padding: 0.4rem;
+      }
+    }
+    &_btn {
+      padding: 0 10%;
+      margin-top: 0.2rem;
     }
   }
 }

@@ -2,17 +2,21 @@
   <div class="break">
     <c-header title="质量大闯关" :isHelp="true" @onHelp="onHelpShow"></c-header>
     <ul class="break-grade">
-      <li @click="onStartBreak(item)" :class="{'active':!item.isOpen}" v-for="item in gradeData" :key="item.id">
+
+      <li v-for="(item,index) in gradeData"
+        @click="onStartBreak(item,index)"
+        :class="{'active':(Number(item.IsStartNow))||(index+1)>Number(user.gamelevels)}"
+        :key="item.id">
         <div class="break-grade_name" >
-          <h4>{{item.title}}</h4>
-          <span>金币<u>{{item.gold}}</u></span>
+          <h4>{{item.ActiveName}}</h4>
+          <span>金币<u>{{item.jifenNum}}</u></span>
         </div>
-        <div class="break-grade_star"><c-star wh="0.5rem" :number="item.allStar" :star="0"></c-star></div>
+        <div class="break-grade_star"><c-star wh="0.5rem" :number="Number(item.StartNum)" :star="Number(item.UserPassCount)"></c-star></div>
       </li>
     </ul>
     <p class="break-p">每通过完整一关才可获得相应的奖励</p>
-    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="helpData.isShow"></c-help>
-    <c-help :center="alert.center" :title="alert.title" @onHelpFun="onAlertShow" :isShow="alert.isShow"></c-help>
+    <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
+    <c-help :center="alert.center" :title="alert.title" :isShow.sync="alert.isShow"></c-help>
   </div>
 </template>
 <script>
@@ -25,8 +29,7 @@ export default {
   name: 'break',
   data() {
     return {
-      user: null,
-      star: 1,
+      user: {},
       alert: {
         center: '下一卡关未到开启状态~',
         title: '敬请期待',
@@ -35,38 +38,48 @@ export default {
       gradeData: [
         {
           id: 1,
-          title: '坚韧黑铁',
-          allStar: 1,
-          gold: 40,
-          isOpen: true,
+          ActiveName: '坚韧黑铁',
+          StartNum: 1,
+          jifenNum: 40,
+          IsPass: false,
+          UserPassCount: 0,
+          IsStartNow: 0,
         },
         {
           id: 2,
-          title: '顽强青铜',
-          allStar: 2,
-          gold: 100,
-          isOpen: false,
+          ActiveName: '顽强青铜',
+          StartNum: 2,
+          jifenNum: 100,
+          IsPass: false,
+          UserPassCount: 0,
+          IsStartNow: 0,
         },
         {
           id: 3,
-          title: '傲气白银',
-          allStar: 2,
-          gold: 300,
-          isOpen: false,
+          ActiveName: '傲气白银',
+          StartNum: 2,
+          jifenNum: 300,
+          IsPass: false,
+          UserPassCount: 0,
+          IsStartNow: 0,
         },
         {
           id: 4,
-          title: '无暇钻石',
-          allStar: 3,
-          gold: 700,
-          isOpen: false,
+          ActiveName: '无暇钻石',
+          StartNum: 3,
+          jifenNum: 700,
+          IsPass: false,
+          UserPassCount: 0,
+          IsStartNow: 0,
         },
         {
           id: 5,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
+          ActiveName: '倔匠王者',
+          StartNum: 3,
+          jifenNum: 1000,
+          IsPass: false,
+          UserPassCount: 0,
+          IsStartNow: 0,
         },
       ],
       helpData: {
@@ -84,14 +97,29 @@ export default {
     getBreakInfo() {
       this.$http
         .get(this.$api.breakInfo, {
-          Userid: this.user.userid,
+          Userid: 46,
+          // Userid: this.user.userid,
           UID: this.user.uid,
         })
         .then(res => {
-          console.log(res);
+          if (res.data.status === 1) {
+            this.gradeData = res.data.data;
+            // this.gradeData.UserPassCount = Number(res.data.data.UserPassCount);
+            // this.gradeData.StartNum = Number(res.data.data.StartNum);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+
+          console.log({ ...res.data.data[0] });
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
         });
     },
     onHelpShow() {
@@ -100,9 +128,9 @@ export default {
     onAlertShow() {
       this.alert.isShow = !this.alert.isShow;
     },
-    onStartBreak(item) {
-      if (item.isOpen) {
-        this.$router.push('/answer');
+    onStartBreak(item, index) {
+      if (this.user.gamelevels > index && !Number(item.IsStartNow)) {
+        this.$router.push({ path: '/answer', query: { id: item.ID } });
       } else {
         this.onAlertShow();
       }

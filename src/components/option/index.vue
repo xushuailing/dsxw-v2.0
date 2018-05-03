@@ -2,8 +2,8 @@
   <div class="c-option">
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
-          v-for="(item,index) in data.select"
-          :key="item.id"
+          v-for="(item,index) in data.ItemContent"
+          :key="index"
           :class="['c-option-select_item',userSelect[index]]">
         {{item.name}}
       </li>
@@ -26,19 +26,21 @@ export default {
   data() {
     return {
       userSelect: new Array(this.data.select.length),
-      // type: 1, // 1=单选题,2=判断,3=多项
+      // type: 1, // 1=单选题,6=判断,2=多项
       // result
       click: 0,
     };
   },
   methods: {
     initData() {
+      console.log(this.data);
+
       // this.userSelect = ['', '', '', ''];
     },
     onSelect(item, index) {
       const data = this.data;
-      if (this.data.type === 1 || this.data.type === 2) {
-        data.result.forEach(e => {
+      if (this.data.ItemType === '1' || this.data.ItemType === '2') {
+        data.Answer.forEach(e => {
           if (e === index) {
             this.$set(this.userSelect, index, 'correct');
             this.gameOver(true);
@@ -50,16 +52,16 @@ export default {
             console.log('失败');
           }
         });
-      } else if (data.type === 3) {
-        if (data.result.indexOf(index) > -1) {
+      } else if (data.ItemType === '6') {
+        if (data.Answer.indexOf(index) > -1) {
           this.$set(this.userSelect, index, 'active');
           this.click++;
-          if (this.click === data.result.length) {
+          if (this.click === data.Answer.length) {
             console.log('过关');
             this.gameOver(true);
           }
         } else {
-          data.result.forEach(e => {
+          data.Answer.forEach(e => {
             this.$set(this.userSelect, e, 'correct');
             this.$set(this.userSelect, index, 'error');
             this.gameOver(false);
@@ -79,7 +81,7 @@ export default {
     isTimeEnd() {
       console.log(this);
 
-      this.data.result.forEach(e => {
+      this.data.Answer.forEach(e => {
         this.$set(this.userSelect, e, 'correct');
       });
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="circle">
+  <div class="c-circle">
     <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
       <span>{{ percent/100 }}</span>
     </x-circle>
@@ -22,7 +22,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.circle {
+.c-circle {
   .vux-circle {
     width: 1.1rem;
     height: 1.1rem;

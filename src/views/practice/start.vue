@@ -2,7 +2,8 @@
   <div class="start">
       <c-header :title="title"></c-header>
       <div class="start-time">
-        <c-circle :percent="time"></c-circle>
+        <!-- <c-circle :percent="time"></c-circle> -->
+        <p></p>
       </div>
       <div class="start-subject">
         {{subject.title}}
@@ -13,7 +14,6 @@
 <script>
 import CHeader from '../../components/header';
 import COption from '../../components/option';
-import CCircle from '../../components/circle';
 
 export default {
   name: 'c-start',
@@ -30,11 +30,33 @@ export default {
     };
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userInfo');
+      this.title = this.$route.query.title;
+      console.log('this.$route.query---', this.$route.query.id);
+      this.getPractise();
+    },
+    getPractise() {
+      const id = this.$route.query.id;
+      this.$http
+        .get(this.$api.practise, {
+          userid: this.user.userid,
+          ordernum: id,
+          Uid: this.user.uid,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     isSuccess(type) {
       console.log(type);
     },
   },
   mounted() {
+    this.init();
     const interval = setInterval(() => {
       this.time = this.time - 100;
       if (this.time <= 0) {
@@ -44,7 +66,6 @@ export default {
   },
   components: {
     CHeader,
-    CCircle,
     COption,
   },
 };

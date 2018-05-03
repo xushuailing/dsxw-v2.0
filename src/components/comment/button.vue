@@ -1,20 +1,19 @@
 <template>
   <div class="c-button">
-    <button :style="{width:width,height:height}">{{text}}</button>
+    <button class="c-button_btn" :style="{width:width,height:height,fontSize:fs}">{{text}}</button>
   </div>
 </template>
-<style lang="less" scoped>
+<style lang="less">
 @import '../../assets/css/mixin.less';
 
 .c-button {
   text-align: center;
   width: 100%;
-  button {
+  &_btn {
     border: none;
     padding: 0.3rem;
     .bgurl('/src/assets/images/frame1.png');
     color: #fff;
-    font-size: 0.36rem;
   }
 }
 </style>
@@ -33,6 +32,10 @@ export default {
     height: {
       type: String,
       default: 'initial',
+    },
+    fs: {
+      type: String,
+      default: '0.36rem',
     },
   },
 };

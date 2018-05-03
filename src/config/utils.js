@@ -99,7 +99,31 @@ const _LvType = function(num) {
       };
   }
 };
+const _arrEmpty = function(param,type) {
+  var Arr = [];
+  function isType(type) {
+    var t = Object.prototype.toString.call(type);
+    return t;
+  }
+  function empty(arr) {
+    var r = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+        r.push(arr[i]);
+      }
+    }
+    return r;
+  }
+  if (param && isType(param) == '[object String]') {
+    var str = param.split(type);
+    Arr = empty(str);
+  } else if (param && isType(param) == '[object Array]') {
+    Arr = empty(param);
+  }
+  return Arr;
+};
 export default {
   _Storage: new Storage(),
   _GetUrlParam,
+  _arrEmpty,
 };

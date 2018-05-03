@@ -1,5 +1,5 @@
 <template>
-  <div class="c-dialog" v-show="isShow">
+  <div class="c-dialog" v-if="isShow">
     <c-alert>
       <template>
         <div class="c-dialog-top">
@@ -60,7 +60,8 @@ export default {
       right: 0.16rem;
       top: -0.2rem;
       color: #fff;
-      font-size: 22px;
+      font-size: 0.4rem;
+      opacity: 0.8;
     }
   }
 }

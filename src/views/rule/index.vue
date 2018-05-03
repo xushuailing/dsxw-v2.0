@@ -28,7 +28,7 @@
 import CButton from '../../components/comment/button';
 
 export default {
-  name: 'c-rule',
+  name: 'rule',
   data() {
     return {
       checkedSrc: false,

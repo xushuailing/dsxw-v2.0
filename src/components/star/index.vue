@@ -14,7 +14,7 @@ export default {
     // 星星总数
     number: {
       type: Number,
-      default: 3,
+      default: 1,
     },
     // 高亮数量
     star: {

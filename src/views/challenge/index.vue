@@ -19,9 +19,9 @@
     </div>
     <div class="challenge_item_footer">
       <p class="challenge-p">点击 挑战列表中的挑战进行挑战</p>
-      <c-button></c-button>
+      <c-button @click.native="onNewChallenge" text="发起挑战"></c-button>
     </div>
-    <c-help :center="helpData.center" :title="helpData.title" @onHelpFun="onHelpShow" :isShow="isHelpShow"></c-help>
+    <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
   </div>
 </template>
 <script>
@@ -33,7 +33,6 @@ export default {
   name: 'c-challenge',
   data() {
     return {
-      isHelpShow: false,
       gradeData: [
         {
           id: 1,
@@ -100,21 +99,22 @@ export default {
         },
       ],
       helpData: {
-        title: '闯关规则',
-        center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
+        isShow: false,
+        title: '挑战规则',
+        center: '',
       },
     };
   },
   methods: {
+    init() {
+      this.helpData.center = this.$utils._Storage.get('rule')[0].Pkrules || '';
+    },
     onHelpShow() {
-      this.isHelpShow = !this.isHelpShow;
+      this.helpData.isShow = !this.helpData.isShow;
     },
     onStartchallenge(item) {
       if (item.isOpen) {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '开始挑战',
-        });
+        this.$router.push('/pk');
       } else {
         this.$vux.toast.show({
           type: 'warn',
@@ -122,6 +122,12 @@ export default {
         });
       }
     },
+    onNewChallenge() {
+      this.$router.push('/newPk');
+    },
+  },
+  mounted() {
+    this.init();
   },
   components: {
     CHeader,
