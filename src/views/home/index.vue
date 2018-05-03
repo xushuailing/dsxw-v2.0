@@ -76,7 +76,10 @@ import CHelp from '../../components/comment/help';
 import CDialog from '../../components/alert/dialog';
 import CButton from '../../components/comment/button';
 
-// TODO ...
+/** TODO
+ * 缺少挑战是否开启
+ * 缺少当前挑战次数
+ */
 export default {
   name: 'home',
   data() {

@@ -26,7 +26,7 @@ export default {
       time: 1000,
       number: 1,
       subject: {
-        ItemTitle: '', // 题目
+        title: '', // 题目
         ItemContent: [], // 选项
         Answer: [], // 答案
         ItemType: '', // 类型 1单选|2多项|6判断

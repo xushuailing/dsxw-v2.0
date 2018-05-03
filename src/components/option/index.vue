@@ -2,8 +2,8 @@
   <div class="c-option">
     <ul class="c-option-select">
       <li @click="onSelect(item,index)"
-          v-for="(item,index) in data.ItemContent"
-          :key="index"
+          v-for="(item,index) in data.select"
+          :key="item.id"
           :class="['c-option-select_item',userSelect[index]]">
         {{item.name}}
       </li>
