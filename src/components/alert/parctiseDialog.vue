@@ -8,10 +8,10 @@
         <div class="c-parctise-dialog-container_content">
           37/1231
         </div>
-        <div @click="handleContinue" class="c-parctise-dialog-container_btnKeep">
+        <div @click="handleClick(1)" class="c-parctise-dialog-container_btnKeep">
           <c-button width="100%" height="1.3rem" text="继续闯关"></c-button>
         </div>
-        <div @click="handleFresh" class="c-parctise-dialog-container_btnRefresh">
+        <div @click="handleClick(2)" class="c-parctise-dialog-container_btnRefresh">
           <c-button width="100%" height="1.3rem" text="重新挑战"></c-button>
         </div>
       </div>
@@ -20,10 +20,10 @@
 </template>
 <script>
 /**
- * <c-dialog :visiable.sync="showDialog" @onRefresh="onClose" @onKeep="onClose"></c-dialog>
+ * <c-dialog :visiable.sync="showDialog" @onClick="onClose"></c-dialog>
  * @param{Boolean} visiable 控制显示隐藏
- * @param{Funtion} onKeep 继续闯关
- * @param{Funtion} onRefresh 重新挑战
+ * @param{Funtion} onClick(1) 继续闯关
+ * @param{Funtion} onClick(2) 重新挑战
  */
 
 import CAlert from './index';
@@ -52,13 +52,9 @@ export default {
   },
   components: { CAlert, CButton },
   methods: {
-    handleFresh() {
+    handleClick(type) {
       this.isShow = false;
-      this.$emit('onRefresh');
-    },
-    handleContinue() {
-      this.isShow = false;
-      this.$emit('onKeep');
+      this.$emit('onClick', type);
     },
   },
 };
