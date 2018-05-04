@@ -1,6 +1,9 @@
 <template>
   <div class="c-circle">
-    <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
+     <x-circle v-show="isCircle" :trail-width='0' :percent="0" :stroke-width="7" stroke-color="#01d2f4">
+        <span>{{ percent/100 }}</span>
+     </x-circle>
+    <x-circle v-show="!isCircle" :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
       <span>{{ percent/100 }}</span>
     </x-circle>
   </div>
@@ -14,10 +17,18 @@ import { XCircle } from 'vux';
 export default {
   name: 'c-circle',
   props: {
+    isCircle: {
+      type: Boolean,
+      default: false,
+    },
     percent: {
       type: Number,
     },
   },
+  // watch: {
+  //   isCircle(val) {
+  //   },
+  // },
   components: { XCircle },
 };
 </script>

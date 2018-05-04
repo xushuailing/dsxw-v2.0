@@ -11,4 +11,5 @@ export default {
   practiseList: `${url}/Professor_typeService.ashx?pagetype=list`, // 练习选项
   answerAdd: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=addRecord`, // 添加答题记录(闯关)
   answerData: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 获取题目(闯关)
+  answerOver: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=update`, // 结束答题(闯关|练习)
 };

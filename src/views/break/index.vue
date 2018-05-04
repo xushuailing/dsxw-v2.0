@@ -130,7 +130,7 @@ export default {
     },
     onStartBreak(item, index) {
       if (this.user.gamelevels > index && !Number(item.IsStartNow)) {
-        this.$router.push({ path: '/answer', query: { id: item.ID } });
+        this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName } });
       } else {
         this.onAlertShow();
       }

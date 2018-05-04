@@ -8,9 +8,13 @@
         <div class="c-notify-header">
           <img :src="headerImg[showType]" alt="">
         </div>
-        <slot name="content-text" class="c-notify-content">
-          qweqweqweqwe
-        </slot>
+        <div class="c-notify-content">
+          <div>
+            <img :src="`/src/assets/images/icon_${sex=='1'?'man':'girl'}.png`" alt="">
+            <!-- <img src="/src/assets/images/icon_girl.png" alt=""> -->
+          </div>
+          <!-- <slot></slot> -->
+        </div>
         <div class="c-notify-footer">
           <div @click="handleBtn" class="c-notify-footer_btn">
             {{btnText[showType]}}
@@ -38,6 +42,10 @@ export default {
     showType: {
       type: String,
       default: 'success1',
+    },
+    sex: {
+      type: String,
+      default: '1',
     },
   },
   data() {
@@ -89,7 +97,8 @@ export default {
       right: 0.16rem;
       top: -0.2rem;
       color: #fff;
-      font-size: 22px;
+      font-size: 0.4rem;
+      opacity: 0.8;
     }
   }
   &-header {
@@ -102,6 +111,9 @@ export default {
   }
   &-content {
     text-align: center;
+    padding: 20px 0;
+    color: #fff;
+    // font-size:
   }
   &-footer {
     width: 100%;
@@ -110,13 +122,13 @@ export default {
     &_btn {
       text-align: center;
       width: 80%;
-      height: 100px;
-      line-height: 100px;
+      height: 2rem;
+      line-height: 2rem;
       border: none;
       background: url('/src/assets/images/frame1.png') no-repeat center/cover;
       background-size: 100% 75%;
       color: #fff;
-      font-size: 22px;
+      font-size: 0.44rem;
     }
   }
 }
