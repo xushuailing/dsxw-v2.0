@@ -22,7 +22,7 @@
             {{item.UserName}}
           </div>
           <div class="rank-grade_btn">
-            <div>{{item.GameName}}</div>
+            <div>{{item.GameName ? item.GameName : '未知质量'}}</div>
             <div class="rank-grade_btn_star"><c-star :star='3' wh='0.4rem'></c-star></div>
           </div>
         </li>
@@ -76,8 +76,31 @@ export default {
           console.log(err);
         });
     },
+    getPkTopList() {
+      this.$http
+        .get(this.$api.pkTopList, {
+          pagesize: 5,
+        })
+        .then(res => {
+          if (res.data.status) {
+            const data = res.data.data;
+            console.log('getPkTopListadasdasd', data);
+            this.gradeData = data;
+          } else {
+            console.log('getPkTopList---', res);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleClick() {
       this.isChecked = !this.isChecked;
+      if (this.isChecked) {
+        this.getTopList();
+      } else {
+        this.getPkTopList();
+      }
     },
   },
   mounted() {

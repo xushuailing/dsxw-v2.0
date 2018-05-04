@@ -13,6 +13,7 @@ import Pk from '../views/challenge/pk';
 import NewPk from '../views/challenge/newPk';
 import Answer from '../views/answer';
 import StartView from '../views/practice/start.vue';
+import parctiseDialog from '../components/alert/parctiseDialog.vue';
 
 Vue.use(Router);
 
@@ -82,6 +83,11 @@ export default new Router({
       path: '/start',
       name: 'start',
       component: StartView,
+    },
+    {
+      path: '/pdialog',
+      name: 'parctiseDialog',
+      component: parctiseDialog,
     },
   ],
 });
