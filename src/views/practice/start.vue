@@ -2,13 +2,18 @@
   <div class="start">
       <c-header :title="title"></c-header>
       <div class="start-time">
-        <!-- <c-circle :percent="time"></c-circle> -->
-        <p></p>
+        <p>剩余答题时间：{{time}}秒</p>
+        <p>答题数：{{nownumber}}/{{totle}}</p>
       </div>
       <div class="start-subject">
         {{subject.title}}
       </div>
-      <c-option :data="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
+      <!-- <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option> -->
+      <div v-if="isLog">
+        {{nownumber}}/{{totle}}
+        <button @click="onAnew">重新答题</button>
+        <button @click="onContinue">继续答题</button>
+      </div>
   </div>
 </template>
 <script>
@@ -20,24 +25,59 @@ export default {
   data() {
     return {
       title: '质量大闯关',
-      time: 1000,
-      subject: {
-        title: '公司的Logo的颜色是什么颜色?是什么颜色?是什么颜色?是什么颜色?么颜色么颜色么颜色',
-        select: [{ name: '红色', id: 0 }, { name: '橙色', id: 1 }, { name: '蓝色', id: 2 }, { name: '绿色', id: 3 }],
-        result: [0, 1],
-        type: 3,
-      },
+      time: 20,
+      subject: {},
+      totle: 0, // 题目总数
+      nownumber: 0, // 当前题目数
+      isLog: false, // 有没有练习过
     };
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo');
       this.title = this.$route.query.title;
-      console.log('this.$route.query---', this.$route.query.id);
-      this.getPractise();
-    },
-    getPractise() {
+
+      const isPractice = this.$route.query.isPractice;
       const id = this.$route.query.id;
+      if (Number(isPractice)) {
+        console.log('练习过');
+        this.isLog = true;
+      } else {
+        this.getPractise(id);
+      }
+      this.setTime();
+    },
+    setTime() {
+      this.interval = setInterval(() => {
+        this.time--;
+        if (this.time === 0) {
+          clearInterval(this.interval);
+        }
+      }, 1000);
+    },
+    // 练习记录
+    getPractiseLog(id) {
+      this.$http
+        .get(this.$api.practiseLog, {
+          typeid: id,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.totle = res.data.totle;
+            this.nownumber = res.data.nownumber;
+          } else {
+            console.log(1111);
+          }
+          console.log(res);
+          // nownumber  上次答的题目
+          // totle  总的题目数
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    // 练习题目
+    getPractise(id) {
       this.$http
         .get(this.$api.practise, {
           userid: this.user.userid,
@@ -51,18 +91,17 @@ export default {
           console.log(err);
         });
     },
-    isSuccess(type) {
+    gameOver(type) {
       console.log(type);
     },
+    onAnew() {
+      this.nownumber = 0;
+      this.getPractise();
+    },
+    onContinue() {},
   },
   mounted() {
     this.init();
-    const interval = setInterval(() => {
-      this.time = this.time - 100;
-      if (this.time <= 0) {
-        clearInterval(interval);
-      }
-    }, 1000);
   },
   components: {
     CHeader,
@@ -77,7 +116,11 @@ export default {
   .bgurl('../../assets/images/bg.jpg');
   &-time {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 30px;
+    color: #ff5900;
+    font-size: 18px;
   }
   &-subject {
     padding: 0 0.3rem;

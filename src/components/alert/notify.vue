@@ -1,5 +1,5 @@
 <template>
-  <div class="c-notify" v-show="isShow">
+  <div class="c-notify" v-if="isShow">
     <c-alert>
       <template>
         <div class="c-notify-top">
@@ -9,11 +9,11 @@
           <img :src="headerImg[showType]" alt="">
         </div>
         <div class="c-notify-content">
-          <div>
+          <div class="c-notify-content_pic" v-if="showType=='success1'||showType=='fail1'">
             <img :src="`/src/assets/images/icon_${sex=='1'?'man':'girl'}.png`" alt="">
-            <!-- <img src="/src/assets/images/icon_girl.png" alt=""> -->
+            <span>{{title}}</span>
           </div>
-          <!-- <slot></slot> -->
+          <slot></slot>
         </div>
         <div class="c-notify-footer">
           <div @click="handleBtn" class="c-notify-footer_btn">
@@ -46,6 +46,10 @@ export default {
     sex: {
       type: String,
       default: '1',
+    },
+    title: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -114,6 +118,19 @@ export default {
     padding: 20px 0;
     color: #fff;
     // font-size:
+    &_pic {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+      img {
+        width: 136px/2;
+        height: 136px/2;
+        margin-bottom: 10px;
+      }
+    }
   }
   &-footer {
     width: 100%;

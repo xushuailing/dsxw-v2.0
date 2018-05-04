@@ -2,9 +2,9 @@
   <div class="practice">
     <c-header title="练习赢金币"></c-header>
     <ul :class="[user.usertype=='1'?'type1':'type2']">
-      <li class="practice-item" v-for="item in practiceData" :key="item.id" @click="onGoPractice(item)">
+      <li class="practice-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
       <!-- <li :class="['practice-item']" v-for="item in practiceData1" :key="item.id" @click="onGoPractice(item)"> -->
-        <img :src="`/src/views/practice/icon_${item.id}.png`" alt="">
+        <img :src="`/src/views/practice/icon_${index}.png`" alt="">
         <span>{{item.Type_name}}</span>
       </li>
       <li class="practice-error">错题库</li>
@@ -18,100 +18,7 @@ export default {
   data() {
     return {
       user: {},
-      practiceData: [
-        {
-          Type_name: '通用题型',
-          icon: '01',
-          id: 0,
-        },
-        {
-          Type_name: '产品策划',
-          icon: '02',
-          id: 1,
-        },
-        {
-          Type_name: '结构设计',
-          icon: '03',
-          id: 2,
-        },
-        {
-          Type_name: '软件设计',
-          icon: '04',
-          id: 3,
-        },
-        {
-          Type_name: '硬件设计',
-          icon: '05',
-          id: 4,
-        },
-        {
-          Type_name: '项目管理',
-          icon: '06',
-          id: 5,
-        },
-        {
-          Type_name: '设计质量',
-          icon: '07',
-          id: 6,
-        },
-        {
-          Type_name: '质量管理',
-          icon: '08',
-          id: 7,
-        },
-        {
-          Type_name: '供应链管理',
-          icon: '09',
-          id: 8,
-        },
-        {
-          Type_name: 'SMT技术',
-          icon: '10',
-          id: 9,
-        },
-        {
-          Type_name: '组装技术',
-          icon: '11',
-          id: 10,
-        },
-        {
-          Type_name: '测试技术',
-          icon: '12',
-          id: 11,
-        },
-      ],
-      practiceData1: [
-        {
-          Type_name: '通用题型',
-          icon: '01',
-          id: 0,
-        },
-        {
-          Type_name: '供应链管理',
-          icon: '13',
-          id: 1,
-        },
-        {
-          Type_name: '组装&摄像头',
-          icon: '11',
-          id: 2,
-        },
-        {
-          Type_name: '显示&模组类',
-          icon: '14',
-          id: 3,
-        },
-        {
-          Type_name: '质量管理类',
-          icon: '07',
-          id: 4,
-        },
-        {
-          Type_name: '贴片&焊接类',
-          icon: '15',
-          id: 5,
-        },
-      ],
+      practiceData: [],
     };
   },
   methods: {
@@ -141,7 +48,8 @@ export default {
         });
     },
     onGoPractice(e) {
-      this.$router.push({ path: '/start', query: { title: e.Type_name, id: e.ID } });
+      console.log('e.IsPractice---', e.IsPractice);
+      this.$router.push({ path: '/start', query: { isPractice: e.IsPractice, title: e.Type_name, id: e.ID } });
     },
   },
   mounted() {
@@ -193,7 +101,7 @@ export default {
     color: @color3;
     margin-top: 0.2rem;
   }
-  .type2 {
+  .type1 {
     .practice-item {
       height: 1.3rem;
       .bgurl('../../assets/images/frame4.png');
@@ -203,7 +111,7 @@ export default {
       height: 3.16rem/2;
     }
   }
-  .type1 {
+  .type2 {
     .practice-item {
       height: 2.2rem;
       .bgurl('/src/views/practice/frame.png');

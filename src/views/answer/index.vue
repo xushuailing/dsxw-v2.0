@@ -10,8 +10,23 @@
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>
-    <c-notify :visiable.sync="shownotify" showType="fail1" @handleClose="onClose" @clickbtn="clickTest">
-      <div>
+    <c-notify
+      :visiable.sync="shownotify"
+      showType="success1"
+      :sex="user.sex"
+      :title="title"
+      @handleClose="onClose"
+      @clickbtn="clickTest">
+      <div class="answer-frame">
+        <h4>获得奖励</h4>
+         <div class="answer-frame_money">
+          <img src="../../assets/images/money.png" alt="">
+          <span>x435</span>
+        </div>
+        <div class="answer-frame_star">
+          <c-star :number="1" :star="1"></c-star>
+          <span>x1</span>
+        </div>
 
       </div>
     </c-notify>
@@ -22,6 +37,7 @@ import CHeader from '../../components/header';
 import COption from '../../components/option';
 import CCircle from '../../components/circle';
 import CNotify from '../../components/alert/notify';
+import CStar from '../../components/star/index';
 
 export default {
   name: 'answer',
@@ -34,7 +50,8 @@ export default {
       number: 1,
       errNum: 0,
       subject: null,
-      shownotify: true,
+      shownotify: false,
+      recordid: '',
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
@@ -60,6 +77,7 @@ export default {
         .then(res => {
           if (res.data.status === 1) {
             this.getSubject(res.data);
+            this.recordid = res.data.RecordID;
           } else {
             console.log('123---', 123);
           }
@@ -114,11 +132,18 @@ export default {
       this.setTime();
     },
     // 结束答题
-    overSubject(id, isPass) {
-      this.$http.get(this.$api.answerOver, {
-        Id: id,
-        isPass,
-      });
+    overSubject(isPass) {
+      this.$http
+        .get(this.$api.answerOver, {
+          Id: this.recordid,
+          isPass,
+        })
+        .then(res => {
+          console.log('res', res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     setTime() {
       this.interval = setInterval(() => {
@@ -159,14 +184,15 @@ export default {
     },
   },
   mounted() {
-    // this.init();
-    // this.addSubject();
+    this.init();
+    this.addSubject();
   },
   components: {
     CHeader,
     COption,
     CCircle,
     CNotify,
+    CStar,
   },
 };
 </script>
@@ -197,6 +223,35 @@ export default {
     u {
       font-size: 12px;
       color: #ccc;
+    }
+  }
+  &-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    h4 {
+      width: 100%;
+      font-size: 18px;
+      color: #7a7a7a;
+      margin-bottom: 10px;
+    }
+    > div {
+      flex: 1;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 30px;
+      span {
+        font-size: 18px;
+        color: @color3;
+      }
+    }
+    &_money {
+      img {
+        width: 83px/2;
+        height: 83px/2;
+      }
     }
   }
 }
