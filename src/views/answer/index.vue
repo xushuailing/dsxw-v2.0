@@ -11,21 +11,21 @@
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>
     <c-notify
-      :visiable.sync="shownotify"
+      :visiable.sync="notify.isShow"
       showType="success1"
       :sex="user.sex"
-      :title="title"
+      :title="notify.gameLv"
       @handleClose="onClose"
       @clickbtn="clickTest">
       <div class="answer-frame">
         <h4>获得奖励</h4>
          <div class="answer-frame_money">
           <img src="../../assets/images/money.png" alt="">
-          <span>x435</span>
+          <span>x{{notify.money}}</span>
         </div>
         <div class="answer-frame_star">
-          <c-star :number="1" :star="1"></c-star>
-          <span>x1</span>
+          <c-star :number="notify.star" :star="notify.star"></c-star>
+          <span>x{{notify.star}}</span>
         </div>
 
       </div>
@@ -44,14 +44,19 @@ export default {
   data() {
     return {
       user: {},
-      title: '',
-      time: 1000,
-      isCircle: false,
-      number: 1,
-      errNum: 0,
-      subject: null,
-      shownotify: false,
-      recordid: '',
+      title: '', // 标题
+      time: 1000, // 答题时长
+      isCircle: false, // 处理倒计时bug
+      number: 1, // 答题数
+      errNum: 0, // 答题错误数
+      subject: null, // 题目数据
+      notify: {
+        isShow: false, // 成功|失败弹框
+        gameLv: 0, // 等级
+        star: 0, // 星星数
+        money: 0, // 金币
+      },
+      recordid: '', // 题目id
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
