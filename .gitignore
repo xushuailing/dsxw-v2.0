@@ -4,6 +4,7 @@ dist/
 npm-debug.log
 yarn-error.log
 dsxw-v2.0-切图
+static/设计图
 
 # Editor directories and files
 .idea

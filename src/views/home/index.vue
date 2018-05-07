@@ -189,7 +189,7 @@ export default {
 .home {
   height: 100%;
   padding: 0.4rem 0.2rem;
-  background: url('./bg.jpg') no-repeat center/cover;
+  .bgurl('../../views/home/bg.jpg');
 
   &-top {
     height: 6.8rem/2;
@@ -273,7 +273,7 @@ export default {
     height: 4.9rem/2;
     padding: 0.4rem;
     margin-bottom: 0.2rem;
-    background: url('../../assets/images/frame2.png') no-repeat center/cover;
+    .bgurl('../../assets/images/frame2.png');
     color: #fff;
     span {
       font-size: 0.48rem;
@@ -332,7 +332,7 @@ export default {
   &-practice,
   &-rank {
     padding: 0.3rem;
-    background: url('../../assets/images/frame3.png') no-repeat center/cover;
+    .bgurl('../../assets/images/frame3.png');
     flex: 1;
     height: 5rem/2;
     display: flex;
@@ -377,7 +377,7 @@ export default {
       text-align: center;
       input {
         color: #fff;
-        .bgurl('/src/assets/images/frame1.png');
+        .bgurl('../../assets/images/frame1.png');
         padding: 0.4rem;
       }
     }

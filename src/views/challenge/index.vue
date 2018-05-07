@@ -141,10 +141,7 @@ export default {
 
 .challenge {
   height: 100%;
-  background: url('../../assets/images/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  .bgurl('../../assets/images/bg.jpg');
   display: flex;
   justify-content: flex-start;
   flex-direction: column;

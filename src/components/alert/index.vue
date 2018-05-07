@@ -46,7 +46,7 @@ export default {
     height: 46px/2;
     padding: 10px;
     padding-bottom: 0;
-    .bgurl('/src/components/alert/top.png');
+    .bgurl('../../components/alert/top.png');
   }
   &-center {
     padding: 20px;
@@ -59,7 +59,7 @@ export default {
     padding: 10px;
     padding-top: 0;
     height: 58px/2;
-    .bgurl('/src/components/alert/footer.png');
+    .bgurl('../../components/alert/footer.png');
   }
 }
 </style>

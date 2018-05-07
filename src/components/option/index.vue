@@ -119,7 +119,7 @@ export default {
     &_item {
       padding: 0 10px;
       height: 2.64rem/2;
-      .bgurl('/src/assets/images/frame11.png');
+      .bgurl('../../assets/images/frame11.png');
       background-size: 100% 100%;
       .flex();
       font-size: 0.3rem;
@@ -128,15 +128,15 @@ export default {
         margin-top: 0.2rem;
       }
       &.active {
-        .bgurl('/src/components/option/select.png');
+        .bgurl('../../components/option/select.png');
       }
       &.error {
         padding-left: 50px;
-        .bgurl('/src/components/option/error.png');
+        .bgurl('../../components/option/error.png');
       }
       &.correct {
         padding-right: 50px;
-        .bgurl('/src/components/option/correct.png');
+        .bgurl('../../components/option/correct.png');
       }
     }
   }

@@ -12,7 +12,8 @@
   &_btn {
     border: none;
     padding: 0.3rem;
-    .bgurl('/src/assets/images/frame1.png');
+    .bgurl('../../assets/images/frame1.png');
+
     color: #fff;
   }
 }

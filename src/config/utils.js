@@ -73,33 +73,21 @@ const _GetUrlParam = function(name) {
 const _LvType = function(num) {
   switch (Number(num)) {
     case 1:
-      return {
-        title: '坚韧黑铁',
-        star: 1,
-      };
+      return '坚韧黑铁';
     case 2:
-      return {
-        title: '顽强青铜',
-        star: 2,
-      };
+      return '顽强青铜';
     case 3:
-      return {
-        title: '傲气白银',
-        star: 3,
-      };
+      return '傲气白银';
     case 4:
-      return {
-        title: '无暇钻石',
-        star: 3,
-      };
+      return '无暇钻石';
     case 5:
-      return {
-        title: '倔强王者',
-        star: 3,
-      };
+      return '倔匠王者';
+    default:
+      return '倔匠王者';
+      break;
   }
 };
-const _arrEmpty = function(param,type) {
+const _arrEmpty = function(param, type) {
   var Arr = [];
   function isType(type) {
     var t = Object.prototype.toString.call(type);
@@ -126,4 +114,5 @@ export default {
   _Storage: new Storage(),
   _GetUrlParam,
   _arrEmpty,
+  _LvType,
 };

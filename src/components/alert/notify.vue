@@ -142,7 +142,7 @@ export default {
       height: 2rem;
       line-height: 2rem;
       border: none;
-      background: url('/src/assets/images/frame1.png') no-repeat center/cover;
+      .bgurl('../../assets/images/frame1.png');
       background-size: 100% 75%;
       color: #fff;
       font-size: 0.44rem;

@@ -34,15 +34,10 @@ export default {
 
 .c-star {
   .flex();
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
   span {
-    // background: url('../../assets/images/star1.jpg') no-repeat center/cover;
-    .bgurl('/src/components/star/star1.jpg');
+    .bgurl('../../components/star/star1.jpg');
     &.active {
-      .bgurl('/src/components/star/star2.jpg');
-      // background: url('../../assets/images/star2.jpg') no-repeat center/cover;
+      .bgurl('../../components/star/star2.jpg');
     }
   }
 }

@@ -3,7 +3,12 @@
     <div class="pkview_item_header"><c-header title="来自xx的挑战"></c-header></div>
     <div class="pkview_item_content">
       <div class="pkview_item_content_img">
-        <div class="pkview_item_content_img_top"><a href="javascript:;"><img src="/static/images/pk/icon_man.png" alt=""></a></div>
+        <div class="pkview_item_content_img_top">
+          <a href="javascript:;">
+            <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
+            <img v-else src="../../assets/images/icon_girl.png" alt="">
+          </a>
+        </div>
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
       <div class="pkview_item_content_time">
@@ -13,7 +18,12 @@
         <c-circle :percent="percent"></c-circle>
       </div>
       <div class="pkview_item_content_img">
-        <div class="pkview_item_content_img_top"><a href="javascript:;"><img src="/static/images/pk/icon_girl.png" alt=""></a></div>
+        <div class="pkview_item_content_img_top">
+          <a href="javascript:;">
+             <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
+            <img v-else src="../../assets/images/icon_girl.png" alt="">
+          </a>
+        </div>
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
     </div>
@@ -50,6 +60,7 @@ export default {
   name: 'pkview',
   data() {
     return {
+      user: {},
       percent: 1000,
       timer: null,
       time: 10,
@@ -63,6 +74,7 @@ export default {
     };
   },
   mounted() {
+    this.init();
     this.timer = setInterval(() => {
       this.percent = this.percent - 100;
       this.height = this.height + 10;
@@ -72,6 +84,9 @@ export default {
     }, 1000);
   },
   methods: {
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+    },
     isSuccess(type) {
       console.log(type);
     },
@@ -90,10 +105,8 @@ export default {
 
 .pkview {
   height: 100%;
-  background: url('../../assets/images/bg.jpg');
-  background-repeat: no-repeat;
+  .bgurl('../../assets/images/bg.jpg');
   background-size: cover;
-  background-position: center;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -118,7 +131,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: url('/static/images/pk/left.png');
+        .bgurl('../../../static/images/pk/left.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

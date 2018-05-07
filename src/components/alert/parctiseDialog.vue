@@ -6,12 +6,12 @@
           上次练习到
         </div>
         <div class="c-parctise-dialog-container_content">
-          37/1231
+          {{nownumber}}/{{totle}}
         </div>
-        <div @click="handleClick(1)" class="c-parctise-dialog-container_btnKeep">
+        <div @click="handleClick(true)" class="c-parctise-dialog-container_btnKeep">
           <c-button width="100%" height="1.3rem" text="继续闯关"></c-button>
         </div>
-        <div @click="handleClick(2)" class="c-parctise-dialog-container_btnRefresh">
+        <div @click="handleClick(false)" class="c-parctise-dialog-container_btnRefresh">
           <c-button width="100%" height="1.3rem" text="重新挑战"></c-button>
         </div>
       </div>
@@ -22,6 +22,8 @@
 /**
  * <c-dialog :visiable.sync="showDialog" @onClick="onClose"></c-dialog>
  * @param{Boolean} visiable 控制显示隐藏
+ * @param{String} nownumber 历史答题数
+ * @param{String} totle 总答题数
  * @param{Funtion} onClick(1) 继续闯关
  * @param{Funtion} onClick(2) 重新挑战
  */
@@ -35,6 +37,14 @@ export default {
     visiable: {
       type: Boolean,
       default: false,
+    },
+    nownumber: {
+      typeL: String,
+      default: '0',
+    },
+    totle: {
+      typeL: String,
+      default: '0',
     },
   },
   data() {
@@ -54,7 +64,7 @@ export default {
   methods: {
     handleClick(type) {
       this.isShow = false;
-      this.$emit('onClick', type);
+      this.$emit('onParctiseLog', type);
     },
   },
 };
@@ -79,11 +89,11 @@ export default {
       font-size: 0.96rem;
       margin-bottom: 2.2rem/2;
     }
-    &_btnKeep{
+    &_btnKeep {
       height: 2.6rem/2;
       width: 11.04rem/2;
     }
-    &_btnRefresh{
+    &_btnRefresh {
       height: 2.6rem/2;
       width: 11.04rem/2;
     }

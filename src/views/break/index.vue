@@ -97,22 +97,19 @@ export default {
     getBreakInfo() {
       this.$http
         .get(this.$api.breakInfo, {
-          Userid: 46,
-          // Userid: this.user.userid,
+          Userid: this.user.userid,
           UID: this.user.uid,
         })
         .then(res => {
           if (res.data.status === 1) {
             this.gradeData = res.data.data;
-            // this.gradeData.UserPassCount = Number(res.data.data.UserPassCount);
-            // this.gradeData.StartNum = Number(res.data.data.StartNum);
+            this.$utils._Storage.set('break', res.data.data);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
               type: 'warn',
             });
           }
-
           console.log({ ...res.data.data[0] });
         })
         .catch(err => {

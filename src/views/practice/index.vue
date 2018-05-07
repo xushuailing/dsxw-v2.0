@@ -4,10 +4,10 @@
     <ul :class="[user.usertype=='1'?'type1':'type2']">
       <li class="practice-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
       <!-- <li :class="['practice-item']" v-for="item in practiceData1" :key="item.id" @click="onGoPractice(item)"> -->
-        <img :src="`/src/views/practice/icon_${index}.png`" alt="">
+        <img :src="'./static/images/practice/icon_'+index+'.png'" alt="">
         <span>{{item.Type_name}}</span>
       </li>
-      <li class="practice-error">错题库</li>
+      <li class="practice-error" @click="onGOError">错题库</li>
     </ul>
   </div>
 </template>
@@ -44,12 +44,18 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
         });
     },
     onGoPractice(e) {
       console.log('e.IsPractice---', e.IsPractice);
       this.$router.push({ path: '/start', query: { isPractice: e.IsPractice, title: e.Type_name, id: e.ID } });
+    },
+    onGOError() {
+      this.$router.push({ path: '/start', query: { title: '错题库' } });
     },
   },
   mounted() {
@@ -69,6 +75,7 @@ export default {
   flex-direction: column;
   padding-bottom: 0.4rem;
   ul {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -81,6 +88,8 @@ export default {
     font-size: 24px;
     color: #fff;
     margin-bottom: 5px;
+    height: 1.3rem;
+    .bgurl('../../assets/images/frame4.png');
     position: relative;
     img {
       position: absolute;
@@ -102,22 +111,14 @@ export default {
     margin-top: 0.2rem;
   }
   .type1 {
-    .practice-item {
-      height: 1.3rem;
-      .bgurl('../../assets/images/frame4.png');
-    }
     .practice-error {
-      .bgurl('/src/views/practice/error.png');
+      .bgurl('../../views/practice/error.png');
       height: 3.16rem/2;
     }
   }
   .type2 {
-    .practice-item {
-      height: 2.2rem;
-      .bgurl('/src/views/practice/frame.png');
-    }
     .practice-error {
-      .bgurl('/src/views/practice/error1.png');
+      .bgurl('../../views/practice/error1.png');
       height: 6.16rem/2;
     }
   }

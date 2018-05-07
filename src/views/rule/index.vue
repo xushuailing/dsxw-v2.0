@@ -18,7 +18,7 @@
         <c-button text="我知道了"></c-button>
       </div>
       <div @click="handleTip" class="rule-bottom_tip">
-        <img class="tip-check" :src="checkedSrc ? '/static/images/rule/checked.png' : '/static/images/rule/check.png'" alt="">
+        <img class="tip-check" :src="checkedSrc ? './static/images/rule/checked.png' : './static/images/rule/check.png'" alt="">
         下次不再提示
       </div>
     </div>
@@ -59,12 +59,15 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/index.less';
+
 .rule {
   position: relative;
   width: 100%;
   height: 100%;
   padding: 0.4rem 0.2rem;
-  background: url('../../assets/images/bg.jpg') no-repeat center/cover;
+  .bgurl('../../assets/images/bg.jpg');
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

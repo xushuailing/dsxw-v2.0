@@ -6,30 +6,37 @@
     </div>
     <div class="answer-center" v-if="subject">
       <div class="answer_subject" >
-        {{subject.ItemTitle}} <u>({{subject.ItemTypeName}})</u>
+        {{subject.ItemTitle}} <u>({{subject.ItemTypeName}})</u><u>答案({{Number(subject.Answer)+1}})</u>
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>
     <c-notify
       :visiable.sync="notify.isShow"
-      showType="success1"
+      :showType="notify.type"
       :sex="user.sex"
       :title="notify.gameLv"
-      @handleClose="onClose"
-      @clickbtn="clickTest">
-      <div class="answer-frame">
+      @handleClose="onNotifyClose"
+      @clickbtn="onNotifyBtn">
+      <div class="answer-frame" v-if="notify.isPass">
         <h4>获得奖励</h4>
-         <div class="answer-frame_money">
+        <div class="answer-frame_money">
           <img src="../../assets/images/money.png" alt="">
-          <span>x{{notify.money}}</span>
+          <span>+{{notify.money}}</span>
         </div>
         <div class="answer-frame_star">
-          <c-star :number="notify.star" :star="notify.star"></c-star>
-          <span>x{{notify.star}}</span>
+          <c-star :number="1" :star="1"></c-star>
+          <span>+{{notify.star}}</span>
         </div>
-
+      </div>
+      <div class="answer-frame" v-else>
+        <h4>惩罚</h4>
+        <div class="answer-frame_star">
+          <c-star :number="1" :star="1"></c-star>
+          <span>-{{notify.star}}</span>
+        </div>
       </div>
     </c-notify>
+    <c-help :center="alert.center" @onHelpFun="onNotifyClose" :title="alert.title" :isShow.sync="alert.isShow"></c-help>
   </div>
 </template>
 <script>
@@ -38,6 +45,7 @@ import COption from '../../components/option';
 import CCircle from '../../components/circle';
 import CNotify from '../../components/alert/notify';
 import CStar from '../../components/star/index';
+import CHelp from '../../components/comment/help';
 
 export default {
   name: 'answer',
@@ -45,18 +53,25 @@ export default {
     return {
       user: {},
       title: '', // 标题
-      time: 1000, // 答题时长
+      time: 3000, // 答题时长
       isCircle: false, // 处理倒计时bug
       number: 1, // 答题数
       errNum: 0, // 答题错误数
-      subject: null, // 题目数据
       notify: {
         isShow: false, // 成功|失败弹框
-        gameLv: 0, // 等级
+        gameLv: '', // 等级
         star: 0, // 星星数
         money: 0, // 金币
+        type: '', // 失败|成功
+        isPass: false, // 是否通过
+      },
+      alert: {
+        center: '下一卡关未到开启时间~',
+        title: '敬请期待',
+        isShow: false,
       },
       recordid: '', // 题目id
+      subject: null, // 题目数据
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
@@ -84,11 +99,17 @@ export default {
             this.getSubject(res.data);
             this.recordid = res.data.RecordID;
           } else {
-            console.log('123---', 123);
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
           }
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
         });
     },
     // 获取题目
@@ -104,13 +125,20 @@ export default {
           if (res.data.status === 1) {
             this.handleData(res.data.data);
           } else {
-            console.log('111---', 111);
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
           }
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
         });
     },
+    // 处理数据
     handleData(data) {
       const obj = JSON.parse(JSON.stringify(data));
       obj.ItemContent = [];
@@ -134,44 +162,30 @@ export default {
         obj.ItemContent = ['错', '对'];
       }
       this.subject = obj;
+      console.log(this.subject.Answer);
+
       this.setTime();
     },
-    // 结束答题
-    overSubject(isPass) {
-      this.$http
-        .get(this.$api.answerOver, {
-          Id: this.recordid,
-          isPass,
-        })
-        .then(res => {
-          console.log('res', res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    setTime() {
-      this.interval = setInterval(() => {
-        this.time -= 100;
-        if (this.time === 0) {
-          clearInterval(this.interval);
-        }
-      }, 1000);
-    },
+    // 验证答案
     gameOver(type) {
       clearInterval(this.interval); // 关闭倒计时
-      this.overSubject(type); // 提交答案
       this.isCircle = true; // 关闭倒计时圆圈
 
       if (!type) this.errNum++; // 答错题
       this.number++; // 题数
 
-      if (this.number > 10) {
-        console.log('闯关成功');
-        return;
-      }
       if (this.errNum > 1) {
         console.log('闯关失败');
+        setTimeout(() => {
+          this.overSubject(false); // 提交答案
+        }, 1500);
+        return;
+      }
+      if (this.number > 10) {
+        console.log('闯关成功');
+        setTimeout(() => {
+          this.overSubject(true); // 提交答案
+        }, 1500);
         return;
       }
 
@@ -181,11 +195,80 @@ export default {
         this.addSubject(); // 请求题目
       }, 1500);
     },
-    onClose() {
-      console.log('1---', 1);
+    // 结束答题
+    overSubject(isPass) {
+      this.$http
+        .get(this.$api.answerOver, {
+          Id: this.recordid,
+          isPass,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            const data = res.data;
+            this.notify.star = data.starnum;
+            this.notify.isShow = true;
+            this.notify.star = Number(data.starnum);
+            this.notify.gameLv = this.$utils._LvType(data.gamelevels);
+            if (isPass) {
+              this.notify.type = 'success1';
+              this.notify.money = Number(data.jinfen);
+              this.user.jiFen = Number(this.user.jiFen) + Number(data.jinfen);
+              this.notify.isPass = true;
+            } else {
+              this.notify.type = 'fail1';
+              this.notify.isPass = false;
+            }
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+          console.log('res', res);
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
     },
-    clickTest() {
-      console.log('2---', 2);
+    // 计时器
+    setTime() {
+      this.interval = setInterval(() => {
+        this.time -= 100;
+        if (this.time === 0) {
+          clearInterval(this.interval);
+        }
+      }, 1000);
+    },
+    // 提示框X事件
+    onNotifyClose() {
+      this.$router.push('/break');
+    },
+    // 提示框按钮事件
+    onNotifyBtn() {
+      if (this.notify.isPass) {
+        const breakData = this.$utils._Storage.get('break');
+        breakData.forEach((e, i) => {
+          if (this.$route.query.id === e.ID) {
+            if (i + 1 > breakData.length) {
+              this.alert.isShow = true;
+              this.alert.center = '已完成所有关卡~';
+              this.alert.title = '恭喜您';
+            } else {
+              const data = breakData[i + 1];
+              if (data.IsStartNow === '1') {
+                this.alert.isShow = true;
+              } else {
+                this.$router.push({ path: '/answer', query: { id: data.ID, title: data.ActiveName } });
+              }
+            }
+          }
+        });
+      } else {
+        this.$router.go(0);
+      }
     },
   },
   mounted() {
@@ -198,6 +281,7 @@ export default {
     CCircle,
     CNotify,
     CStar,
+    CHelp,
   },
 };
 </script>
@@ -242,7 +326,7 @@ export default {
       margin-bottom: 10px;
     }
     > div {
-      flex: 1;
+      flex: 0 0 50%;
       display: flex;
       justify-content: space-around;
       align-items: center;

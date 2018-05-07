@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="login-footer">
-      <img src="/src/assets/images/logo.png" alt="">
+      <img src="./logo.png" alt="">
     </div>
   </div>
 </template>

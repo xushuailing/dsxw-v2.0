@@ -97,7 +97,7 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0.4rem 0.2rem;
-  background: url('../../assets/images/bg.jpg') no-repeat center/cover;
+  .bgurl('../../assets/images/bg.jpg');
   &-top {
     color: #fff;
     font-size: 0.48rem;

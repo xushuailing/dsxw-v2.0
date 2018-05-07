@@ -87,7 +87,7 @@ export default {
         width: 100%;
         border: none;
         padding: 8px;
-        background: url('/src/assets/images/frame1.png') no-repeat center/cover;
+        background: url('../../assets/images/frame1.png') no-repeat center/cover;
         background-size: 100% 75%;
         color: #fff;
         font-size: 10px;
