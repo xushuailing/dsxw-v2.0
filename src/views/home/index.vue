@@ -15,7 +15,7 @@
             <i class="iconfont icon-help"></i>
           </div>
         </div>
-        <div class="info-lv">顽强青铜</div>
+        <div class="info-lv">{{user.GameName}}</div>
         <c-star :number="user.starnum" :star="user.activenum" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png" alt="">

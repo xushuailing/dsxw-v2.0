@@ -99,7 +99,7 @@ export default {
         this.data.Answer.forEach(e => {
           this.$set(this.userSelect, e, 'correct');
         });
-        this.gameOver(false);
+        this.gameOver(false, []);
       }, 500);
     },
   },

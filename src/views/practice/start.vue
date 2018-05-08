@@ -33,6 +33,7 @@ export default {
         isShow: false, // 有没有练习过
       },
       subject: null, // 题目数据
+      typeId: null, // 题目类型
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
@@ -46,32 +47,41 @@ export default {
     init() {
       this.user = this.$utils._Storage.get('userInfo');
       this.title = this.$route.query.title;
+      this.typeId = this.$route.query.id;
+      const isPractice = this.$route.query.isPractice;
 
-      if (!this.$route.query.id) {
-        this.getErrPractise();
+      if (Number(isPractice)) {
+        this.practiseLog.isShow = true;
+        this.getPractiseLog();
       } else {
-        const isPractice = this.$route.query.isPractice;
-        if (Number(isPractice)) {
-          this.practiseLog.isShow = true;
-          this.getPractiseLog(this.$route.query.id);
-        } else {
-          this.getPractise(this.$route.query.id);
-          this.setTime();
-        }
+        this.getPractise();
       }
     },
+
     // 练习题目
-    getPractise(id) {
-      this.$http
-        .get(this.$api.practise, {
+    getPractise() {
+      let url = null;
+      let data = null;
+      if (!this.typeId) {
+        url = this.$api.practiseErr;
+        data = {
           userid: this.user.userid,
-          typeid: id,
+        };
+      } else {
+        url = this.$api.practise;
+        data = {
+          userid: this.user.userid,
+          typeid: this.typeId,
           ordernum: this.nownumber,
           Uid: this.user.uid,
-        })
+        };
+      }
+      this.$http
+        .get(url, data)
         .then(res => {
           if (res.data.status === 1) {
             this.practiseId = res.data.data.ID;
+            this.totle = res.data.QuestionCount;
             this.handleData(res.data.data);
           } else {
             this.$vux.toast.show({
@@ -88,32 +98,7 @@ export default {
           });
         });
     },
-    // 错题库
-    getErrPractise() {
-      console.log(1);
 
-      this.$http
-        .get(this.$api.practiseErr, {
-          userid: this.user.userid,
-        })
-        .then(res => {
-          if (res.data.status === 1) {
-            this.handleData(res.data.data);
-          } else {
-            this.$vux.toast.show({
-              text: res.data.msg,
-              type: 'warn',
-            });
-          }
-          console.log({ ...res.data.data });
-        })
-        .catch(err => {
-          this.$vux.toast.show({
-            text: err,
-            type: 'warn',
-          });
-        });
-    },
     // 处理数据
     handleData(data) {
       const obj = JSON.parse(JSON.stringify(data));
@@ -142,12 +127,11 @@ export default {
       this.setTime();
     },
     // 练习记录
-    getPractiseLog(id) {
-      // TODO
+    getPractiseLog() {
       this.$http
         .get(this.$api.practiseLog, {
           userid: this.user.userid,
-          typeid: id,
+          typeid: this.typeId,
         })
         .then(res => {
           if (res.data.status === 1) {
@@ -170,25 +154,28 @@ export default {
           });
         });
     },
-    gameOver(type) {
-      if (type) {
+    // 答题结束
+    gameOver(data) {
+      clearInterval(this.interval); // 关闭倒计时
+      this.nownumber++;
+      if (data.type) {
         console.log('正确');
       } else {
         console.log('错误');
       }
+      setTimeout(() => {
+        this.time = 20; // 初始化倒计时
+        this.getPractise();
+      }, 1500);
+
       this.$http
         .get(this.$api.practiseEnd, {
           questionid: this.practiseId,
-
           userid: this.user.userid,
-
           QuestionNum: this.nownumber,
-
-          questionanswer: '问题答案',
-
-          typeid: '专业类型id',
-
-          isright: type,
+          questionanswer: data.select,
+          typeid: this.typeId,
+          isright: data.type,
         })
         .then(res => {
           console.log(res);
@@ -197,21 +184,47 @@ export default {
           console.log(err);
         });
     },
+
+    // 计时器
     setTime() {
       this.interval = setInterval(() => {
         this.time--;
-        if (this.time === 0) {
+        if (this.time <= 0) {
           clearInterval(this.interval);
         }
       }, 1000);
     },
 
+    // 继续答题||重新答题
     onParctiseLog(type) {
       // type == true 继续答题||重新答题
       if (!type) {
-        this.nownumber = 2;
+        this.$http
+          .get(this.$api.practiseNew, {
+            typeid: this.typeId,
+            Userid: this.user.userid,
+            IsContinue: 0,
+            uid: this.user.uid,
+          })
+          .then(res => {
+            if (res.data.status === 1) {
+              this.$router.go(-1);
+            } else {
+              this.$vux.toast.show({
+                text: '错误码_500',
+                type: 'warn',
+              });
+            }
+          })
+          .catch(err => {
+            this.$vux.toast.show({
+              text: err,
+              type: 'warn',
+            });
+          });
+      } else {
+        this.getPractise();
       }
-      this.getPractise(this.$route.query.id);
     },
   },
   mounted() {
