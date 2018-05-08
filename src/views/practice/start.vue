@@ -45,9 +45,9 @@ export default {
   },
   methods: {
     init() {
-      this.user = this.$utils._Storage.get('userInfo');
+      this.user = this.$utils._Storage.get('userInfo') || {};
       this.title = this.$route.query.title;
-      this.typeId = this.$route.query.id;
+      this.typeId = this.$route.query.id || 0;
       const isPractice = this.$route.query.isPractice;
 
       if (Number(isPractice)) {
@@ -81,13 +81,26 @@ export default {
         .then(res => {
           if (res.data.status === 1) {
             this.practiseId = res.data.data.ID;
-            this.totle = res.data.QuestionCount;
+            this.totle = res.data.QuestionCount || 0;
+            if (!this.totle) {
+              this.$vux.toast.show({
+                text: '该题库没有题目~',
+                type: 'warn',
+              });
+              setTimeout(() => {
+                this.$router.go(-1);
+              }, 1000);
+              return;
+            }
             this.handleData(res.data.data);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
               type: 'warn',
             });
+            setTimeout(() => {
+              this.$router.go(-1);
+            }, 1000);
           }
           console.log({ ...res.data.data });
         })
@@ -157,14 +170,24 @@ export default {
     // 答题结束
     gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
-      this.nownumber++;
       if (data.type) {
         console.log('正确');
       } else {
         console.log('错误');
       }
+      if (this.nownumber > this.totle) {
+        this.$vux.toast.show({
+          text: '题目已经练习完毕~',
+          type: 'warn',
+        });
+        setTimeout(() => {
+          this.$router.go(-1);
+        }, 1500);
+        return;
+      }
       setTimeout(() => {
         this.time = 20; // 初始化倒计时
+        this.nownumber++;
         this.getPractise();
       }, 1500);
 
