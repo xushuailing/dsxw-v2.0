@@ -1,7 +1,7 @@
 <template>
   <div class="challenge">
     <div class="challenge_item_header"><c-header title="倔匠挑战赛" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
-    <div class="challenge_item_content">
+    <div v-if="gradeData" class="challenge_item_content">
       <ul class="challenge-grade">
         <li v-for="(item, index) in gradeData" :key="item.ID">
           <div class="challenge-grade_num" >
@@ -34,21 +34,21 @@ export default {
   data() {
     return {
       gradeData: [
-        {
-          ID: 1,
-          NickName: '坚韧黑铁',
-          UserID: 1,
-        },
-        {
-          ID: 2,
-          NickName: '顽强青铜',
-          UserID: 2,
-        },
-        {
-          ID: 3,
-          NickName: '傲气白银',
-          UserID: 3,
-        },
+        // {
+        //   ID: 1,
+        //   NickName: '坚韧黑铁',
+        //   UserID: 1,
+        // },
+        // {
+        //   ID: 2,
+        //   NickName: '顽强青铜',
+        //   UserID: 2,
+        // },
+        // {
+        //   ID: 3,
+        //   NickName: '傲气白银',
+        //   UserID: 3,
+        // },
       ],
       helpData: {
         isShow: false,
@@ -73,7 +73,7 @@ export default {
         path: '/pk',
         query: {
           gradeValue: this.$route.query.id,
-          pkuserid: item.ID,
+          pkuserid: item.UserID,
         },
       });
       console.log(item);

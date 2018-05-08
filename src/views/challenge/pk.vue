@@ -29,16 +29,16 @@
     </div>
     <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
-        <div class="text">{{percent}}</div>
+        <div class="text">{{totalNumber}}</div>
         <div class="line">
           <span :style="'height:' + height + '%'"></span>
         </div>
       </div>
       <div class="pkview_item_footer_middle">
-        <c-option :data="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
+        <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
       </div>
       <div class="pkview_item_footer_left">
-        <div class="text">{{percent}}</div>
+        <div class="text">{{totalNumber}}</div>
         <div class="line">
           <span :style="'height:' + height + '%'"></span>
         </div>
@@ -57,28 +57,74 @@ export default {
   data() {
     return {
       user: {},
-      percent: 1000,
-      timer: null,
-      time: 10,
-      height: 0,
-      subject: null,
+      routerVal: this.$route.query,
+      isCircle: false, // 处理倒计时bug
+      percent: 1000, // 答题时长 ms
+      number: 1, // 答题数量
+      score: [], // 分数
+      interval: null,
+      rheight: 0,
+      subject: null, // 题目数据
     };
+  },
+  computed: {
+    // 总分数
+    totalNumber() {
+      return this.score.reduce((total, item) => total + item, 0);
+    },
+    // 积分器百分比高度
+    height() {
+      return this.score.reduce((total, item) => total + item * 20 / 100, 0);
+    },
   },
   mounted() {
     this.init();
-    this.timer = setInterval(() => {
+    this.interval = setInterval(() => {
       this.percent = this.percent - 100;
-      this.height = this.height + 10;
       if (this.percent <= 0) {
-        clearInterval(this.timer);
+        clearInterval(this.interval);
       }
     }, 1000);
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      this.addAnswerRecord();
     },
-    isSuccess(type) {
+    // 步骤一: 添加答题记录
+    addAnswerRecord() {
+      this.$http
+        .get(this.$api.challenge.PkStep1, {
+          Userid: this.user.userid,
+          UID: this.user.uid,
+          gradeValue: this.routerVal.gradeValue,
+          pkuserid: this.routerVal.pkuserid,
+        })
+        .then(res => {
+          console.log(res.data, 'res');
+          if (res.data.status === 1) {
+            this.arguments = {
+              Userid: this.user.userid,
+              recordid: res.data.RecordID,
+              ordernum: this.number,
+              activeid: res.data.activeid,
+            };
+            // this.startAnswer(this.arguments);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    gameOver(type) {
       console.log(type);
     },
   },
