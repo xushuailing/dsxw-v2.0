@@ -192,7 +192,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 2) {
+      if (this.number > 10) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
@@ -208,10 +208,6 @@ export default {
     },
     // 提交答案
     checkSubject(data) {
-      console.log(data);
-
-      console.log(this.subject.ID);
-
       this.$http
         .get(this.$api.answerCheck, {
           questionid: this.subject.ID,
@@ -220,12 +216,13 @@ export default {
           ordernum: this.subject.OrderNum,
           questionanswer: data.select,
           isright: data.type,
+          ActiveID: this.breakId,
         })
         .then(res => {
-          console.log(res);
+          console.log('res---', res);
         })
         .catch(err => {
-          console.log(err);
+          console.log('err---', err);
         });
     },
     // 结束答题
@@ -233,6 +230,7 @@ export default {
       this.$http
         .get(this.$api.answerOver, {
           Id: this.recordid,
+          activeID: this.breakId,
           isPass,
         })
         .then(res => {
@@ -245,12 +243,14 @@ export default {
             if (isPass) {
               this.notify.type = 'success1';
               this.notify.money = Number(data.jinfen);
-              this.user.jiFen = Number(this.user.jiFen) + Number(data.jinfen);
               this.notify.isPass = true;
+              this.user.jiFen = Number(this.user.jiFen) + Number(data.jinfen);
             } else {
               this.notify.type = 'fail1';
               this.notify.isPass = false;
             }
+
+            this.$utils._Storage.set('userInfo', this.user);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,

@@ -110,9 +110,32 @@ const _arrEmpty = function(param, type) {
   }
   return Arr;
 };
+const _UpdateUserInfo = function(vue, id) {
+  vue.$http
+    .get(vue.$api.userInfo, {
+      userid: id,
+    })
+    .then(res => {
+      if (res.data.status === 1) {
+        vue.$utils._Storage.set('userInfo', res.data);
+      } else {
+        vue.$vux.toast.show({
+          text: res.data.msg,
+          type: 'warn',
+        });
+      }
+    })
+    .catch(err => {
+      vue.$vux.toast.show({
+        text: err,
+        type: 'warn',
+      });
+    });
+};
 export default {
   _Storage: new Storage(),
   _GetUrlParam,
   _arrEmpty,
   _LvType,
+  _UpdateUserInfo,
 };
