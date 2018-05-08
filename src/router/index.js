@@ -11,6 +11,7 @@ import Challenge from '../views/challenge';
 import Practice from '../views/practice';
 import Pk from '../views/challenge/pk';
 import NewPk from '../views/challenge/newPk';
+import NewPkList from '../views/challenge/list.vue';
 import Answer from '../views/answer';
 import StartView from '../views/practice/start.vue';
 import parctiseDialog from '../components/alert/parctiseDialog.vue';
@@ -68,6 +69,11 @@ export default new Router({
       path: '/pk',
       name: 'pk',
       component: Pk,
+    },
+    {
+      path: '/pkinfo',
+      name: 'pkinfo',
+      component: NewPkList,
     },
     {
       path: '/practice',

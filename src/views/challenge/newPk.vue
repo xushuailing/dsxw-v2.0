@@ -15,16 +15,16 @@
         <!-- <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
           <span>{{ percent / 100 }}</span>
         </x-circle> -->
-        <c-circle :percent="percent"></c-circle>
+        <c-circle :percent="percent" :isCircle="isCircle"></c-circle>
       </div>
       <div class="pkview_item_content_img">
 
       </div>
     </div>
-    <div class="pkview_item_question">
-      {{subject.title}}
+    <div v-if="subject" class="pkview_item_question">
+      {{subject.ItemTitle}}<u>({{subject.ItemTypeName}})</u>
     </div>
-    <div class="pkview_item_footer">
+    <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
         <div class="text">{{percent}}</div>
         <div class="line">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="pkview_item_footer_middle">
-        <c-option :data="subject" :isTimeEnd="Boolean(time)" @gameOver="isSuccess"></c-option>
+        <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
       </div>
       <div class="pkview_item_footer_left">
 
@@ -41,7 +41,6 @@
   </div>
 </template>
 <script>
-// import { XCircle } from 'vux';
 import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
@@ -52,19 +51,14 @@ export default {
   data() {
     return {
       user: {},
-      percent: 1000,
+      isCircle: false, // 处理倒计时bug
+      percent: 1000, // 答题时长 ms
+      number: 1, // 答题数量
       timer: null,
-      time: 10,
-      height: 0,
-      subject: {
-        title: '公司的Logo的颜色是什么颜色?是什么颜色?是什么颜色?是什么颜色?么颜色么颜色么颜色',
-        select: [{ name: '红色', id: 0 }, { name: '橙色', id: 1 }, { name: '蓝色', id: 2 }, { name: '绿色', id: 3 }],
-        result: [0, 1],
-        type: 3,
-      },
+      height: 0, // 积分器百分比高度
+      subject: null, // 题目数据
     };
   },
-
   mounted() {
     this.init();
     this.timer = setInterval(() => {
@@ -78,15 +72,105 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      this.addAnswerRecord();
     },
-    isSuccess(type) {
+    // 步骤一: 添加答题记录
+    addAnswerRecord() {
+      this.$http
+        .get(this.$api.challenge.newPkStep1, {
+          Userid: this.user.userid,
+          UID: this.user.uid,
+          gradeValue: this.$route.query.activeid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            console.log(res.data, 'res.data');
+            this.startAnswer(res.data);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    // 步骤二: 开始答题
+    startAnswer(data) {
+      this.$http
+        .get(this.$api.challenge.newPkStep2, {
+          Userid: this.user.userid,
+          recordid: data.RecordID,
+          ordernum: 1,
+          activeid: data.activeid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.handleData(res.data.data);
+            console.log(this.subject, 'this.subject');
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    // 处理数据
+    handleData(data) {
+      const obj = JSON.parse(JSON.stringify(data));
+      obj.ItemContent = [];
+      obj.Answer = [];
+
+      if (data.ItemType === '1' || data.ItemType === '2') {
+        const arr = 'ABCDEFG';
+        this.$utils._arrEmpty(data.Answer, '').forEach(e => {
+          const index = arr.indexOf(e);
+          obj.Answer.push(index);
+        });
+        this.$utils._arrEmpty(data.ItemContent, ',').forEach(e => {
+          obj.ItemContent.push(e);
+        });
+      } else {
+        if (data.Answer === '对') {
+          obj.Answer.push(1);
+        } else {
+          obj.Answer.push(0);
+        }
+        obj.ItemContent = ['错', '对'];
+      }
+      this.subject = obj;
+      console.log(this.subject.Answer);
+
+      this.setTime();
+    },
+    // 计时器
+    setTime() {
+      this.interval = setInterval(() => {
+        this.time -= 100;
+        if (this.time === 0) {
+          clearInterval(this.interval);
+        }
+      }, 1000);
+    },
+    gameOver(type) {
       console.log(type);
     },
   },
   components: {
     CHeader,
     CButton,
-    // XCircle,
     COption,
     CCircle,
   },

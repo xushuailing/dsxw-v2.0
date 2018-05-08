@@ -12,9 +12,6 @@
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
       <div class="pkview_item_content_time">
-        <!-- <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
-          <span>{{ percent / 100 }}</span>
-        </x-circle> -->
         <c-circle :percent="percent"></c-circle>
       </div>
       <div class="pkview_item_content_img">
@@ -50,7 +47,6 @@
   </div>
 </template>
 <script>
-// import { XCircle } from 'vux';
 import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
@@ -65,12 +61,7 @@ export default {
       timer: null,
       time: 10,
       height: 0,
-      subject: {
-        title: '公司的Logo的颜色是什么颜色?是什么颜色?是什么颜色?是什么颜色?么颜色么颜色么颜色',
-        select: [{ name: '红色', id: 0 }, { name: '橙色', id: 1 }, { name: '蓝色', id: 2 }, { name: '绿色', id: 3 }],
-        result: [0, 1],
-        type: 3,
-      },
+      subject: null,
     };
   },
   mounted() {
@@ -94,7 +85,6 @@ export default {
   components: {
     CHeader,
     CButton,
-    // XCircle,
     COption,
     CCircle,
   },
