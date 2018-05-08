@@ -26,5 +26,6 @@ export default {
     list: `${url}/View_Active_VipLevelService.ashx?pagetype=list&ispk=1`, // pk个人信息列表
     newPkStep1: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=addRecord&pklaunch=true`, // 发起新挑战 步骤一 添加答题记录
     newPkStep2: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 发起新挑战 步骤二 开始答题
+    newPkEnd: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=pklaunchupdate`, // 发起新挑战答题结束
   },
 };

@@ -26,7 +26,7 @@
     </div>
     <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
-        <div class="text">{{percent}}</div>
+        <div class="text">{{totalNumber}}</div>
         <div class="line">
           <span :style="'height:' + height + '%'"></span>
         </div>
@@ -53,21 +53,32 @@ export default {
       user: {},
       isCircle: false, // 处理倒计时bug
       percent: 1000, // 答题时长 ms
+      // totalNumber: 0, // 总分数 1题100分
       number: 1, // 答题数量
-      timer: null,
-      height: 0, // 积分器百分比高度
+      score: [], // 分数
+      interval: null,
+      // height: 0, // 积分器百分比高度
       subject: null, // 题目数据
+      arguments: {
+        Userid: '',
+        recordid: '',
+        ordernum: '',
+        activeid: '',
+      },
     };
+  },
+  computed: {
+    // 总分数
+    totalNumber() {
+      return this.score.reduce((total, item) => total + item, 0);
+    },
+    // 积分器百分比高度
+    height() {
+      return this.score.reduce((total, item) => total + item * 20 / 100, 0);
+    },
   },
   mounted() {
     this.init();
-    this.timer = setInterval(() => {
-      this.percent = this.percent - 100;
-      this.height = this.height + 10;
-      if (this.percent <= 0) {
-        clearInterval(this.timer);
-      }
-    }, 1000);
   },
   methods: {
     init() {
@@ -84,8 +95,13 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
-            console.log(res.data, 'res.data');
-            this.startAnswer(res.data);
+            this.arguments = {
+              Userid: this.user.userid,
+              recordid: res.data.RecordID,
+              ordernum: this.number,
+              activeid: res.data.activeid,
+            };
+            this.startAnswer(this.arguments);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -104,15 +120,12 @@ export default {
     startAnswer(data) {
       this.$http
         .get(this.$api.challenge.newPkStep2, {
-          Userid: this.user.userid,
-          recordid: data.RecordID,
-          ordernum: 1,
-          activeid: data.activeid,
+          ...data,
+          ordernum: this.number,
         })
         .then(res => {
           if (res.data.status === 1) {
             this.handleData(res.data.data);
-            console.log(this.subject, 'this.subject');
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -151,21 +164,92 @@ export default {
         obj.ItemContent = ['错', '对'];
       }
       this.subject = obj;
-      console.log(this.subject.Answer);
+      console.log(this.subject, 'this.subject');
 
       this.setTime();
     },
     // 计时器
     setTime() {
       this.interval = setInterval(() => {
-        this.time -= 100;
-        if (this.time === 0) {
+        this.percent = this.percent - 100;
+        if (this.percent <= 0) {
           clearInterval(this.interval);
         }
       }, 1000);
     },
-    gameOver(type) {
-      console.log(type);
+    // 答案验证
+    gameOver(data) {
+      clearInterval(this.interval); // 关闭倒计时
+      this.isCircle = true; // 关闭倒计时圆圈
+      this.number++;
+      this.checkAnswer(data);
+      if (this.number <= 5) {
+        if (data.type) {
+          this.score.push(this.percent / 10);
+        } else {
+          this.score.push(0);
+        }
+      } else {
+        this.$vux.toast.show({
+          text: '发起挑战成功！',
+          type: 'success',
+        });
+        this.endAnswer(this.arguments);
+        setTimeout(() => {
+          this.$router.go(-1);
+        }, 1500);
+        return;
+      }
+      setTimeout(() => {
+        this.isCircle = false; // 打开倒计时圆圈
+        this.percent = 1000; // 初始化倒计时
+        this.startAnswer(this.arguments); // 请求题目
+      }, 1500);
+    },
+    // 答题结束
+    endAnswer(data) {
+      this.$http
+        .get(this.$api.challenge.newPkEnd, {
+          Id: data.recordid,
+          isPass: true,
+          totlescore: this.totalNumber,
+          activeid: data.activeid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            console.log('答题结束，记录提交');
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    // 答题记录验证每一次答题结束都要
+    checkAnswer(data) {
+      this.$http
+        .get(this.$api.answerCheck, {
+          questionid: this.subject.ID,
+          userid: this.user.userid,
+          recordid: this.arguments.recordid,
+          ordernum: this.subject.OrderNum,
+          questionanswer: data.select,
+          isright: data.type,
+          ActiveID: this.arguments.activeid,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
   },
   components: {
@@ -231,25 +315,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      // .vux-circle {
-      //   width: 1.1rem;
-      //   height: 1.1rem;
-      //   margin-bottom: 0.2rem;
-      //   .vux-circle-content {
-      //     span {
-      //       display: inline-block;
-      //       width: 0.8rem;
-      //       height: 0.8rem;
-      //       line-height: 0.8rem;
-      //       color: #fff;
-      //       font-size: 0.44rem;
-      //       // font-weight: 600;
-      //       border-radius: 100%;
-      //       border: 1px solid #01d2f4;
-      //       box-shadow: 0 0 5px #01d2f4 inset;
-      //     }
-      //   }
-      // }
     }
   }
   &_item_question {
