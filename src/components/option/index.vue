@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       userSelect: [],
+      selectIndex: [],
       // ItemType: 1, // 1=单选题,6=判断,2=多项
       click: 0,
     };
@@ -40,53 +41,55 @@ export default {
   methods: {
     initData() {
       this.userSelect = new Array(this.data.ItemContent.length);
+      this.selectIndex = [];
       this.click = 0;
     },
     onSelect(item, index) {
       if (!this.isTimeEnd) return; // 时间结束
+      if (this.userSelect[index]) return; // 已经选择过
       this.click++;
 
       const data = this.data;
-      if (this.data.ItemType === '1' || this.data.ItemType === '6') {
+      if (data.ItemType === '1' || data.ItemType === '6') {
         if (this.click > 1) return;
 
         data.Answer.forEach(e => {
           if (e === index) {
             this.$set(this.userSelect, index, 'correct');
-            this.gameOver(true);
+            this.gameOver(true, [index]);
           } else {
             this.$set(this.userSelect, e, 'correct');
             this.$set(this.userSelect, index, 'error');
-            this.gameOver(false);
+            this.gameOver(false, [index]);
           }
         });
       } else if (data.ItemType === '2') {
         if (this.click > data.Answer.length) return;
-
+        this.selectIndex.push(index);
         if (data.Answer.indexOf(index) > -1) {
           this.$set(this.userSelect, index, 'active');
           if (this.click === data.Answer.length) {
             data.Answer.forEach(e => {
               this.$set(this.userSelect, e, 'correct');
             });
-            this.gameOver(true);
+            this.gameOver(true, this.selectIndex);
           }
         } else {
           data.Answer.forEach(e => {
             this.$set(this.userSelect, e, 'correct');
             this.$set(this.userSelect, index, 'error');
-            this.gameOver(false);
           });
+
+          this.gameOver(false, this.selectIndex);
         }
       }
     },
-    gameOver(type) {
-      this.$emit('isSuccess', type);
+    gameOver(type, index) {
+      this.$emit('isSuccess', { type, select: index });
       setTimeout(() => {
         this.initData();
       }, 1500);
     },
-    isJudge() {},
   },
 
   watch: {

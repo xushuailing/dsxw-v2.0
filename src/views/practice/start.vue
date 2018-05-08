@@ -28,6 +28,7 @@ export default {
       time: 20, // 时间
       totle: 0, // 题目总数
       nownumber: 1, // 当前题目数
+      practiseId: null, // 题目id
       practiseLog: {
         isShow: false, // 有没有练习过
       },
@@ -70,6 +71,7 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
+            this.practiseId = res.data.data.ID;
             this.handleData(res.data.data);
           } else {
             this.$vux.toast.show({
@@ -88,8 +90,10 @@ export default {
     },
     // 错题库
     getErrPractise() {
+      console.log(1);
+
       this.$http
-        .get(this.$api.practise, {
+        .get(this.$api.practiseErr, {
           userid: this.user.userid,
         })
         .then(res => {
@@ -139,6 +143,7 @@ export default {
     },
     // 练习记录
     getPractiseLog(id) {
+      // TODO
       this.$http
         .get(this.$api.practiseLog, {
           userid: this.user.userid,
@@ -166,7 +171,31 @@ export default {
         });
     },
     gameOver(type) {
-      console.log(type);
+      if (type) {
+        console.log('正确');
+      } else {
+        console.log('错误');
+      }
+      this.$http
+        .get(this.$api.practiseEnd, {
+          questionid: this.practiseId,
+
+          userid: this.user.userid,
+
+          QuestionNum: this.nownumber,
+
+          questionanswer: '问题答案',
+
+          typeid: '专业类型id',
+
+          isright: type,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     setTime() {
       this.interval = setInterval(() => {
@@ -180,7 +209,7 @@ export default {
     onParctiseLog(type) {
       // type == true 继续答题||重新答题
       if (!type) {
-        this.nownumber = 4;
+        this.nownumber = 2;
       }
       this.getPractise(this.$route.query.id);
     },

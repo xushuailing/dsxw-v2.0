@@ -57,6 +57,7 @@ export default {
       isCircle: false, // 处理倒计时bug
       number: 1, // 答题数
       errNum: 0, // 答题错误数
+      breakId: null, // 关卡id
       notify: {
         isShow: false, // 成功|失败弹框
         gameLv: '', // 等级
@@ -70,7 +71,7 @@ export default {
         title: '敬请期待',
         isShow: false,
       },
-      recordid: '', // 题目id
+      recordid: '', // 题目记录id
       subject: null, // 题目数据
       // {
       // ItemTitle: '', // 题目
@@ -82,9 +83,17 @@ export default {
     };
   },
   methods: {
-    init() {
+    init(data = {}) {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.title = this.$route.query.title;
+      this.breakId = data.id || this.$route.query.id;
+      this.title = data.title || this.$route.query.title;
+      this.addSubject();
+
+      this.number = 1;
+      this.time = 3000;
+      this.errNum = 0;
+      this.isCircle = false;
+      this.notify.isShow = false;
     },
     // 添加记录
     addSubject() {
@@ -92,7 +101,7 @@ export default {
         .get(this.$api.answerAdd, {
           userid: this.user.userid,
           Uid: this.user.uid,
-          gradeValue: this.$route.query.id,
+          gradeValue: this.breakId,
         })
         .then(res => {
           if (res.data.status === 1) {
@@ -167,11 +176,13 @@ export default {
       this.setTime();
     },
     // 验证答案
-    gameOver(type) {
+    gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
       this.isCircle = true; // 关闭倒计时圆圈
 
-      if (!type) this.errNum++; // 答错题
+      this.checkSubject(data);
+
+      if (!data.type) this.errNum++; // 答错题
       this.number++; // 题数
 
       if (this.errNum > 1) {
@@ -181,7 +192,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 10) {
+      if (this.number > 2) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
@@ -191,9 +202,31 @@ export default {
 
       setTimeout(() => {
         this.isCircle = false; // 打开倒计时圆圈
-        this.time = 1000; // 初始化倒计时
+        this.time = 3000; // 初始化倒计时
         this.addSubject(); // 请求题目
       }, 1500);
+    },
+    // 提交答案
+    checkSubject(data) {
+      console.log(data);
+
+      console.log(this.subject.ID);
+
+      this.$http
+        .get(this.$api.answerCheck, {
+          questionid: this.subject.ID,
+          userid: this.user.userid,
+          recordid: this.recordid,
+          ordernum: this.subject.OrderNum,
+          questionanswer: data.select,
+          isright: data.type,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     // 结束答题
     overSubject(isPass) {
@@ -244,36 +277,32 @@ export default {
     },
     // 提示框X事件
     onNotifyClose() {
-      this.$router.push('/break');
+      this.$router.go(-1);
     },
     // 提示框按钮事件
     onNotifyBtn() {
-      if (this.notify.isPass) {
-        const breakData = this.$utils._Storage.get('break');
-        breakData.forEach((e, i) => {
-          if (this.$route.query.id === e.ID) {
-            if (i + 1 > breakData.length) {
+      const breakData = this.$utils._Storage.get('break');
+      breakData.forEach((e, i) => {
+        if (this.breakId === e.ID && this.notify.isShow) {
+          console.log('e---', e);
+          if (i + 1 > breakData.length) {
+            this.alert.isShow = true;
+            this.alert.center = '已完成所有关卡~';
+            this.alert.title = '恭喜您';
+          } else {
+            const data = breakData[i + 1];
+            if (data.IsStartNow === '1') {
               this.alert.isShow = true;
-              this.alert.center = '已完成所有关卡~';
-              this.alert.title = '恭喜您';
             } else {
-              const data = breakData[i + 1];
-              if (data.IsStartNow === '1') {
-                this.alert.isShow = true;
-              } else {
-                this.$router.push({ path: '/answer', query: { id: data.ID, title: data.ActiveName } });
-              }
+              this.init({ id: data.ID, title: data.ActiveName });
             }
           }
-        });
-      } else {
-        this.$router.go(0);
-      }
+        }
+      });
     },
   },
   mounted() {
     this.init();
-    this.addSubject();
   },
   components: {
     CHeader,
