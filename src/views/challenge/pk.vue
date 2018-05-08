@@ -24,10 +24,10 @@
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
     </div>
-    <div class="pkview_item_question">
+    <div v-if="subject" class="pkview_item_question">
       {{subject.title}}
     </div>
-    <div class="pkview_item_footer">
+    <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
         <div class="text">{{percent}}</div>
         <div class="line">

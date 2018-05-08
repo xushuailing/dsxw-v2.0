@@ -20,6 +20,16 @@ Vue.prototype.$utils = utils;
 
 Vue.config.productionTip = false;
 
+router.beforeEach((to, from, next) => {
+  const userinfo = utils._Storage.get('userInfo') || {};
+  if (to.path === '/') {
+    next();
+  } else if (!userinfo.userid) {
+    next({ path: '/' });
+  } else {
+    next();
+  }
+});
 /* eslint-disable no-new */
 new Vue({
   router,

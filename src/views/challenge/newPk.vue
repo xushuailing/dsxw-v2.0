@@ -164,7 +164,7 @@ export default {
         obj.ItemContent = ['错', '对'];
       }
       this.subject = obj;
-      // console.log(this.subject.Answer);
+      console.log(this.subject, 'this.subject');
 
       this.setTime();
     },
@@ -208,10 +208,9 @@ export default {
     },
     // 答题结束
     endAnswer(data) {
-      console.log(data, '答题结束shuju');
       this.$http
         .get(this.$api.challenge.newPkEnd, {
-          Id: data.RecordID,
+          Id: data.recordid,
           isPass: true,
           totlescore: this.totalNumber,
           activeid: data.activeid,
@@ -235,17 +234,6 @@ export default {
     },
     // 答题记录验证每一次答题结束都要
     checkAnswer(data) {
-      console.log(
-        {
-          questionid: this.subject.ID,
-          userid: this.user.userid,
-          recordid: this.arguments.recordid,
-          ordernum: this.subject.OrderNum,
-          questionanswer: data.select,
-          isright: data.type,
-        },
-        '123312312312312',
-      );
       this.$http
         .get(this.$api.answerCheck, {
           questionid: this.subject.ID,
@@ -254,6 +242,7 @@ export default {
           ordernum: this.subject.OrderNum,
           questionanswer: data.select,
           isright: data.type,
+          ActiveID: this.arguments.activeid,
         })
         .then(res => {
           console.log(res);

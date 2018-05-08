@@ -69,7 +69,13 @@ export default {
       this.helpData.isShow = !this.helpData.isShow;
     },
     onStartchallenge(item) {
-      this.$router.push('/pk');
+      this.$router.push({
+        path: '/pk',
+        query: {
+          gradeValue: this.$route.query.id,
+          pkuserid: item.ID,
+        },
+      });
       console.log(item);
     },
     onNewChallenge() {
