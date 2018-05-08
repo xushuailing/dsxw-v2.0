@@ -135,7 +135,7 @@ export default {
       } else if (!this.user.nickname) {
         this.pk.isInputName = true;
       } else {
-        this.$router.push('/challenge');
+        this.$router.push('/pkinfo');
       }
     },
     /* 提交名字 */
@@ -149,7 +149,7 @@ export default {
         });
       } else {
         this.pk.isInputName = false;
-        this.$router.push('/challenge');
+        this.$router.push('/pkinfo');
       }
     },
     // 显示弹框

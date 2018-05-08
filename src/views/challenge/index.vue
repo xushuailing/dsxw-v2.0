@@ -3,7 +3,7 @@
     <div class="challenge_item_header"><c-header title="倔匠挑战赛" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
     <div class="challenge_item_content">
       <ul class="challenge-grade">
-        <li v-for="(item, index) in gradeData" :key="item.id">
+        <li v-for="(item, index) in gradeData" :key="item.ID">
           <div class="challenge-grade_num" >
             {{index+1}}. 发起者
           </div>
@@ -11,7 +11,7 @@
             <a href="javascript:;"><img src="http://placehold.it/35x35" alt=""></a>
           </div>
           <div class="challenge-grade_name" >
-            昵称{{index}}{{item.title}}
+            {{item.NickName}}
           </div>
           <div @click="onStartchallenge(item)" class="challenge-grade_btn">挑战</div>
         </li>
@@ -35,67 +35,19 @@ export default {
     return {
       gradeData: [
         {
-          id: 1,
-          title: '坚韧黑铁',
-          allStar: 1,
-          gold: 40,
-          isOpen: true,
+          ID: 1,
+          NickName: '坚韧黑铁',
+          UserID: 1,
         },
         {
-          id: 2,
-          title: '顽强青铜',
-          allStar: 2,
-          gold: 100,
-          isOpen: false,
+          ID: 2,
+          NickName: '顽强青铜',
+          UserID: 2,
         },
         {
-          id: 3,
-          title: '傲气白银',
-          allStar: 2,
-          gold: 300,
-          isOpen: false,
-        },
-        {
-          id: 4,
-          title: '无暇钻石',
-          allStar: 3,
-          gold: 700,
-          isOpen: false,
-        },
-        {
-          id: 5,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
-        },
-        {
-          id: 6,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
-        },
-        {
-          id: 7,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
-        },
-        {
-          id: 8,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
-        },
-        {
-          id: 9,
-          title: '倔匠王者',
-          allStar: 3,
-          gold: 1000,
-          isOpen: false,
+          ID: 3,
+          NickName: '傲气白银',
+          UserID: 3,
         },
       ],
       helpData: {
@@ -105,6 +57,10 @@ export default {
       },
     };
   },
+  mounted() {
+    this.init();
+    this.getPkList(this.$route.query.id);
+  },
   methods: {
     init() {
       this.helpData.center = this.$utils._Storage.get('rule')[0].Pkrules || '';
@@ -113,21 +69,31 @@ export default {
       this.helpData.isShow = !this.helpData.isShow;
     },
     onStartchallenge(item) {
-      if (item.isOpen) {
-        this.$router.push('/pk');
-      } else {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '未开放',
-        });
-      }
+      this.$router.push('/pk');
+      console.log(item);
     },
     onNewChallenge() {
-      this.$router.push('/newPk');
+      this.$router.push({ path: '/newPk', query: { activeid: this.$route.query.id } });
     },
-  },
-  mounted() {
-    this.init();
+    getPkList(id) {
+      this.$http
+        .get(this.$api.challenge.index, { activeid: id })
+        .then(res => {
+          const data = res.data;
+          if (data.status === 1) {
+            this.gradeData = data.data;
+            console.log(this.gradeData, '12312');
+          } else {
+            console.log(123);
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
   },
   components: {
     CHeader,

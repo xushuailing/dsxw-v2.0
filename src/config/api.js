@@ -20,4 +20,11 @@ export default {
   answerData: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 获取题目(闯关)
   answerOver: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=update`, // 结束答题(闯关)
   answerCheck: `${url}/WJ_QuestionAnswerService.ashx?pagetype=add`, // 提交答案
+  // pk挑战
+  challenge: {
+    index: `${url}/View_User_AnswerRecordService.ashx?pagetype=applist&issucess=1`, // 挑战列表
+    list: `${url}/View_Active_VipLevelService.ashx?pagetype=list&ispk=1`, // pk个人信息列表
+    newPkStep1: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=addRecord&pklaunch=true`, // 发起新挑战 步骤一 添加答题记录
+    newPkStep2: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 发起新挑战 步骤二 开始答题
+  },
 };
