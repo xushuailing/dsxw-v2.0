@@ -36,7 +36,7 @@ export default {
     },
     fs: {
       type: String,
-      default: '0.30rem',
+      default: '0.32rem',
     },
   },
 };
