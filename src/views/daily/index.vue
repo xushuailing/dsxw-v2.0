@@ -57,7 +57,7 @@ export default {
               text: '今日已领取~~~',
               type: 'warn',
               onHide: () => {
-                this.$router.push('/');
+                this.$router.push('/home');
               },
             });
           }
