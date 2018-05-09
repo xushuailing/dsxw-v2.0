@@ -249,15 +249,15 @@ export default {
       console.log(data);
       clearInterval(this.interval); // 关闭倒计时
       this.isCircle = true; // 关闭倒计时圆圈
+      this.number++;
       this.checkAnswer(data);
+      if (data.type) {
+        this.score.push(this.jifen);
+      } else {
+        this.score.push(0);
+      }
+      console.log(this.score, '记分123123');
       if (this.number <= 5) {
-        console.log(this.number, 'object');
-        if (data.type) {
-          this.score.push(this.jifen);
-        } else {
-          this.score.push(0);
-        }
-        this.number++;
         setTimeout(() => {
           this.isCircle = false; // 打开倒计时圆圈
           this.percent = 1000; // 初始化倒计时
