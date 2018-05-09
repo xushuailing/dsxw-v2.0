@@ -127,7 +127,7 @@ const _UpdateUserInfo = function(vue, id) {
     })
     .catch(err => {
       vue.$vux.toast.show({
-        text: err,
+        text: `err__${err}`,
         type: 'warn',
       });
     });

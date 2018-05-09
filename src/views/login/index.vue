@@ -85,7 +85,7 @@ export default {
           })
           .catch(err => {
             this.$vux.toast.show({
-              text: err,
+              text: `err__${err}`,
               type: 'warn',
             });
           });

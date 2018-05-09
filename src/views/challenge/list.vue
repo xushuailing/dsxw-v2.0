@@ -71,7 +71,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -86,8 +86,8 @@ export default {
       if (Number(item.IsStartNow)) {
         this.onAlertShow();
       } else if (Number(item.IsPass)) {
-        alert.title = '该等级挑战已通过~';
-        alert.center = '请选择别的等级~';
+        this.alert.title = '该等级挑战已通过~';
+        this.alert.center = '请选择别的等级~';
         this.onAlertShow();
       } else {
         this.$router.push({ path: '/challenge', query: { id: item.ID, title: item.ActiveName } });

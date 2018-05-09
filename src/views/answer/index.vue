@@ -117,7 +117,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -143,7 +143,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -264,7 +264,7 @@ export default {
         .catch(err => {
           console.log('1111res', err);
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });

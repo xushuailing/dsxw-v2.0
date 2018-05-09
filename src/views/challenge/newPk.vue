@@ -112,7 +112,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -136,7 +136,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -194,8 +194,8 @@ export default {
     gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
       this.isCircle = true; // 关闭倒计时圆圈
-      this.number++;
       this.checkAnswer(data);
+      this.number++;
       if (data.type) {
         this.score.push(this.jifen);
       } else {
@@ -240,7 +240,7 @@ export default {
         })
         .catch(err => {
           this.$vux.toast.show({
-            text: err,
+            text: `err__${err}`,
             type: 'warn',
           });
         });
@@ -252,7 +252,7 @@ export default {
           questionid: this.subject.ID,
           userid: this.user.userid,
           recordid: this.arguments.recordid,
-          ordernum: this.subject.OrderNum,
+          ordernum: this.number,
           questionanswer: data.select,
           isright: data.type,
           ActiveID: this.arguments.activeid,
