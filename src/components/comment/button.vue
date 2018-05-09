@@ -13,7 +13,7 @@
     border: none;
     padding: 0.3rem;
     .bgurl('../../assets/images/frame1.png');
-
+    background-size: 100%;
     color: #fff;
   }
 }
@@ -36,7 +36,7 @@ export default {
     },
     fs: {
       type: String,
-      default: '0.36rem',
+      default: '0.30rem',
     },
   },
 };

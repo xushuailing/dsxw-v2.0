@@ -152,6 +152,7 @@ export default {
 .break {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: 100%;
   &-grade {
     padding: 0.2rem 0.3rem;
     li {

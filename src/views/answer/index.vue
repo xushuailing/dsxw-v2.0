@@ -57,7 +57,6 @@ export default {
       isCircle: false, // 处理倒计时bug
       number: 1, // 答题数
       errNum: 0, // 答题错误数
-      breakId: null, // 关卡id
       notify: {
         isShow: false, // 成功|失败弹框
         gameLv: '', // 等级
@@ -73,6 +72,7 @@ export default {
       },
       recordid: '', // 题目记录id
       subject: null, // 题目数据
+      breakId: null, // 关卡id
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
@@ -105,8 +105,9 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
-            this.getSubject(res.data);
+            this.breakId = res.data.activeid;
             this.recordid = res.data.RecordID;
+            this.getSubject();
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -122,12 +123,12 @@ export default {
         });
     },
     // 获取题目
-    getSubject(option) {
+    getSubject() {
       this.$http
         .get(this.$api.answerData, {
-          activeid: option.activeid,
+          activeid: this.breakId,
           ordernum: this.number,
-          recordid: option.RecordID,
+          recordid: this.recordid,
           Userid: this.user.userid,
         })
         .then(res => {
@@ -250,7 +251,7 @@ export default {
               this.notify.isPass = false;
             }
 
-            this.$utils._Storage.set('userInfo', this.user);
+            this.$utils._UpdateUserInfo(); // 更新用户信息
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -284,7 +285,6 @@ export default {
       const breakData = this.$utils._Storage.get('break');
       breakData.forEach((e, i) => {
         if (this.breakId === e.ID && this.notify.isShow) {
-          console.log('e---', e);
           if (i + 1 > breakData.length) {
             this.alert.isShow = true;
             this.alert.center = '已完成所有关卡~';

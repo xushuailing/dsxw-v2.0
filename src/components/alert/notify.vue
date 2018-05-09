@@ -115,7 +115,7 @@ export default {
   }
   &-content {
     text-align: center;
-    padding: 20px 0;
+    padding: 0.4rem 0;
     color: #fff;
     // font-size:
     &_pic {
@@ -123,27 +123,28 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 30px;
-      margin-bottom: 20px;
+      font-size: 0.6rem;
+      margin-bottom: 0.4rem;
       img {
-        width: 136px/2;
-        height: 136px/2;
-        margin-bottom: 10px;
+        width: 2.72rem/2;
+        height: 2.72rem/2;
+        margin-bottom: 0.2rem;
       }
     }
   }
   &-footer {
-    width: 100%;
-    display: flex;
     justify-content: center;
+    display: flex;
+    width: 100%;
     &_btn {
       text-align: center;
       width: 80%;
-      height: 2rem;
-      line-height: 2rem;
+      height: 100px;
+      line-height: 100px;
       border: none;
       .bgurl('../../assets/images/frame1.png');
       background-size: 100% 75%;
+      background-position: center;
       color: #fff;
       font-size: 0.44rem;
     }

@@ -30,7 +30,7 @@
       <img src="./icon_01.png" alt="">
     </div>
     <div :class="['home-dare',{'active':!pk.isDare || !pk.isChallengeBegins}]" @click="onBeginDare">
-      <div class="home-dare_wait" v-if="!pk.isDare">
+      <div class="home-dare_wait" v-if="pk.isDare">
         <span>{{condition.title}}</span>
         <p>{{condition.center}}</p>
       </div>
@@ -96,8 +96,8 @@ export default {
         center: '',
       },
       pk: {
-        isChallengeBegins: !false, // 未开始挑战
-        isDare: !false, // 显示解锁条件
+        isChallengeBegins: false, // 未开始挑战
+        isDare: false, // 显示解锁条件
         center: '',
         isInputName: false,
         nickname: null,
@@ -125,13 +125,14 @@ export default {
     /* 挑战赛 */
     onBeginDare() {
       if (!this.pk.isChallengeBegins) {
+        console.log('1---', this.pk.isDare);
         if (this.pk.isDare) {
           this.$vux.toast.show({
             text: '未开始挑战~',
             type: 'warn',
           });
         }
-        this.isDare = true;
+        this.pk.isDare = true;
       } else if (!this.user.nickname) {
         this.pk.isInputName = true;
       } else {
@@ -190,7 +191,7 @@ export default {
   height: 100%;
   padding: 0.4rem 0.2rem;
   .bgurl('../../views/home/bg.jpg');
-
+  background-size: cover;
   &-top {
     height: 6.8rem/2;
     display: flex;
@@ -361,10 +362,10 @@ export default {
     }
     img {
       position: absolute;
-      right: 0.1rem;
-      bottom: 0.08rem;
-      width: 2.8rem/2;
-      height: 1.88rem/2;
+      right: 0.14rem;
+      bottom: 0.2rem;
+      width: 1.4rem;
+      height: 0.94rem;
     }
   }
   &-pk {

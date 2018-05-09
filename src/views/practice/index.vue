@@ -85,17 +85,18 @@ export default {
   &-item {
     flex: 49% 0 0;
     .flex();
-    font-size: 24px;
+    font-size: 0.48rem;
     color: #fff;
-    margin-bottom: 5px;
+    margin-bottom: 0.1rem;
     height: 1.3rem;
     .bgurl('../../assets/images/frame4.png');
+    background-position: center;
     position: relative;
     img {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 30px;
+      width: 0.6rem;
       transform: translateY(-50%);
     }
     &:nth-child(2n) img {

@@ -170,6 +170,7 @@ export default {
     // 答题结束
     gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
+      this.checkPractise(data);
       if (data.type) {
         console.log('正确');
       } else {
@@ -190,24 +191,25 @@ export default {
         this.nownumber++;
         this.getPractise();
       }, 1500);
-
+    },
+    // 提交记录
+    checkPractise(data) {
       this.$http
         .get(this.$api.practiseEnd, {
           questionid: this.practiseId,
           userid: this.user.userid,
-          QuestionNum: this.nownumber,
+          ordernum: this.nownumber,
           questionanswer: data.select,
           typeid: this.typeId,
           isright: data.type,
         })
         .then(res => {
-          console.log(res);
+          console.log('res', res);
         })
         .catch(err => {
           console.log(err);
         });
     },
-
     // 计时器
     setTime() {
       this.interval = setInterval(() => {

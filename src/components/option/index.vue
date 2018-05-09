@@ -132,14 +132,17 @@ export default {
       }
       &.active {
         .bgurl('../../components/option/select.png');
+      background-size: 100% 100%;
       }
       &.error {
         padding-left: 50px;
         .bgurl('../../components/option/error.png');
+      background-size: 100% 100%;
       }
       &.correct {
         padding-right: 50px;
         .bgurl('../../components/option/correct.png');
+      background-size: 100% 100%;
       }
     }
   }
