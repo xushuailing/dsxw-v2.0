@@ -1,40 +1,40 @@
 <template>
-  <div class="pkview">
-    <div class="pkview_item_header"><c-header title="发起挑战"></c-header></div>
-    <div class="pkview_item_content">
-      <div class="pkview_item_content_img">
-        <div class="pkview_item_content_img_top">
+  <div class="newpkview">
+    <div class="newpkview_item_header"><c-header title="发起挑战"></c-header></div>
+    <div class="newpkview_item_content">
+      <div class="newpkview_item_content_img">
+        <div class="newpkview_item_content_img_top">
           <a href="javascript:;">
             <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
             <img v-else src="../../assets/images/icon_girl.png" alt="">
           </a>
         </div>
-        <div class="pkview_item_content_img_bottom">倔强小西</div>
+        <div class="newpkview_item_content_img_bottom">倔强小西</div>
       </div>
-      <div class="pkview_item_content_time">
+      <div class="newpkview_item_content_time">
         <!-- <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
           <span>{{ percent / 100 }}</span>
         </x-circle> -->
         <c-circle :percent="percent" :isCircle="isCircle"></c-circle>
       </div>
-      <div class="pkview_item_content_img">
+      <div class="newpkview_item_content_img">
 
       </div>
     </div>
-    <div v-if="subject" class="pkview_item_question">
+    <div v-if="subject" class="newpkview_item_question">
       {{subject.ItemTitle}}<u>({{subject.ItemTypeName}})</u>
     </div>
-    <div v-if="subject" class="pkview_item_footer">
-      <div class="pkview_item_footer_left">
+    <div v-if="subject" class="newpkview_item_footer">
+      <div class="newpkview_item_footer_left">
         <div class="text">{{totalNumber}}</div>
         <div class="line">
           <span :style="'height:' + height + '%'"></span>
         </div>
       </div>
-      <div class="pkview_item_footer_middle">
+      <div class="newpkview_item_footer_middle">
         <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
       </div>
-      <div class="pkview_item_footer_left">
+      <div class="newpkview_item_footer_left">
 
       </div>
     </div>
@@ -45,9 +45,10 @@ import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
 import CCircle from '../../components/circle';
+import { setInterval } from 'timers';
 
 export default {
-  name: 'pkview',
+  name: 'newpkview',
   data() {
     return {
       user: {},
@@ -263,7 +264,7 @@ export default {
 <style lang="less" scoped>
 @import '../../assets/css/mixin.less';
 
-.pkview {
+.newpkview {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   display: flex;

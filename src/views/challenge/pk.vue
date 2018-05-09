@@ -12,7 +12,7 @@
         <div class="pkview_item_content_img_bottom">倔强小西</div>
       </div>
       <div class="pkview_item_content_time">
-        <c-circle :percent="percent"></c-circle>
+        <c-circle :percent="percent" :isCircle="isCircle"></c-circle>
       </div>
       <div class="pkview_item_content_img">
         <div class="pkview_item_content_img_top">
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div v-if="subject" class="pkview_item_question">
-      {{subject.title}}
+      {{subject.ItemTitle}}<u>({{subject.ItemTypeName}})</u>
     </div>
     <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
@@ -38,12 +38,38 @@
         <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
       </div>
       <div class="pkview_item_footer_left">
-        <div class="text">{{totalNumber}}</div>
+        <div class="text">{{rtotalNumber}}</div>
         <div class="line">
-          <span :style="'height:' + height + '%'"></span>
+          <span :style="'height:' + rheight + '%'"></span>
         </div>
       </div>
     </div>
+    <c-notify
+      :visiable.sync="notify.isShow"
+      :showType="notify.type"
+      :sex="user.sex"
+      :title="notify.gameLv"
+      @handleClose="onNotifyClose"
+      @clickbtn="onNotifyBtn">
+      <div class="pkview-frame" v-if="notify.isPass">
+        <h4>获得奖励</h4>
+        <div class="pkview-frame_money">
+          <img src="../../assets/images/money.png" alt="">
+          <span>+{{notify.money}}</span>
+        </div>
+        <div class="pkview-frame_star">
+          <c-star :number="1" :star="1"></c-star>
+          <span>+{{notify.star}}</span>
+        </div>
+      </div>
+      <div class="pkview-frame" v-else>
+        <h4>惩罚</h4>
+        <div class="pkview-frame_star">
+          <c-star :number="1" :star="1"></c-star>
+          <span>-{{notify.star}}</span>
+        </div>
+      </div>
+    </c-notify>
   </div>
 </template>
 <script>
@@ -51,6 +77,8 @@ import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
 import CCircle from '../../components/circle';
+import CStar from '../../components/star/index';
+import CNotify from '../../components/alert/notify';
 
 export default {
   name: 'pkview',
@@ -63,8 +91,27 @@ export default {
       number: 1, // 答题数量
       score: [], // 分数
       interval: null,
-      rheight: 0,
+      jifen: 100, // 记分变量
+      // rheight: 50,
+      // rtotalNumber: this.$route.query.totlescore,
       subject: null, // 题目数据
+      iscommon: 0, // 分数相同传1 不同传0 同时 isPass传false
+      isPass: true, // isPass传false，true
+      arguments: {
+        Userid: '',
+        recordid: '',
+        ordernum: '',
+        pkuserid: '',
+        pkrecordid: '',
+      },
+      notify: {
+        isShow: false, // 成功|失败弹框
+        gameLv: '', // 等级
+        star: 0, // 星星数
+        money: 0, // 金币
+        type: '', // 失败|成功
+        isPass: false, // 是否通过
+      },
     };
   },
   computed: {
@@ -76,15 +123,17 @@ export default {
     height() {
       return this.score.reduce((total, item) => total + item * 20 / 100, 0);
     },
+    // 被挑战者总分数
+    rtotalNumber() {
+      return this.$route.query.totlescore;
+    },
+    // 被挑战者积分器百分比高度
+    rheight() {
+      return Number(this.$route.query.totlescore) * 100 / 500 || 0;
+    },
   },
   mounted() {
     this.init();
-    this.interval = setInterval(() => {
-      this.percent = this.percent - 100;
-      if (this.percent <= 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
   },
   methods: {
     init() {
@@ -97,19 +146,19 @@ export default {
         .get(this.$api.challenge.PkStep1, {
           Userid: this.user.userid,
           UID: this.user.uid,
-          gradeValue: this.routerVal.gradeValue,
-          pkuserid: this.routerVal.pkuserid,
+          gradeValue: this.routerVal.gradeValue, // 关卡id
+          pkuserid: this.routerVal.pkuserid, // 发起者的userid
         })
         .then(res => {
-          console.log(res.data, 'res');
           if (res.data.status === 1) {
             this.arguments = {
               Userid: this.user.userid,
-              recordid: res.data.RecordID,
               ordernum: this.number,
-              activeid: res.data.activeid,
+              recordid: res.data.RecordID,
+              pkuserid: this.routerVal.pkuserid,
+              pkrecordid: this.routerVal.pkrecordid,
             };
-            // this.startAnswer(this.arguments);
+            this.startAnswer(this.arguments);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -124,8 +173,180 @@ export default {
           });
         });
     },
-    gameOver(type) {
-      console.log(type);
+    // 步骤二: 开始答题
+    startAnswer(data) {
+      this.$http
+        .get(this.$api.challenge.PkStep2, {
+          ...data,
+          ordernum: this.number,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.handleData(res.data.data);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    // 处理数据
+    handleData(data) {
+      const obj = JSON.parse(JSON.stringify(data));
+      obj.ItemContent = [];
+      obj.Answer = [];
+
+      if (data.ItemType === '1' || data.ItemType === '2') {
+        const arr = 'ABCDEFG';
+        this.$utils._arrEmpty(data.Answer, '').forEach(e => {
+          const index = arr.indexOf(e);
+          obj.Answer.push(index);
+        });
+        this.$utils._arrEmpty(data.ItemContent, ',').forEach(e => {
+          obj.ItemContent.push(e);
+        });
+      } else {
+        if (data.Answer === '对') {
+          obj.Answer.push(1);
+        } else {
+          obj.Answer.push(0);
+        }
+        obj.ItemContent = ['错', '对'];
+      }
+      this.subject = obj;
+      console.log(this.subject, 'this.subject');
+      this.setTime();
+    },
+    // 计时器
+    setTime() {
+      // this.interval = setInterval(() => {
+      //   this.percent = this.percent - 100;
+      //   if (this.percent <= 0) {
+      //     clearInterval(this.interval);
+      //   }
+      // }, 1000);
+      let a = 0;
+      this.interval = setInterval(() => {
+        a++;
+        this.jifen -= 1;
+        if (a === 10) {
+          this.percent = this.percent - 100;
+          a = 0;
+        }
+        if (this.percent <= 0) {
+          clearInterval(this.interval);
+        }
+      }, 100);
+    },
+    gameOver(data) {
+      console.log(data);
+      clearInterval(this.interval); // 关闭倒计时
+      this.isCircle = true; // 关闭倒计时圆圈
+      this.checkAnswer(data);
+      if (this.number <= 5) {
+        console.log(this.number, 'object');
+        if (data.type) {
+          this.score.push(this.jifen);
+        } else {
+          this.score.push(0);
+        }
+        this.number++;
+        setTimeout(() => {
+          this.isCircle = false; // 打开倒计时圆圈
+          this.percent = 1000; // 初始化倒计时
+          this.jifen = 100; // 初始化记分器
+          this.startAnswer(this.arguments); // 请求题目
+        }, 1500);
+      } else {
+        setTimeout(() => {
+          console.log('挑战结束！！');
+          console.log(this.score, 'fenshu');
+          this.endAnswer(this.arguments);
+        }, 1500);
+      }
+    },
+    // 答题结束
+    endAnswer(data) {
+      if (Number(this.totalNumber) === Number(this.routerVal.totlescore)) {
+        this.iscommon = 1;
+        this.isPass = false;
+      } else if (Number(this.totalNumber) <= Number(this.routerVal.totlescore)) {
+        this.iscommon = 0;
+        this.isPass = false;
+      } else {
+        this.iscommon = 0;
+        this.isPass = true;
+      }
+      this.$http
+        .get(this.$api.challenge.PkEnd, {
+          iscommon: this.iscommon,
+          isPass: this.isPass,
+          totlescore: this.totalNumber,
+          activeID: this.routerVal.gradeValue,
+          recordid: data.recordid,
+          pkrecordid: data.pkrecordid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            const notifyData = res.data;
+            this.notify.isShow = true;
+            this.notify.star = Number(notifyData.starnum);
+            if (this.isPass) {
+              this.notify.type = 'success2';
+              this.notify.money = Number(notifyData.jinfen);
+              this.notify.isPass = true;
+            } else {
+              this.notify.type = 'fail2';
+              this.notify.isPass = false;
+            }
+            console.log(notifyData, '答题结束，记录提交1111111111');
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+    // 答题记录验证每一次答题结束都要
+    checkAnswer(data) {
+      this.$http
+        .get(this.$api.answerCheck, {
+          questionid: this.subject.ID,
+          userid: this.user.userid,
+          recordid: this.arguments.recordid,
+          ordernum: this.subject.OrderNum,
+          questionanswer: data.select,
+          isright: data.type,
+          ActiveID: this.routerVal.gradeValue,
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    // 提示框X事件
+    onNotifyClose() {
+      this.$router.go(-1);
+    },
+    // 提示框按钮事件
+    onNotifyBtn() {
+      this.$router.go(-1);
     },
   },
   components: {
@@ -133,6 +354,8 @@ export default {
     CButton,
     COption,
     CCircle,
+    CNotify,
+    CStar,
   },
 };
 </script>
@@ -258,6 +481,35 @@ export default {
       flex: 1;
       overflow: hidden;
       display: flex;
+    }
+  }
+  &-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    h4 {
+      width: 100%;
+      font-size: 18px;
+      color: #7a7a7a;
+      margin-bottom: 10px;
+    }
+    > div {
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 30px;
+      span {
+        font-size: 18px;
+        color: @color3;
+      }
+    }
+    &_money {
+      img {
+        width: 83px/2;
+        height: 83px/2;
+      }
     }
   }
 }

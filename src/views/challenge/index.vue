@@ -72,8 +72,10 @@ export default {
       this.$router.push({
         path: '/pk',
         query: {
-          gradeValue: this.$route.query.id,
+          gradeValue: this.$route.query.id, // 关卡id
           pkuserid: item.UserID,
+          pkrecordid: item.ID,
+          totlescore: item.totlesore,
         },
       });
       console.log(item);

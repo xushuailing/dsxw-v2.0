@@ -28,5 +28,7 @@ export default {
     newPkStep2: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 发起新挑战 步骤二 开始答题
     newPkEnd: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=pklaunchupdate`, // 发起新挑战答题结束
     PkStep1: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=addRecord&pkaccept=true`, // 接受挑战步骤一 添加答题记录
+    PkStep2: `${url}/WJ_QuestionsService.ashx?pagetype=PkQuestion`, // 接受挑战答题 步骤二 开始答题
+    PkEnd: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=pkupdate`, // 接受挑战答题 答题结束
   },
 };
