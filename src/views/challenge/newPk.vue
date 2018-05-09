@@ -45,7 +45,6 @@ import CButton from '../../components/comment/button';
 import CHeader from '../../components/header';
 import COption from '../../components/option';
 import CCircle from '../../components/circle';
-import { setInterval } from 'timers';
 
 export default {
   name: 'newpkview',
@@ -58,6 +57,7 @@ export default {
       number: 1, // 答题数量
       score: [], // 分数
       interval: null,
+      jifen: 100, // 记分变量
       // height: 0, // 积分器百分比高度
       subject: null, // 题目数据
       arguments: {
@@ -171,12 +171,24 @@ export default {
     },
     // 计时器
     setTime() {
+      // this.interval = setInterval(() => {
+      //   this.percent = this.percent - 100;
+      //   if (this.percent <= 0) {
+      //     clearInterval(this.interval);
+      //   }
+      // }, 1000);
+      let a = 0;
       this.interval = setInterval(() => {
-        this.percent = this.percent - 100;
+        a++;
+        this.jifen -= 1;
+        if (a === 10) {
+          this.percent = this.percent - 100;
+          a = 0;
+        }
         if (this.percent <= 0) {
           clearInterval(this.interval);
         }
-      }, 1000);
+      }, 100);
     },
     // 答案验证
     gameOver(data) {
@@ -184,12 +196,18 @@ export default {
       this.isCircle = true; // 关闭倒计时圆圈
       this.number++;
       this.checkAnswer(data);
+      if (data.type) {
+        this.score.push(this.jifen);
+      } else {
+        this.score.push(0);
+      }
       if (this.number <= 5) {
-        if (data.type) {
-          this.score.push(this.percent / 10);
-        } else {
-          this.score.push(0);
-        }
+        setTimeout(() => {
+          this.isCircle = false; // 打开倒计时圆圈
+          this.percent = 1000; // 初始化倒计时
+          this.jifen = 100; // 初始化记分器
+          this.startAnswer(this.arguments); // 请求题目
+        }, 1500);
       } else {
         this.$vux.toast.show({
           text: '发起挑战成功！',
@@ -199,13 +217,7 @@ export default {
         setTimeout(() => {
           this.$router.go(-1);
         }, 1500);
-        return;
       }
-      setTimeout(() => {
-        this.isCircle = false; // 打开倒计时圆圈
-        this.percent = 1000; // 初始化倒计时
-        this.startAnswer(this.arguments); // 请求题目
-      }, 1500);
     },
     // 答题结束
     endAnswer(data) {

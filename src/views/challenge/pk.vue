@@ -49,7 +49,7 @@
       :showType="notify.type"
       :sex="user.sex"
       :title="notify.gameLv"
-      @handleClose="onNotifyClose"
+      @handleClose="onNotifyBtn"
       @clickbtn="onNotifyBtn">
       <div class="pkview-frame" v-if="notify.isPass">
         <h4>获得奖励</h4>
@@ -70,6 +70,7 @@
         </div>
       </div>
     </c-notify>
+    <c-help :center="alert.center" @onHelpFun="onNotifyClose" :title="alert.title" :isShow.sync="alert.isShow"></c-help>
   </div>
 </template>
 <script>
@@ -79,6 +80,7 @@ import COption from '../../components/option';
 import CCircle from '../../components/circle';
 import CStar from '../../components/star/index';
 import CNotify from '../../components/alert/notify';
+import CHelp from '../../components/comment/help';
 
 export default {
   name: 'pkview',
@@ -107,10 +109,17 @@ export default {
       notify: {
         isShow: false, // 成功|失败弹框
         gameLv: '', // 等级
+        gamename: '', // 等级名称
         star: 0, // 星星数
         money: 0, // 金币
         type: '', // 失败|成功
         isPass: false, // 是否通过
+        isgrave: false, // 是否升级
+      },
+      alert: {
+        center: '',
+        title: '恭喜升级！',
+        isShow: false,
       },
     };
   },
@@ -226,12 +235,6 @@ export default {
     },
     // 计时器
     setTime() {
-      // this.interval = setInterval(() => {
-      //   this.percent = this.percent - 100;
-      //   if (this.percent <= 0) {
-      //     clearInterval(this.interval);
-      //   }
-      // }, 1000);
       let a = 0;
       this.interval = setInterval(() => {
         a++;
@@ -246,7 +249,6 @@ export default {
       }, 100);
     },
     gameOver(data) {
-      console.log(data);
       clearInterval(this.interval); // 关闭倒计时
       this.isCircle = true; // 关闭倒计时圆圈
       this.number++;
@@ -256,7 +258,6 @@ export default {
       } else {
         this.score.push(0);
       }
-      console.log(this.score, '记分123123');
       if (this.number <= 5) {
         setTimeout(() => {
           this.isCircle = false; // 打开倒计时圆圈
@@ -302,6 +303,13 @@ export default {
               this.notify.type = 'success2';
               this.notify.money = Number(notifyData.jinfen);
               this.notify.isPass = true;
+              if (Number(notifyData.isgrave)) {
+                setTimeout(() => {
+                  console.log('段位升级！！', notifyData);
+                  this.alert.isShow = true;
+                  this.alert.center = `当前段位：${notifyData.gamename}`;
+                }, 1000);
+              }
             } else {
               this.notify.type = 'fail2';
               this.notify.isPass = false;
@@ -340,11 +348,11 @@ export default {
           console.log(err);
         });
     },
-    // 提示框X事件
+    // 提示框段位升级事件
     onNotifyClose() {
-      this.$router.go(-1);
+      this.$router.replace('/pkinfo');
     },
-    // 提示框按钮事件
+    // 提示框按钮事件，提示框X事件
     onNotifyBtn() {
       this.$router.go(-1);
     },
@@ -355,6 +363,7 @@ export default {
     COption,
     CCircle,
     CNotify,
+    CHelp,
     CStar,
   },
 };
