@@ -70,28 +70,28 @@ export default {
   justify-content: space-between;
   width: 100%;
   &-title {
-    font-size: 20px;
+    font-size: 0.4rem;
     &.alert {
-      margin-top: 10px;
-      margin-bottom: 30px;
-      font-size: 18px;
+      margin-top: 0.2rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.36rem;
     }
   }
   &-conter {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    font-size: 14px;
-    max-height: 360px;
+    margin-top: 0.4rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.28rem;
+    max-height: 7.2rem;
     overflow: auto;
   }
   &-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: -10px;
+    margin-bottom: -0.2rem;
 
     &::before {
-      margin-bottom: 15px;
+      margin-bottom: 0.3rem;
       content: '';
       width: 100%;
       height: 1px;

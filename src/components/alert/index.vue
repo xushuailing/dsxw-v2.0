@@ -35,7 +35,7 @@ export default {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.3);
-  padding: 30px 10px;
+  padding: 0.6rem 0.2rem;
   &-box {
     position: absolute;
     right: 0;
@@ -43,22 +43,22 @@ export default {
     transform: translateY(-50%);
   }
   &-top {
-    height: 46px/2;
-    padding: 10px;
+    height: 0.92rem/2;
+    padding: 0.2rem;
     padding-bottom: 0;
     .bgurl('../../components/alert/top.png');
   }
   &-center {
-    padding: 20px;
+    padding: 0.4rem;
     flex: 1;
     background: url('./center.png');
     background-repeat: initial;
     background-size: 100%;
   }
   &-footer {
-    padding: 10px;
+    padding: 0.2rem;
     padding-top: 0;
-    height: 58px/2;
+    height: 1.16rem/2;
     .bgurl('../../components/alert/footer.png');
   }
 }
