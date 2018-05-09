@@ -1,8 +1,8 @@
 <template>
   <div class="challenge">
     <div class="challenge_item_header"><c-header title="倔匠挑战赛" :isHelp="true" @onHelp="onHelpShow"></c-header></div>
-    <div v-if="gradeData" class="challenge_item_content">
-      <ul class="challenge-grade">
+    <div class="challenge_item_content">
+      <ul class="challenge-grade" v-if="gradeData.length" >
         <li v-for="(item, index) in gradeData" :key="item.ID">
           <div class="challenge-grade_num" >
             {{index+1}}. 发起者
@@ -16,6 +16,7 @@
           <div @click="onStartchallenge(item)" class="challenge-grade_btn">挑战</div>
         </li>
       </ul>
+      <div v-else style="color:#fff;fontSize:0.3rem;text-align: center;padding:.4rem;">暂无人发起挑战~</div>
     </div>
     <div class="challenge_item_footer">
       <p class="challenge-p">点击 挑战列表中的挑战进行挑战</p>
@@ -90,9 +91,11 @@ export default {
           const data = res.data;
           if (data.status === 1) {
             this.gradeData = data.data;
-            console.log(this.gradeData, '12312');
           } else {
-            console.log(123);
+            this.$vux.toast.show({
+              text: data.msg,
+              type: 'warn',
+            });
           }
         })
         .catch(err => {

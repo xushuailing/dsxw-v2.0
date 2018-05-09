@@ -29,7 +29,7 @@
       </div>
       <img src="./icon_01.png" alt="">
     </div>
-    <div :class="['home-dare',{'active':!pk.isChallengeBegins }]" @click="onBeginDare">
+    <div :class="['home-dare',{'active':pk.isChallengeBegins }]" @click="onBeginDare">
       <div class="home-dare_wait" v-if="pk.isDare">
         <span>{{condition.title}}</span>
         <p>{{condition.center}}</p>
@@ -125,7 +125,7 @@ export default {
 
     /* 挑战赛 */
     onBeginDare() {
-      if (!this.pk.isChallengeBegins) {
+      if (this.pk.isChallengeBegins) {
         console.log('1---', this.pk.isDare);
         if (this.pk.isDare) {
           this.$vux.toast.show({

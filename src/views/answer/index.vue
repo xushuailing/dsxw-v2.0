@@ -219,11 +219,11 @@ export default {
           isright: data.type,
           ActiveID: this.breakId,
         })
-        .then(res => {
-          console.log('res---', res);
+        .then(() => {
+          // console.log('res---', res);
         })
-        .catch(err => {
-          console.log('err---', err);
+        .catch(() => {
+          // console.log('err---', err);
         });
     },
     // 结束答题
@@ -235,6 +235,8 @@ export default {
           isPass,
         })
         .then(res => {
+          console.log('1111res', res);
+
           if (res.data.status === 1) {
             const data = res.data;
             this.notify.star = data.starnum;
@@ -251,16 +253,16 @@ export default {
               this.notify.isPass = false;
             }
 
-            this.$utils._UpdateUserInfo(); // 更新用户信息
+            this.$utils._UpdateUserInfo(this, this.user.userid); // 更新用户信息
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
               type: 'warn',
             });
           }
-          console.log('res', res);
         })
         .catch(err => {
+          console.log('1111res', err);
           this.$vux.toast.show({
             text: err,
             type: 'warn',
@@ -282,23 +284,27 @@ export default {
     },
     // 提示框按钮事件
     onNotifyBtn() {
-      const breakData = this.$utils._Storage.get('break');
-      breakData.forEach((e, i) => {
-        if (this.breakId === e.ID && this.notify.isShow) {
-          if (i + 1 > breakData.length) {
-            this.alert.isShow = true;
-            this.alert.center = '已完成所有关卡~';
-            this.alert.title = '恭喜您';
-          } else {
-            const data = breakData[i + 1];
-            if (data.IsStartNow === '1') {
+      if (this.notify.isPass) {
+        const breakData = this.$utils._Storage.get('break');
+        breakData.forEach((e, i) => {
+          if (this.breakId === e.ID && this.notify.isShow) {
+            if (i + 1 > breakData.length) {
               this.alert.isShow = true;
+              this.alert.center = '已完成所有关卡~';
+              this.alert.title = '恭喜您';
             } else {
-              this.init({ id: data.ID, title: data.ActiveName });
+              const data = breakData[i + 1];
+              if (data.IsStartNow === '1') {
+                this.alert.isShow = true;
+              } else {
+                this.init({ id: data.ID, title: data.ActiveName });
+              }
             }
           }
-        }
-      });
+        });
+      } else {
+        this.$router.go(0);
+      }
     },
   },
   mounted() {

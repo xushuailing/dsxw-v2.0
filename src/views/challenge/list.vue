@@ -5,7 +5,7 @@
 
       <li v-for="(item,index) in gradeData"
         @click="onStartpklist(item,index)"
-        :class="{'active':!Boolean(Number(item.IsPass))}"
+        :class="{'active':Boolean(Number(item.IsStartNow))}"
         :key="item.id">
         <div class="pkinfo-grade_name" >
           <h4>{{item.ActiveName}}</h4>
@@ -13,6 +13,7 @@
         </div>
         <div class="pkinfo-grade_star"><c-star wh="0.5rem" :number="Number(item.StartNum)" :star="Number(item.UserPassCount)"></c-star></div>
       </li>
+
     </ul>
     <p class="pkinfo-p">每通过完整一关才可获得相应的奖励</p>
     <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
@@ -82,11 +83,14 @@ export default {
       this.alert.isShow = !this.alert.isShow;
     },
     onStartpklist(item) {
-      // > 换 ===
-      if (Number(item.IsPass)) {
-        this.$router.push({ path: '/challenge', query: { id: item.ID, title: item.ActiveName } });
-      } else {
+      if (Number(item.IsStartNow)) {
         this.onAlertShow();
+      } else if (Number(item.IsPass)) {
+        alert.title = '该等级挑战已通过~';
+        alert.center = '请选择别的等级~';
+        this.onAlertShow();
+      } else {
+        this.$router.push({ path: '/challenge', query: { id: item.ID, title: item.ActiveName } });
       }
     },
   },
