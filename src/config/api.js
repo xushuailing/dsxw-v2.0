@@ -30,5 +30,6 @@ export default {
     PkStep1: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=addRecord&pkaccept=true`, // 接受挑战步骤一 添加答题记录
     PkStep2: `${url}/WJ_QuestionsService.ashx?pagetype=PkQuestion`, // 接受挑战答题 步骤二 开始答题
     PkEnd: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=pkupdate`, // 接受挑战答题 答题结束
+    setName: `${url}/WJ_UserService.ashx?pagetype=addnickname`, // 设置pk名称
   },
 };

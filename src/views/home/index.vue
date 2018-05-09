@@ -29,7 +29,7 @@
       </div>
       <img src="./icon_01.png" alt="">
     </div>
-    <div :class="['home-dare',{'active':!pk.isDare || !pk.isChallengeBegins}]" @click="onBeginDare">
+    <div :class="['home-dare',{'active':!pk.isChallengeBegins }]" @click="onBeginDare">
       <div class="home-dare_wait" v-if="pk.isDare">
         <span>{{condition.title}}</span>
         <p>{{condition.center}}</p>
@@ -37,7 +37,7 @@
       <div v-else class="home-dare_start" >
         <div>
           <span>倔匠挑战赛</span>
-          <p>当前挑战池共有挑战<u>3</u></p>
+          <p>当前挑战池共有挑战<u>{{pk.num}}</u></p>
         </div>
         <img src="./icon_02.png" alt="">
       </div>
@@ -51,8 +51,7 @@
       </div>
       <div class="home-rank" @click="onLookrank">
         <span>排行榜</span>
-        <img src="./icon_04.png"
-             alt="">
+        <img src="./icon_04.png" alt="">
       </div>
 
     </div>
@@ -76,10 +75,6 @@ import CHelp from '../../components/comment/help';
 import CDialog from '../../components/alert/dialog';
 import CButton from '../../components/comment/button';
 
-/** TODO
- * 缺少挑战是否开启
- * 缺少当前挑战次数
- */
 export default {
   name: 'home',
   data() {
@@ -101,20 +96,26 @@ export default {
         center: '',
         isInputName: false,
         nickname: null,
+        num: 0,
       },
     };
   },
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      this.$utils._UpdateUserInfo(this, this.user.userid); // 更新用户信息
+      this.user = this.$utils._Storage.get('userInfo') || {};
       this.userName = this.user.nickname || this.$utils._Storage.get('userAccount').name;
 
       this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
       this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
-      this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
 
       this.user.starnum = Number(this.user.starnum);
       this.user.activenum = Number(this.user.activenum);
+
+      this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
+      this.pk.isChallengeBegins = Number(this.user.isopenpk);
+      this.pk.num = this.user.pkcount;
     },
 
     /* 闯关 */
@@ -141,16 +142,34 @@ export default {
     },
     /* 提交名字 */
     onSubmitName() {
-      console.log('this.pk---', this.pk);
-      // http
       if (!this.pk.nickname) {
         this.$vux.toast.show({
           text: '请输入挑战昵称~',
           type: 'warn',
         });
       } else {
-        this.pk.isInputName = false;
-        this.$router.push('/pkinfo');
+        this.$http
+          .get(this.$api.challenge.setName, {
+            userid: this.user.userid,
+            pkname: this.pk.nickname,
+          })
+          .then(res => {
+            if (res.data.status === 1) {
+              this.pk.isInputName = false;
+              this.$router.push('/pkinfo');
+            } else {
+              this.$vux.toast.show({
+                text: '设置失败~',
+                type: 'warn',
+              });
+            }
+          })
+          .catch(err => {
+            this.$vux.toast.show({
+              text: err,
+              type: 'warn',
+            });
+          });
       }
     },
     // 显示弹框
@@ -379,12 +398,14 @@ export default {
       input {
         color: #fff;
         .bgurl('../../assets/images/frame1.png');
+        background-position: center;
         padding: 0.4rem;
       }
     }
     &_btn {
       padding: 0 10%;
       margin-top: 0.2rem;
+      background-position: center;
     }
   }
 }

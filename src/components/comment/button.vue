@@ -13,7 +13,7 @@
     border: none;
     padding: 0.3rem;
     .bgurl('../../assets/images/frame1.png');
-    background-size: 100%;
+    background-position: center;
     color: #fff;
   }
 }

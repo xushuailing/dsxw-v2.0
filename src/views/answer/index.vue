@@ -204,7 +204,7 @@ export default {
       setTimeout(() => {
         this.isCircle = false; // 打开倒计时圆圈
         this.time = 3000; // 初始化倒计时
-        this.addSubject(); // 请求题目
+        this.getSubject(); // 请求题目
       }, 1500);
     },
     // 提交答案
