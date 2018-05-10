@@ -10,7 +10,8 @@
         </div>
         <div class="c-notify-content">
           <div class="c-notify-content_pic" v-if="showType=='success1'||showType=='fail1'">
-            <img :src="`/src/assets/images/icon_${sex=='1'?'man':'girl'}.png`" alt="">
+            <img v-if="Number(sex)===1" src="../../assets/images/icon_man.png" alt="">
+            <img v-else src="../../assets/images/icon_girl.png" alt="">
             <span>{{title}}</span>
           </div>
           <slot></slot>
@@ -56,10 +57,10 @@ export default {
     return {
       isShow: this.visiable,
       headerImg: {
-        success1: '/static/images/notify/success1.png',
-        success2: '/static/images/notify/success2.png',
-        fail1: '/static/images/notify/fail1.png',
-        fail2: '/static/images/notify/fail2.png',
+        success1: './static/images/notify/success1.png',
+        success2: './static/images/notify/success2.png',
+        fail1: './static/images/notify/fail1.png',
+        fail2: './static/images/notify/fail2.png',
       },
       btnText: {
         success1: '继续闯关',
