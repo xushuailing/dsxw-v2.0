@@ -92,7 +92,6 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.$utils._UpdateUserInfo(this, this.user.userid);
       this.getBreakInfo();
     },
     getBreakInfo() {

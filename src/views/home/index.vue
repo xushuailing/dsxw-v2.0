@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="home-top">
+    <div class="home-top" v-if="user">
       <div class="home-top_pic">
         <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
         <img v-else src="../../assets/images/icon_girl.png" alt="">
@@ -16,20 +16,20 @@
           </div>
         </div>
         <div class="info-lv">{{user.GameName}}</div>
-        <c-star :number="user.starnum" :star="user.activenum" class="info-star"></c-star>
+        <c-star :number="Number(user.starnum)" :star="Number(user.activenum)" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png" alt="">
           <span>{{user.jiFen}}</span>
         </div>
       </div>
     </div>
-    <div class="home-break" @click="onBeginBreak">
+    <div class="home-break" @click="onBeginBreak" v-if="user">
       <div class="home-break_start">
         <span>质量大闯关</span>
       </div>
       <img src="./icon_01.png" alt="">
     </div>
-    <div :class="['home-dare',{'active':pk.isChallengeBegins }]" @click="onBeginDare">
+    <div :class="['home-dare',{'active':pk.isChallengeBegins }]" @click="onBeginDare" v-if="user">
       <div class="home-dare_wait" v-if="pk.isDare">
         <span>{{condition.title}}</span>
         <p>{{condition.center}}</p>
@@ -42,7 +42,7 @@
         <img src="./icon_02.png" alt="">
       </div>
     </div>
-    <div class="home-footer" >
+    <div class="home-footer" v-if="user">
       <div class="home-practice" @click="onBeginPractice">
         <span>练习赢金币</span>
         <p>今日已获得<u>{{user.todayjifen}}</u>金币</p>
@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       userName: null,
-      user: {},
+      user: null,
       helpData: {
         isShow: false,
         title: '闯关规则',
@@ -102,22 +102,16 @@ export default {
   },
   methods: {
     init() {
-      this.user = this.$utils._Storage.get('userInfo') || {};
-      this.$utils._UpdateUserInfo(this, this.user.userid); // 更新用户信息
-      this.user = this.$utils._Storage.get('userInfo') || {};
-      this.userName = this.user.nickname || this.$utils._Storage.get('userAccount').name;
-
-      this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
-      this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
-
-      this.user.starnum = Number(this.user.starnum);
-      this.user.activenum = Number(this.user.activenum);
-
-      this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
-      this.pk.isChallengeBegins = Number(this.user.isopenpk);
-      this.pk.num = this.user.pkcount;
+      this.$utils._UpdateUserInfo(this, data => {
+        this.user = data;
+        this.userName = this.user.nickname || this.$utils._Storage.get('userAccount').name;
+        this.pk.isChallengeBegins = Number(this.user.isopenpk);
+        this.pk.num = this.user.pkcount;
+        this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
+        this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
+        this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
+      }); // 更新用户信息
     },
-
     /* 闯关 */
     onBeginBreak() {
       this.$router.push('break');

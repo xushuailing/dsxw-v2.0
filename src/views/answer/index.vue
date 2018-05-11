@@ -253,7 +253,7 @@ export default {
               this.notify.isPass = false;
             }
 
-            this.$utils._UpdateUserInfo(this, this.user.userid); // 更新用户信息
+            this.$utils._UpdateUserInfo(this); // 更新用户信息
           } else {
             this.$vux.toast.show({
               text: res.data.msg,

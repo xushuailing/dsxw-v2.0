@@ -110,14 +110,17 @@ const _arrEmpty = function(param, type) {
   }
   return Arr;
 };
-const _UpdateUserInfo = function(vue, id) {
+const _UpdateUserInfo = function(vue, callback = () => {}) {
+  const user = vue.$utils._Storage.get('userInfo') || {};
+
   vue.$http
     .get(vue.$api.userInfo, {
-      userid: id,
+      userid: user.userid,
     })
     .then(res => {
       if (res.data.status === 1) {
         vue.$utils._Storage.set('userInfo', res.data);
+        callback(res.data);
       } else {
         vue.$vux.toast.show({
           text: res.data.msg,
