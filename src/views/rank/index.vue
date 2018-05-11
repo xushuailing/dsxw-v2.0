@@ -23,7 +23,7 @@
           </div>
           <div class="rank-grade_btn">
             <div>{{item.GameName ? item.GameName : '未知质量'}}</div>
-            <div class="rank-grade_btn_star"><c-star :number="Number(item.StarNum)" :star='Number(item.StarNum)' wh='0.4rem'></c-star></div>
+            <div class="rank-grade_btn_star"><c-star :number="Number(item.StarNum)" :star='Number(item.passcount)' wh='0.4rem'></c-star></div>
           </div>
         </li>
       </ul>
