@@ -31,6 +31,7 @@ export default {
       this.$http
         .get(this.$api.practiseList, {
           usertype: this.user.usertype,
+          userid: this.user.userid,
         })
         .then(res => {
           if (res.data.status === 1) {
