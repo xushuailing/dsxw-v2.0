@@ -17,6 +17,9 @@
     <p class="break-p">每通过完整一关才可获得相应的奖励</p>
     <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
     <c-help :center="alert.center" :title="alert.title" :isShow.sync="alert.isShow"></c-help>
+    <c-dialog :visiable.sync="showDialog">
+      <c-type @onClickType="chooseType"></c-type>
+    </c-dialog>
   </div>
 </template>
 <script>
@@ -24,11 +27,14 @@ import CStar from '../../components/star';
 import CButton from '../../components/comment/button';
 import CHelp from '../../components/comment/help';
 import CHeader from '../../components/header';
+import CDialog from '../../components/alert/dialog';
+import CType from './type';
 
 export default {
   name: 'break',
   data() {
     return {
+      showDialog: false,
       user: {},
       alert: {
         center: '下一卡关未到开启状态~',
@@ -128,10 +134,17 @@ export default {
     onStartBreak(item, index) {
       // > 换 ===
       if (Number(this.user.gamelevels) > index && !Number(item.IsStartNow)) {
-        this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName } });
+        if (index === 2 || index === 4) {
+          this.showDialog = true;
+        } else {
+          this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName } });
+        }
       } else {
         this.onAlertShow();
       }
+    },
+    chooseType(item) {
+      this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName, typeid: item.ID } });
     },
   },
   mounted() {
@@ -142,6 +155,8 @@ export default {
     CStar,
     CButton,
     CHelp,
+    CDialog,
+    CType,
   },
 };
 </script>

@@ -1,19 +1,14 @@
 <template>
-  <div class="practice">
-    <c-header title="练习赢金币"></c-header>
-    <ul :class="[user.usertype=='1'?'type1':'type2']">
-      <li class="practice-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
-      <!-- <li :class="['practice-item']" v-for="item in practiceData1" :key="item.id" @click="onGoPractice(item)"> -->
+  <div class="practicetype">
+    <ul>
+      <li class="practicetype-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
         <img :src="'./static/images/practice/icon_'+index+'.png'" alt="">
         <span v-html="item.Type_name"></span>
       </li>
-      <li class="practice-error" @click="onGOError">错题库</li>
     </ul>
   </div>
 </template>
 <script>
-import CHeader from '../../components/header';
-
 export default {
   data() {
     return {
@@ -25,7 +20,6 @@ export default {
     init() {
       this.user = this.$utils._Storage.get('userInfo');
       console.log({ ...this.user });
-      this.user.usertype = 2;
       this.getPractiseList();
     },
     getPractiseList() {
@@ -54,23 +48,18 @@ export default {
     },
     onGoPractice(e) {
       console.log('e.IsPractice---', e.IsPractice);
-      this.$router.push({ path: '/start', query: { isPractice: e.IsPractice, title: e.Type_name, id: e.ID } });
-    },
-    onGOError() {
-      this.$router.push({ path: '/start', query: { title: '错题库' } });
+      this.$emit('onClickType', e);
+      // this.$router.push({ path: '/start', query: { isPractice: e.IsPractice, title: e.Type_name, id: e.ID } });
     },
   },
   mounted() {
     this.init();
   },
-  components: {
-    CHeader,
-  },
 };
 </script>
-<style lang='less'>
+<style lang='less' scoped>
 @import '../../assets/css/mixin.less';
-.practice {
+.practicetype {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   display: flex;
@@ -104,25 +93,6 @@ export default {
     &:nth-child(2n) img {
       right: 0;
       left: initial;
-    }
-  }
-  &-error {
-    width: 100%;
-    .flex();
-    font-size: 0.44rem;
-    color: @color3;
-    margin-top: 0.2rem;
-  }
-  .type1 {
-    .practice-error {
-      .bgurl('../../views/practice/error.png');
-      height: 3.16rem/2;
-    }
-  }
-  .type2 {
-    .practice-error {
-      .bgurl('../../views/practice/error1.png');
-      height: 6.16rem/2;
     }
   }
 }
