@@ -87,6 +87,7 @@ export default {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.breakId = data.id || this.$route.query.id;
       this.title = data.title || this.$route.query.title;
+      this.typeid = this.$route.query.typeid || '';
       this.addSubject();
 
       this.number = 1;
@@ -130,6 +131,7 @@ export default {
           ordernum: this.number,
           recordid: this.recordid,
           Userid: this.user.userid,
+          typeid: this.typeid || '',
         })
         .then(res => {
           if (res.data.status === 1) {
@@ -193,7 +195,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 10) {
+      if (this.number > 2) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
@@ -284,6 +286,7 @@ export default {
     },
     // 提示框按钮事件
     onNotifyBtn() {
+      console.log('点击事件弹出框');
       if (this.notify.isPass) {
         const breakData = this.$utils._Storage.get('break');
         breakData.forEach((e, i) => {
@@ -294,8 +297,11 @@ export default {
               this.alert.title = '恭喜您';
             } else {
               const data = breakData[i + 1];
+              console.log(data, 'onNotifyBtn');
               if (data.IsStartNow === '1') {
                 this.alert.isShow = true;
+              } else if (data.VipLevel === '3' || data.VipLevel === '5') {
+                this.$router.go(-1);
               } else {
                 this.init({ id: data.ID, title: data.ActiveName });
               }
