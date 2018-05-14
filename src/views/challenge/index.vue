@@ -134,7 +134,7 @@ export default {
     height: 2.4rem;
   }
   &-grade {
-    padding: 0 15px;
+    padding: 0 0.3rem;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
@@ -143,14 +143,14 @@ export default {
       display: flex;
       height: 1.6rem;
       margin: 0.2rem 0;
-      padding: 0 20px;
+      padding: 0 0.4rem;
       justify-content: flex-start;
       align-items: center;
     }
     &_num {
-      width: 70px;
+      width: 1.4rem;
       color: @color3;
-      font-size: 12px;
+      font-size: 0.24rem;
     }
     &_img {
       width: 1.2rem;
@@ -170,7 +170,7 @@ export default {
       flex: 1;
       overflow: hidden;
       color: #fff;
-      font-size: 16px;
+      font-size: 0.32rem;
     }
     &_btn {
       width: 3.48rem/2;
@@ -178,7 +178,7 @@ export default {
       line-height: 1.32rem/2;
       text-align: center;
       color: #fff;
-      font-size: 16px;
+      font-size: 0.32rem;
       background: url('../../assets/images/frame4.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
@@ -187,7 +187,7 @@ export default {
   }
   &-p {
     color: #979faf;
-    font-size: 14px;
+    font-size: 0.28rem;
     text-align: center;
     padding: 0.2rem 0 0.4rem;
   }

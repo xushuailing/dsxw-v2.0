@@ -427,25 +427,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      // .vux-circle {
-      //   width: 1.1rem;
-      //   height: 1.1rem;
-      //   margin-bottom: 0.2rem;
-      //   .vux-circle-content {
-      //     span {
-      //       display: inline-block;
-      //       width: 0.8rem;
-      //       height: 0.8rem;
-      //       line-height: 0.8rem;
-      //       color: #fff;
-      //       font-size: 0.44rem;
-      //       // font-weight: 600;
-      //       border-radius: 100%;
-      //       border: 1px solid #01d2f4;
-      //       box-shadow: 0 0 5px #01d2f4 inset;
-      //     }
-      //   }
-      // }
     }
   }
   &_item_question {
@@ -499,25 +480,25 @@ export default {
     flex-wrap: wrap;
     h4 {
       width: 100%;
-      font-size: 18px;
+      font-size: 0.36rem;
       color: #7a7a7a;
-      margin-bottom: 10px;
+      margin-bottom: 0.2rem;
     }
     > div {
       flex: 0 0 50%;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0 30px;
+      padding: 0 0.6rem;
       span {
-        font-size: 18px;
+        font-size: 0.36rem;
         color: @color3;
       }
     }
     &_money {
       img {
-        width: 83px/2;
-        height: 83px/2;
+        width: 1.66rem/2;
+        height: 1.66rem/2;
       }
     }
   }

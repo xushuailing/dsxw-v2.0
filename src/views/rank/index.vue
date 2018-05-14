@@ -138,13 +138,13 @@ export default {
     margin: 0.2rem 0;
     display: flex;
     justify-content: space-around;
-    padding: 0 20px;
+    padding: 0 0.4rem;
     &_top {
-      height: 95px/2;
-      line-height: 95px/2;
+      height: 1.9rem/2;
+      line-height: 1.9rem/2;
       text-align: center;
       width: 50%;
-      font-size: 18px;
+      font-size: 0.36rem;
     }
     .white {
       background: url('../../assets/images/frame4.png');
@@ -162,8 +162,8 @@ export default {
     }
   }
   &-grade {
-    padding: 0 15px;
-    margin-top: 10px;
+    padding: 0 0.3rem;
+    margin-top: 0.2rem;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
@@ -171,18 +171,18 @@ export default {
       background-position: center;
       display: flex;
       height: 1.6rem;
-      padding: 0 20px;
+      padding: 0 0.4rem;
       justify-content: flex-start;
       align-items: center;
     }
     li + li {
-      margin-top: 5px;
+      margin-top: 0.1rem;
     }
     &_num {
-      padding-left: 10px;
-      padding-right: 15px;
+      padding-left: 0.2rem;
+      padding-right: 0.3rem;
       color: #fff;
-      font-size: 18px;
+      font-size: 0.36rem;
     }
     &_img {
       width: 1.2rem;
@@ -202,7 +202,7 @@ export default {
       flex: 1;
       overflow: hidden;
       color: @color3;
-      font-size: 16px;
+      font-size: 0.32rem;
     }
     &_btn {
       width: 3.48rem/2;
@@ -210,7 +210,7 @@ export default {
       line-height: 1.32rem/2;
       text-align: center;
       color: #fff;
-      font-size: 16px;
+      font-size: 0.32rem;
     }
   }
 }

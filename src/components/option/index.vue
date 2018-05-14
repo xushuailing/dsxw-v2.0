@@ -120,7 +120,7 @@ export default {
     width: 100%;
     padding: 0 0.6rem;
     &_item {
-      padding: 0 10px;
+      padding: 0 0.2rem;
       height: 2.64rem/2;
       .bgurl('../../assets/images/frame11.png');
       background-size: 100% 100%;
@@ -135,12 +135,12 @@ export default {
       background-size: 100% 100%;
       }
       &.error {
-        padding-left: 50px;
+        padding-left: 1rem;
         .bgurl('../../components/option/error.png');
       background-size: 100% 100%;
       }
       &.correct {
-        padding-right: 50px;
+        padding-right: 1rem;
         .bgurl('../../components/option/correct.png');
       background-size: 100% 100%;
       }

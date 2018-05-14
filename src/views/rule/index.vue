@@ -91,12 +91,11 @@ export default {
       overflow-y: scroll;
       p {
         color: #fff;
-        // font-size: 14px;
         line-height: 0.4rem;
         word-wrap: break-word;
         margin-top: 0.2rem;
         span {
-          letter-spacing: 3px;
+          letter-spacing: 0.06rem;
         }
       }
     }
@@ -115,7 +114,7 @@ export default {
       height: 1.2rem;
       line-height: 1.2rem;
       color: #38e7ff;
-      font-size: 20px;
+      font-size: 0.4rem;
       .tip-check {
         width: 1.34rem/2;
         height: 1.34rem/2;

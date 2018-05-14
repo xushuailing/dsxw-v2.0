@@ -272,10 +272,10 @@ export default {
   &-time {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
-    margin-top: 30px;
+    padding: 0 0.4rem;
+    margin-top: 0.6rem;
     color: #ff5900;
-    font-size: 18px;
+    font-size: 0.36rem;
   }
   &-center {
     flex: 1;
@@ -291,7 +291,7 @@ export default {
     color: #fff;
     margin-bottom: 0.3rem;
     u {
-      font-size: 12px;
+      font-size: 0.24rem;
       color: #ccc;
     }
   }

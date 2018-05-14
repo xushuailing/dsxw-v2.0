@@ -52,7 +52,7 @@ export default {
     }
   }
   &-content {
-    padding: 0 10px;
+    padding: 0 0.2rem;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -60,7 +60,7 @@ export default {
       flex: 0 0 25%;
       text-align: center;
       margin-top: 0.3rem;
-      padding: 0 5px;
+      padding: 0 0.1rem;
       &_top {
         display: flex;
         justify-content: center;
@@ -71,8 +71,8 @@ export default {
           vertical-align: center;
         }
         span {
-          margin-left: 3px;
-          font-size: 14px;
+          margin-left: 0.06rem;
+          font-size: 0.28rem;
           color: @color3;
         }
       }
@@ -86,19 +86,19 @@ export default {
         text-align: center;
         width: 100%;
         border: none;
-        padding: 8px;
+        padding: 0.16rem;
         background: url('../../assets/images/frame1.png') no-repeat center/cover;
         background-size: 100% 75%;
         color: #fff;
-        font-size: 10px;
+        font-size: 0.2rem;
       }
     }
   }
   &-msg {
     margin-top: 0.5rem;
-    padding: 0 15px;
+    padding: 0 0.3rem;
     color: #757a8c;
-    font-size: 16px;
+    font-size: 0.32rem;
   }
 }
 </style>

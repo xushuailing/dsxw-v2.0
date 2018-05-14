@@ -140,8 +140,8 @@ export default {
     &_btn {
       text-align: center;
       width: 80%;
-      height: 100px;
-      line-height: 100px;
+      height: 2rem;
+      line-height: 2rem;
       border: none;
       .bgurl('../../assets/images/frame1.png');
       background-size: 100% 75%;

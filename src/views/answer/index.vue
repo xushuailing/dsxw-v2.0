@@ -345,7 +345,7 @@ export default {
     color: #fff;
     margin-bottom: 0.3rem;
     u {
-      font-size: 12px;
+      font-size: 0.24rem;
       color: #ccc;
     }
   }
@@ -356,25 +356,25 @@ export default {
     flex-wrap: wrap;
     h4 {
       width: 100%;
-      font-size: 18px;
+      font-size: 0.36rem;
       color: #7a7a7a;
-      margin-bottom: 10px;
+      margin-bottom: 0.2rem;
     }
     > div {
       flex: 0 0 50%;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0 30px;
+      padding: 0 0.6rem;
       span {
-        font-size: 18px;
+        font-size: 0.36rem;
         color: @color3;
       }
     }
     &_money {
       img {
-        width: 83px/2;
-        height: 83px/2;
+        width: 1.66rem/2;
+        height: 1.66rem/2;
       }
     }
   }
