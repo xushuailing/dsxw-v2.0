@@ -287,8 +287,10 @@ export default {
     // 提示框按钮事件
     onNotifyBtn() {
       console.log('点击事件弹出框');
+      console.log('this.notify.isPass---', this.notify.isPass);
       if (this.notify.isPass) {
         const breakData = this.$utils._Storage.get('break');
+        console.log('breakData---', breakData);
         breakData.forEach((e, i) => {
           if (this.breakId === e.ID && this.notify.isShow) {
             if (i + 1 > breakData.length) {

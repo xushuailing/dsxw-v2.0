@@ -136,6 +136,7 @@ export default {
       if (Number(this.user.gamelevels) > index && !Number(item.IsStartNow)) {
         if (index === 2 || index === 4) {
           this.showDialog = true;
+          this.type = item;
         } else {
           this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName } });
         }
@@ -143,8 +144,8 @@ export default {
         this.onAlertShow();
       }
     },
-    chooseType(item) {
-      this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName, typeid: item.ID } });
+    chooseType() {
+      this.$router.push({ path: '/answer', query: { id: this.type.ID, title: this.type.ActiveName, typeid: this.type.ID } });
     },
   },
   mounted() {
