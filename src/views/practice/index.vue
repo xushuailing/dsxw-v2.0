@@ -24,8 +24,6 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo');
-      console.log({ ...this.user });
-      this.user.usertype = 2;
       this.getPractiseList();
     },
     getPractiseList() {
