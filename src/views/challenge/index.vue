@@ -8,7 +8,10 @@
             {{index+1}}. 发起者
           </div>
           <div class="challenge-grade_img" >
-            <a href="javascript:;"><img src="http://placehold.it/35x35" alt=""></a>
+            <a href="javascript:;">
+              <img v-if="Number(item.sex)===1" src="../../assets/images/icon_man.png" alt="">
+              <img v-else src="../../assets/images/icon_girl.png" alt="">
+            </a>
           </div>
           <div class="challenge-grade_name" >
             {{item.NickName}}
@@ -77,6 +80,7 @@ export default {
           pkuserid: item.UserID,
           pkrecordid: item.ID,
           totlescore: item.totlesore,
+          sex: item.sex,
         },
       });
       console.log(item);

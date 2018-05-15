@@ -17,7 +17,7 @@
       <div class="pkview_item_content_img">
         <div class="pkview_item_content_img_top">
           <a href="javascript:;">
-             <img v-if="Number(user.sex)===1" src="../../assets/images/icon_man.png" alt="">
+             <img v-if="Number(routerVal.sex)===1" src="../../assets/images/icon_man.png" alt="">
             <img v-else src="../../assets/images/icon_girl.png" alt="">
           </a>
         </div>
