@@ -47,7 +47,6 @@ export default {
         });
     },
     onGoPractice(e) {
-      console.log('e.IsPractice---', e.IsPractice);
       this.$emit('onClickType', e);
       // this.$router.push({ path: '/start', query: { isPractice: e.IsPractice, title: e.Type_name, id: e.ID } });
     },

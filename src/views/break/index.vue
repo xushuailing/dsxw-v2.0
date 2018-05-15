@@ -144,8 +144,8 @@ export default {
         this.onAlertShow();
       }
     },
-    chooseType() {
-      this.$router.push({ path: '/answer', query: { id: this.type.ID, title: this.type.ActiveName, typeid: this.type.ID } });
+    chooseType(e) {
+      this.$router.push({ path: '/answer', query: { id: this.type.ID, title: this.type.ActiveName, typeid: e.ID } });
     },
   },
   mounted() {
