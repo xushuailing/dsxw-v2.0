@@ -1,6 +1,6 @@
 <template>
   <div class="answer">
-    <c-header :title="title" ></c-header>
+    <c-header :title="gameInfo.title" ></c-header>
     <div class="answer-time">
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
@@ -52,7 +52,6 @@ export default {
   data() {
     return {
       user: {},
-      title: '', // 标题
       time: 3000, // 答题时长
       isCircle: false, // 处理倒计时bug
       number: 1, // 答题数
@@ -72,7 +71,13 @@ export default {
       },
       recordid: '', // 题目记录id
       subject: null, // 题目数据
-      breakId: null, // 关卡id
+
+      gameInfo: {
+        title: '', // 标题
+        breakId: null, // 关卡id
+        gameNumber: 0, // 关卡次数
+        allGameNumber: 0, // 关卡总次数
+      }, // 当前关卡信息
       // {
       // ItemTitle: '', // 题目
       // ItemContent: [], // 选项
@@ -85,8 +90,15 @@ export default {
   methods: {
     init(data = {}) {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.breakId = data.id || this.$route.query.id;
-      this.title = data.title || this.$route.query.title;
+      this.breakId = this.$route.query.id;
+      // this.gameInfo = this.$utils._Storage.get('answer') || {};
+      // this.title = data.title || this.$route.query.title;
+      // this.breakId = data.id || this.gameInfo.id; // 关卡id
+      // this.title = data.title || this.gameInfo.title; // 关卡title
+
+      // this.gameNumber = this.gameInfo.UserPassCount; // 关卡次数
+      // this.allGameNumber = this.gameInfo.StartNum; // 关卡总次数
+
       this.typeid = this.$route.query.typeid || '';
       this.addSubject();
 
@@ -286,11 +298,8 @@ export default {
     },
     // 提示框按钮事件
     onNotifyBtn() {
-      console.log('点击事件弹出框');
-      console.log('this.notify.isPass---', this.notify.isPass);
       if (this.notify.isPass) {
         const breakData = this.$utils._Storage.get('break');
-        console.log('breakData---', breakData);
         breakData.forEach((e, i) => {
           if (this.breakId === e.ID && this.notify.isShow) {
             if (i + 1 > breakData.length) {
@@ -299,7 +308,6 @@ export default {
               this.alert.title = '恭喜您';
             } else {
               const data = breakData[i + 1];
-              console.log(data, 'onNotifyBtn');
               if (data.IsStartNow === '1') {
                 this.alert.isShow = true;
               } else if (data.VipLevel === '3' || data.VipLevel === '5') {
@@ -314,9 +322,39 @@ export default {
         this.$router.go(0);
       }
     },
+    // 获取游戏信息
+    getBreakInfo() {
+      this.$http
+        .get(this.$api.breakInfo, {
+          Userid: this.user.userid,
+          UID: this.user.uid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            res.data.data.forEach(e => {
+              // this.breakData
+              if (this.breakId === e.ID) {
+              }
+            });
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+          console.log({ ...res.data.data });
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: `err__${err}`,
+            type: 'warn',
+          });
+        });
+    },
   },
   mounted() {
     this.init();
+    this.getBreakInfo();
   },
   components: {
     CHeader,

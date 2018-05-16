@@ -63,7 +63,6 @@ export default {
         .then(res => {
           if (res.data.status === 1) {
             this.gradeData = res.data.data;
-            this.$utils._Storage.set('break', res.data.data);
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -92,9 +91,8 @@ export default {
           this.showDialog = true;
           this.type = item;
         } else {
-          this.$router.push({ path: '/answer' });
+          this.$router.push({ path: '/answer', query: { id: item.ID } });
         }
-        this.$utils._Storage.set('answer', item);
       } else {
         if (Number(item.IsPass)) {
           this.alert.center = '请选择未通过的关卡~';
