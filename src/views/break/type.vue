@@ -60,7 +60,8 @@ export default {
 @import '../../assets/css/mixin.less';
 .practicetype {
   height: 100%;
-  .bgurl('../../assets/images/bg.jpg');
+  padding: 0.6rem 0;
+  background: rgba(0, 0, 0, .2);
   display: flex;
   flex-direction: column;
   padding-bottom: 0.4rem;

@@ -41,53 +41,7 @@ export default {
         title: '敬请期待',
         isShow: false,
       },
-      gradeData: [
-        {
-          id: 1,
-          ActiveName: '坚韧黑铁',
-          StartNum: 1,
-          jifenNum: 40,
-          IsPass: false,
-          UserPassCount: 0,
-          IsStartNow: 0,
-        },
-        {
-          id: 2,
-          ActiveName: '顽强青铜',
-          StartNum: 2,
-          jifenNum: 100,
-          IsPass: false,
-          UserPassCount: 0,
-          IsStartNow: 0,
-        },
-        {
-          id: 3,
-          ActiveName: '傲气白银',
-          StartNum: 2,
-          jifenNum: 300,
-          IsPass: false,
-          UserPassCount: 0,
-          IsStartNow: 0,
-        },
-        {
-          id: 4,
-          ActiveName: '无暇钻石',
-          StartNum: 3,
-          jifenNum: 700,
-          IsPass: false,
-          UserPassCount: 0,
-          IsStartNow: 0,
-        },
-        {
-          id: 5,
-          ActiveName: '倔匠王者',
-          StartNum: 3,
-          jifenNum: 1000,
-          IsPass: false,
-          UserPassCount: 0,
-          IsStartNow: 0,
-        },
-      ],
+      gradeData: [],
       helpData: {
         title: '闯关规则',
         center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
@@ -133,19 +87,27 @@ export default {
     },
     onStartBreak(item, index) {
       // > 换 ===
-      if (Number(this.user.gamelevels) > index && !Number(item.IsStartNow)) {
+      if (Number(this.user.gamelevels) - 1 === index && !Number(item.IsStartNow)) {
         if (index === 2 || index === 4) {
           this.showDialog = true;
           this.type = item;
         } else {
-          this.$router.push({ path: '/answer', query: { id: item.ID, title: item.ActiveName } });
+          this.$router.push({ path: '/answer' });
         }
+        this.$utils._Storage.set('answer', item);
       } else {
+        if (Number(item.IsPass)) {
+          this.alert.center = '请选择未通过的关卡~';
+          this.alert.title = '闯关完成';
+        } else {
+          this.alert.center = '下一卡关未到开启状态~';
+          this.alert.title = '敬请期待';
+        }
         this.onAlertShow();
       }
     },
     chooseType(e) {
-      this.$router.push({ path: '/answer', query: { id: this.type.ID, title: this.type.ActiveName, typeid: e.ID } });
+      this.$router.push({ path: '/answer', query: { typeid: e.ID } });
     },
   },
   mounted() {
