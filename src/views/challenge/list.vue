@@ -5,7 +5,7 @@
 
       <li v-for="(item,index) in gradeData"
         @click="onStartpklist(item,index)"
-        :class="{'active':Boolean(Number(item.IsStartNow))}"
+        :class="{'active':Boolean(Number(item.IsStartNow))||Number(user.pkgamelevels)-1<index}"
         :key="item.id">
         <div class="pkinfo-grade_name" >
           <h4>{{item.ActiveName}}</h4>
@@ -47,6 +47,7 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+
       this.getPkInfo();
 
       const help = this.$utils._Storage.get('rule');
@@ -82,15 +83,25 @@ export default {
     onAlertShow() {
       this.alert.isShow = !this.alert.isShow;
     },
-    onStartpklist(item) {
+    onStartpklist(item, index) {
       if (Number(item.IsStartNow)) {
+        this.alert.title = '敬请期待';
+        this.alert.center = '该等级挑战未到开启状态~';
         this.onAlertShow();
-      } else if (Number(item.IsPass)) {
-        this.alert.title = '该等级挑战已通过~';
+        return;
+      }
+      if (Number(item.IsPass)) {
+        this.alert.title = '已通过';
         this.alert.center = '请选择别的等级~';
         this.onAlertShow();
-      } else {
+        return;
+      }
+      if (Number(this.user.pkgamelevels) - 1 === index) {
         this.$router.push({ path: '/challenge', query: { id: item.ID, title: item.ActiveName } });
+      } else {
+        this.alert.title = '等级不够';
+        this.alert.center = '请选择对应的等级~';
+        this.onAlertShow();
       }
     },
   },

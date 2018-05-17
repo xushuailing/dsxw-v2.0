@@ -47,7 +47,7 @@ export default {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.title = this.$route.query.title;
-      this.typeId = this.$route.query.id || 0;
+      this.typeId = this.$route.query.id || null;
       const isPractice = this.$route.query.isPractice;
 
       if (Number(isPractice)) {
@@ -62,7 +62,8 @@ export default {
     getPractise() {
       let url = null;
       let data = null;
-      if (!this.typeId) {
+      if (this.typeId === null) {
+        // 练习题
         url = this.$api.practiseErr;
         data = {
           userid: this.user.userid,
@@ -169,6 +170,7 @@ export default {
     },
     // 答题结束
     gameOver(data) {
+      console.log('data11111---', data);
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
@@ -180,10 +182,11 @@ export default {
         this.$vux.toast.show({
           text: '题目已经练习完毕~',
           type: 'warn',
+          time: 2000,
         });
         setTimeout(() => {
           this.$router.go(-1);
-        }, 1500);
+        }, 2000);
         return;
       }
       setTimeout(() => {
@@ -216,12 +219,14 @@ export default {
         this.time--;
         if (this.time <= 0) {
           clearInterval(this.interval);
+          this.time = 0;
         }
       }, 1000);
     },
 
     // 继续答题||重新答题
     onParctiseLog(type) {
+      console.log('type---', type);
       // type == true 继续答题||重新答题
       if (!type) {
         this.$http

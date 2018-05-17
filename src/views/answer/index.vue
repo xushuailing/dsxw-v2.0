@@ -7,7 +7,7 @@
     <div class="answer-center" v-if="subject">
       <div class="answer_subject">
         <span v-html="subject.ItemTitle"></span>
-        <u>({{subject.ItemTypeName}})</u><u>答案({{Number(subject.Answer)+1}})</u>
+        <u>({{subject.ItemTypeName}})</u><u>答案({{subject.Answer}})</u>
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>
@@ -106,7 +106,6 @@ export default {
     },
     // 添加记录
     addSubject() {
-      console.log('this.gameInfo.ID---', this.gameInfo.ID);
       this.$http
         .get(this.$api.answerAdd, {
           userid: this.user.userid,
@@ -133,7 +132,6 @@ export default {
     },
     // 获取题目
     getSubject() {
-      console.log('this.typeid---', this.typeid);
       this.$http
         .get(this.$api.answerData, {
           activeid: this.gameInfo.ID,
@@ -204,9 +202,8 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 2) {
+      if (this.number > 10) {
         console.log('闯关成功');
-        console.log('this.gameInfo---', this.gameInfo);
         setTimeout(() => {
           this.overSubject(true); // 提交答案
         }, 1500);
@@ -247,8 +244,6 @@ export default {
           isPass,
         })
         .then(res => {
-          console.log('1111res', res);
-
           if (res.data.status === 1) {
             const data = res.data;
             this.notify.star = data.starnum;
