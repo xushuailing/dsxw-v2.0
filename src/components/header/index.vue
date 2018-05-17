@@ -1,7 +1,7 @@
 <template>
   <div class="c-header">
     <i v-if="isBack" @click="onBack" class="c-header-back iconfont icon-left"></i>
-    <h4 class="c-header-title">{{title}}</h4>
+    <h4 class="c-header-title" v-html="title"></h4>
     <i v-if="isHelp" @click="onHelp" class="c-header-help iconfont icon-help"></i>
   </div>
 </template>

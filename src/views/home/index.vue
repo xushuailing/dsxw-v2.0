@@ -104,7 +104,7 @@ export default {
     init() {
       this.$utils._UpdateUserInfo(this, data => {
         this.user = data;
-        this.userName = this.user.nickname || this.$utils._Storage.get('userAccount').name;
+        this.userName = this.$utils._Storage.get('userAccount').name;
         this.pk.isChallengeBegins = Number(this.user.isopenpk);
         this.pk.num = this.user.pkcount;
         this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
