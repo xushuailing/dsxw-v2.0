@@ -81,6 +81,7 @@ export default {
           pkrecordid: item.ID,
           totlescore: item.totlesore,
           sex: item.sex,
+          NickName: item.NickName,
         },
       });
       console.log(item);

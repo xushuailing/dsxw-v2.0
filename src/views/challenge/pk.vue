@@ -9,7 +9,7 @@
             <img v-else src="../../assets/images/icon_girl.png" alt="">
           </a>
         </div>
-        <div class="pkview_item_content_img_bottom">倔强小西</div>
+        <div class="pkview_item_content_img_bottom">{{user.nickname}}</div>
       </div>
       <div class="pkview_item_content_time">
         <c-circle :percent="percent" :isCircle="isCircle"></c-circle>
@@ -21,7 +21,7 @@
             <img v-else src="../../assets/images/icon_girl.png" alt="">
           </a>
         </div>
-        <div class="pkview_item_content_img_bottom">倔强小西</div>
+        <div class="pkview_item_content_img_bottom">{{routerVal.NickName}}</div>
       </div>
     </div>
     <div v-if="subject" class="pkview_item_question">
