@@ -34,7 +34,7 @@ export default {
     return {
       user: {
         cardId: '1111',
-        name: 'test',
+        name: 'test2',
         password: '1111',
       },
       isDaily: null,
