@@ -1,6 +1,6 @@
 <template>
   <div class="answer">
-    <c-header :title="gameInfo.title" ></c-header>
+    <c-header :title="gameInfo.ActiveName" ></c-header>
     <div class="answer-time">
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
@@ -73,10 +73,10 @@ export default {
       subject: null, // 题目数据
 
       gameInfo: {
-        title: '', // 标题
-        breakId: null, // 关卡id
-        gameNumber: 0, // 关卡次数
-        allGameNumber: 0, // 关卡总次数
+        ActiveName: '', // 标题
+        ID: null, // 关卡id
+        UserPassCount: 0, // 关卡次数
+        UserSubmitSum: 0, // 关卡总次数
       }, // 当前关卡信息
       // {
       // ItemTitle: '', // 题目
@@ -90,14 +90,9 @@ export default {
   methods: {
     init(data = {}) {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.breakId = this.$route.query.id;
-      // this.gameInfo = this.$utils._Storage.get('answer') || {};
-      // this.title = data.title || this.$route.query.title;
-      // this.breakId = data.id || this.gameInfo.id; // 关卡id
-      // this.title = data.title || this.gameInfo.title; // 关卡title
+      this.gameInfo.ID = data.id || this.$route.query.id;
 
-      // this.gameNumber = this.gameInfo.UserPassCount; // 关卡次数
-      // this.allGameNumber = this.gameInfo.StartNum; // 关卡总次数
+      this.getBreakInfo();
 
       this.typeid = this.$route.query.typeid || '';
       this.addSubject();
@@ -114,11 +109,10 @@ export default {
         .get(this.$api.answerAdd, {
           userid: this.user.userid,
           Uid: this.user.uid,
-          gradeValue: this.breakId,
+          gradeValue: this.gameInfo.ID,
         })
         .then(res => {
           if (res.data.status === 1) {
-            this.breakId = res.data.activeid;
             this.recordid = res.data.RecordID;
             this.getSubject();
           } else {
@@ -139,7 +133,7 @@ export default {
     getSubject() {
       this.$http
         .get(this.$api.answerData, {
-          activeid: this.breakId,
+          activeid: this.gameInfo.ID,
           ordernum: this.number,
           recordid: this.recordid,
           Userid: this.user.userid,
@@ -207,7 +201,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 10) {
+      if (this.number > 2) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
@@ -231,7 +225,7 @@ export default {
           ordernum: this.subject.OrderNum,
           questionanswer: data.select,
           isright: data.type,
-          ActiveID: this.breakId,
+          ActiveID: this.gameInfo.ID,
         })
         .then(() => {
           // console.log('res---', res);
@@ -245,7 +239,7 @@ export default {
       this.$http
         .get(this.$api.answerOver, {
           Id: this.recordid,
-          activeID: this.breakId,
+          activeID: this.gameInfo.ID,
           isPass,
         })
         .then(res => {
@@ -299,21 +293,26 @@ export default {
     // 提示框按钮事件
     onNotifyBtn() {
       if (this.notify.isPass) {
-        const breakData = this.$utils._Storage.get('break');
-        breakData.forEach((e, i) => {
-          if (this.breakId === e.ID && this.notify.isShow) {
-            if (i + 1 > breakData.length) {
+        if (this.gameInfo.UserPassCount < this.gameInfo.UserSubmitSum) {
+          this.$router.go(0);
+          return;
+        }
+        this.breakData.forEach((e, i) => {
+          if (this.gameInfo.ID === e.ID) {
+            if (i + 1 > this.breakData.length) {
               this.alert.isShow = true;
-              this.alert.center = '已完成所有关卡~';
               this.alert.title = '恭喜您';
+              this.alert.center = '已完成所有关卡~';
             } else {
-              const data = breakData[i + 1];
+              const data = this.breakData[i + 1];
               if (data.IsStartNow === '1') {
                 this.alert.isShow = true;
+                this.alert.title = '敬请期待';
+                this.alert.center = '下一卡关未到开启时间~';
               } else if (data.VipLevel === '3' || data.VipLevel === '5') {
                 this.$router.go(-1);
               } else {
-                this.init({ id: data.ID, title: data.ActiveName });
+                this.init({ id: data.ID });
               }
             }
           }
@@ -331,9 +330,11 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
+            this.breakData = res.data.data;
+            console.log('this.breakData---', this.breakData);
             res.data.data.forEach(e => {
-              // this.breakData
-              if (this.breakId === e.ID) {
+              if (this.gameInfo.ID === e.ID) {
+                this.gameInfo = e;
               }
             });
           } else {
@@ -342,7 +343,6 @@ export default {
               type: 'warn',
             });
           }
-          console.log({ ...res.data.data });
         })
         .catch(err => {
           this.$vux.toast.show({
@@ -354,7 +354,6 @@ export default {
   },
   mounted() {
     this.init();
-    this.getBreakInfo();
   },
   components: {
     CHeader,
