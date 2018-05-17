@@ -9,10 +9,10 @@
           {{nownumber}}/{{totle}}
         </div>
         <div @click="handleClick(true)" class="c-parctise-dialog-container_btnKeep">
-          <c-button width="100%" height="1.3rem" text="继续闯关"></c-button>
+          <c-button width="100%" height="1.3rem" text="继续练习"></c-button>
         </div>
         <div @click="handleClick(false)" class="c-parctise-dialog-container_btnRefresh">
-          <c-button width="100%" height="1.3rem" text="重新挑战"></c-button>
+          <c-button width="100%" height="1.3rem" text="重新练习"></c-button>
         </div>
       </div>
     </c-alert>

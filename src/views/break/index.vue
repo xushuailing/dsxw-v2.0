@@ -86,7 +86,7 @@ export default {
     },
     onStartBreak(item, index) {
       // > 换 ===
-      if (Number(this.user.gamelevels) - 1 > index && !Number(item.IsStartNow)) {
+      if (Number(this.user.gamelevels) - 1 === index && !Number(item.IsStartNow)) {
         if (index === 2 || index === 4) {
           this.showDialog = true;
           this.type = item;
@@ -105,7 +105,7 @@ export default {
       }
     },
     chooseType(e) {
-      this.$router.push({ path: '/answer', query: { typeid: e.ID } });
+      this.$router.push({ path: '/answer', query: { id: this.type.ID, typeid: e.ID } });
     },
   },
   mounted() {

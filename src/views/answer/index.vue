@@ -5,8 +5,9 @@
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
     <div class="answer-center" v-if="subject">
-      <div class="answer_subject" >
-        {{subject.ItemTitle}} <u>({{subject.ItemTypeName}})</u><u>答案({{Number(subject.Answer)+1}})</u>
+      <div class="answer_subject">
+        <span v-html="subject.ItemTitle"></span>
+        <u>({{subject.ItemTypeName}})</u><u>答案({{Number(subject.Answer)+1}})</u>
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>
@@ -105,6 +106,7 @@ export default {
     },
     // 添加记录
     addSubject() {
+      console.log('this.gameInfo.ID---', this.gameInfo.ID);
       this.$http
         .get(this.$api.answerAdd, {
           userid: this.user.userid,
@@ -131,13 +133,14 @@ export default {
     },
     // 获取题目
     getSubject() {
+      console.log('this.typeid---', this.typeid);
       this.$http
         .get(this.$api.answerData, {
           activeid: this.gameInfo.ID,
           ordernum: this.number,
           recordid: this.recordid,
           Userid: this.user.userid,
-          typeid: this.typeid || '',
+          typeid: this.typeid,
         })
         .then(res => {
           if (res.data.status === 1) {
@@ -203,6 +206,7 @@ export default {
       }
       if (this.number > 2) {
         console.log('闯关成功');
+        console.log('this.gameInfo---', this.gameInfo);
         setTimeout(() => {
           this.overSubject(true); // 提交答案
         }, 1500);
@@ -250,12 +254,11 @@ export default {
             this.notify.star = data.starnum;
             this.notify.isShow = true;
             this.notify.star = Number(data.starnum);
-            this.notify.gameLv = this.$utils._LvType(data.gamelevels);
+            this.notify.gameLv = this.$utils._LvType(data.gamelevel);
             if (isPass) {
               this.notify.type = 'success1';
               this.notify.money = Number(data.jinfen);
               this.notify.isPass = true;
-              this.user.jiFen = Number(this.user.jiFen) + Number(data.jinfen);
             } else {
               this.notify.type = 'fail1';
               this.notify.isPass = false;
@@ -293,12 +296,13 @@ export default {
     // 提示框按钮事件
     onNotifyBtn() {
       if (this.notify.isPass) {
-        if (this.gameInfo.UserPassCount < this.gameInfo.UserSubmitSum) {
+        if (Number(this.gameInfo.UserPassCount) + 1 < this.gameInfo.UserSubmitSum) {
           this.$router.go(0);
           return;
         }
+        const info = JSON.parse(JSON.stringify(this.gameInfo));
         this.breakData.forEach((e, i) => {
-          if (this.gameInfo.ID === e.ID) {
+          if (info.ID === e.ID) {
             if (i + 1 > this.breakData.length) {
               this.alert.isShow = true;
               this.alert.title = '恭喜您';

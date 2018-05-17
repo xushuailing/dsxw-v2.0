@@ -71,6 +71,7 @@ const _GetUrlParam = function(name) {
   return r ? decodeURIComponent(r[2]) : null;
 };
 const _LvType = function(num) {
+  console.log('num---', num)
   switch (Number(num)) {
     case 1:
       return '坚韧黑铁';
