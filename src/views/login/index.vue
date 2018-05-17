@@ -148,6 +148,7 @@ export default {
       flex: 1;
       height: 0.96rem;
       color: #fff;
+      font-size: 0.32rem;
     }
     &_submit {
       margin-top: 0.7rem;
