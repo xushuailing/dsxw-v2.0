@@ -202,7 +202,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 10) {
+      if (this.number > 2) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
@@ -291,6 +291,8 @@ export default {
     // 提示框按钮事件
     onNotifyBtn() {
       if (this.notify.isPass) {
+        console.log('this.gameInfo---', this.gameInfo);
+
         if (Number(this.gameInfo.UserPassCount) + 1 < this.gameInfo.UserSubmitSum) {
           this.$router.go(0);
           return;
@@ -298,7 +300,8 @@ export default {
         const info = JSON.parse(JSON.stringify(this.gameInfo));
         this.breakData.forEach((e, i) => {
           if (info.ID === e.ID) {
-            if (i + 1 > this.breakData.length) {
+            console.log('i---', i);
+            if (i + 1 >= this.breakData.length) {
               this.alert.isShow = true;
               this.alert.title = '恭喜您';
               this.alert.center = '已完成所有关卡~';

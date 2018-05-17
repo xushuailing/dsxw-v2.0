@@ -85,7 +85,13 @@ export default {
       this.alert.isShow = !this.alert.isShow;
     },
     onStartBreak(item, index) {
-      // > 换 ===
+      console.log('1---', 1);
+      if (Number(item.IsPass)) {
+        this.alert.center = '请选择未通过的关卡~';
+        this.alert.title = '闯关完成';
+        this.onAlertShow();
+        return;
+      }
       if (Number(this.user.gamelevels) - 1 === index && !Number(item.IsStartNow)) {
         if (index === 2 || index === 4) {
           this.showDialog = true;
@@ -94,13 +100,8 @@ export default {
           this.$router.push({ path: '/answer', query: { id: item.ID } });
         }
       } else {
-        if (Number(item.IsPass)) {
-          this.alert.center = '请选择未通过的关卡~';
-          this.alert.title = '闯关完成';
-        } else {
-          this.alert.center = '下一卡关未到开启状态~';
-          this.alert.title = '敬请期待';
-        }
+        this.alert.center = '下一卡关未到开启状态~';
+        this.alert.title = '敬请期待';
         this.onAlertShow();
       }
     },
