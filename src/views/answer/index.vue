@@ -202,7 +202,7 @@ export default {
         }, 1500);
         return;
       }
-      if (this.number > 2) {
+      if (this.number > 10) {
         console.log('闯关成功');
         setTimeout(() => {
           this.overSubject(true); // 提交答案
