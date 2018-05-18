@@ -7,7 +7,7 @@
     <div class="answer-center" v-if="subject">
       <div class="answer_subject">
         <span v-html="subject.ItemTitle"></span>
-        <u>({{subject.ItemTypeName}})</u><u>答案({{subject.Answer}})</u>
+        <u>({{subject.ItemTypeName}})</u>
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
     </div>

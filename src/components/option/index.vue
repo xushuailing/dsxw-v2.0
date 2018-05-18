@@ -5,8 +5,9 @@
       <li v-for="(item,index) in data.ItemContent"
           @click="onSelect(item,index)"
           :key="index"
-          :class="['c-option-select_item',userSelect[index]]">
-        {{item}}
+          :class="['c-option-select_item',userSelect[index]]"
+          v-html="item">
+        <!-- {{item}} -->
       </li>
     </ul>
   </div>
