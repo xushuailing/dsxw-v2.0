@@ -8,7 +8,7 @@
 
       <div class="start-center" v-if="subject&&!practiseLog.isShow">
         <div class="start_subject" >
-          {{subject.ItemTitle}} <u>({{subject.ItemTypeName}})</u><u>答案({{Number(subject.Answer)+1}})</u>
+          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u>
         </div>
         <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
       </div>

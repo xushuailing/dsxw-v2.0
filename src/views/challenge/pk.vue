@@ -25,7 +25,7 @@
       </div>
     </div>
     <div v-if="subject" class="pkview_item_question">
-      {{subject.ItemTitle}}<u>({{subject.ItemTypeName}})</u>
+      <span v-html="subject.ItemTitle"></span><u>({{subject.ItemTypeName}})</u>
     </div>
     <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
@@ -89,7 +89,7 @@ export default {
       user: {},
       routerVal: this.$route.query,
       isCircle: false, // 处理倒计时bug
-      percent: 1000, // 答题时长 ms
+      percent: 2000, // 答题时长 ms
       number: 1, // 答题数量
       score: [], // 分数
       interval: null,
@@ -231,6 +231,7 @@ export default {
       }
       this.subject = obj;
       console.log(this.subject, 'this.subject');
+      console.log(this.subject.Answer, 'this.subject.Answer');
       this.setTime();
     },
     // 计时器
@@ -238,7 +239,7 @@ export default {
       let a = 0;
       this.interval = setInterval(() => {
         a++;
-        this.jifen -= 1;
+        this.jifen -= 0.5;
         if (a === 10) {
           this.percent = this.percent - 100;
           a = 0;
@@ -254,14 +255,14 @@ export default {
       this.checkAnswer(data);
       this.number++;
       if (data.type) {
-        this.score.push(this.jifen);
+        this.score.push(Math.floor(this.jifen));
       } else {
         this.score.push(0);
       }
       if (this.number <= 5) {
         setTimeout(() => {
           this.isCircle = false; // 打开倒计时圆圈
-          this.percent = 1000; // 初始化倒计时
+          this.percent = 2000; // 初始化倒计时
           this.jifen = 100; // 初始化记分器
           this.startAnswer(this.arguments); // 请求题目
         }, 1500);
