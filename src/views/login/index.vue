@@ -33,9 +33,9 @@ export default {
   data() {
     return {
       user: {
-        cardId: '1111',
-        name: 'test2',
-        password: '1111',
+        cardId: '',
+        name: '',
+        password: '',
       },
       isDaily: null,
     };

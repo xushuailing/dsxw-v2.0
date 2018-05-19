@@ -15,7 +15,7 @@
             <i class="iconfont icon-help"></i>
           </div>
         </div>
-        <div class="info-lv">{{user.GameName}}</div>
+        <div class="info-lv">{{Number(user.gamelevels)>Number(user.pkgamelevels)?user.GameName:user.PkGameName}}</div>
         <c-star :number="Number(user.starnum)" :star="Number(user.activenum)" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png" alt="">
@@ -181,9 +181,6 @@ export default {
     },
     onHelp() {
       console.log(11111111);
-    },
-    getUserInfo() {
-      this.$http.get(this.$api.userInfo, { userid: this.user.userid });
     },
   },
   mounted() {

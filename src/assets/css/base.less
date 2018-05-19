@@ -1,18 +1,18 @@
 @import '~vux/src/styles/reset.less';
 html,
 body {
-    height: 100%;
-    width: 100%;
-    background-color: #000;
-    line-height: normal;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  line-height: normal;
 }
 
 body {
-    font-size: 0.24rem;
+  font-size: 0.24rem;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 b,
@@ -20,14 +20,18 @@ u,
 s,
 i,
 em {
-    font-weight: normal;
-    font-style: normal;
-    text-decoration: none;
-    display: inline-block;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  display: inline-block;
 }
 
 button:focus {
-    outline: 0;
+  outline: 0;
+}
+
+table {
+  border: none;
 }
 
 p,
@@ -39,27 +43,59 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: normal;
-    color: inherit;
+  font-weight: normal;
+  color: inherit;
 }
 
 ul,
 ol {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
-    color: #333;
+  text-decoration: none;
+  color: #333;
 }
 
 input,
 textarea {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
 textarea {
-    resize: none;
-    overflow: auto;
+  resize: none;
+  overflow: auto;
+}
+
+._rule {
+  flex: 1;
+  overflow: hidden;
+  overflow-y: scroll;
+  color: #fff;
+  div + div {
+    margin-top: 10px;
+  }
+  h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  h5 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 13px;
+  }
+  u {
+    color: #f44;
+  }
+  table {
+    margin: 10px 0;
+    width: 100%;
+    border-color: #fff;
+    text-align: center;
+    td {
+      font-size: 13px;
+    }
+  }
 }

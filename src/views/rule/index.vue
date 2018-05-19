@@ -1,16 +1,119 @@
 <template>
   <div class="rule">
     <div class="rule-top">
-      游戏规则
+      2018德赛西威线上知识竞赛规则
     </div>
     <div class="rule-content">
-      <div class="rule-content_msg">
-        <p v-for="item in rule" :key="item.id">
-          {{item.Game_rules}}
-        </p>
+      <div class="_rule">
+        <div>
+          <h3>一、2018年质量知识竞赛线上活动分为质量大闯关与倔匠挑战赛，各五关。</h3>
+        <h5>质量大闯关</h5>
+        <table border="1" cellspacing="0">
+          <tr>
+            <th>关卡名称</th>
+            <th>通关星星</th>
+            <th>轮数</th>
+            <th>每轮题数</th>
+            <th>通关金币奖励</th>
+          </tr>
+          <tr>
+            <td>坚韧黑铁</td>
+            <td>★</td>
+            <td>1</td>
+            <td>10</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>顽强青铜</td>
+            <td>★★</td>
+            <td>2</td>
+            <td>10</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>傲气白银</td>
+            <td>★★</td>
+            <td>2</td>
+            <td>10</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>无暇钻石</td>
+            <td>★★★</td>
+            <td>3</td>
+            <td>10</td>
+            <td>200</td>
+          </tr>
+          <tr>
+            <td>倔匠王者</td>
+            <td>★★★</td>
+            <td>3</td>
+            <td>10</td>
+            <td>250</td>
+          </tr>
+        </table>
+        <p>1.各专业练习题库内包含所有闯关题目，可以先练习再闯关；</p>
+        <p>2.每轮获胜点亮1星，<u>失败不亮星、不灭星</u>，星满通关得金币；</p>
+        <p>3.每题30秒，每轮超时或答错2题则闯关失败； </p>
+        <h5>倔匠挑战赛</h5>
+        <table border="1" cellspacing="0">
+          <tr>
+            <th>关卡名称</th>
+            <th>通关星星</th>
+            <th>轮数</th>
+            <th>每轮题数</th>
+            <th>通关金币奖励</th>
+          </tr>
+          <tr>
+            <td>坚韧黑铁</td>
+            <td>★</td>
+            <td>1</td>
+            <td>10</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>顽强青铜</td>
+            <td>★★</td>
+            <td>2</td>
+            <td>10</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>傲气白银</td>
+            <td>★★</td>
+            <td>2</td>
+            <td>10</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>无暇钻石</td>
+            <td>★★★</td>
+            <td>3</td>
+            <td>10</td>
+            <td>200</td>
+          </tr>
+          <tr>
+            <td>倔匠王者</td>
+            <td>★★★</td>
+            <td>3</td>
+            <td>10</td>
+            <td>250</td>
+          </tr>
+        </table>
+        <p>1.傲气白银闯关通过后，倔匠挑战赛自动解锁；</p>
+        <p>2.可选择应战或者发起新挑战，每题<u>20秒</u>，正确率高者获胜；</p>
+        <p>3.每轮挑战获胜点亮1星，失败灭1星，每关灭到0星为止，星满通关得金币；</p>
+        </div>
+        <div>
+          <h3>二、金币获取方式与兑奖</h3>
+          <p><u>1.每成功邀请一位同事参与游戏即可获得10金币；</u></p>
+          <p>2.练习赢金币，正确一题得1金币，每天上限10金币；</p>
+          <p>3.金币在线兑换随机红包（每次最高50元），数量有限，先兑先得；</p>
+          <p>4.奖励质量大闯关每月专业前三名，倔匠挑战赛每周第一名。</p>
+        </div>
       </div>
       <div class="rule-content_copyright">
-        最终解释权归赛德西威质量月组委会所有
+        最终解释权归2018线上质量知识竞赛组委会所有。
       </div>
     </div>
     <div class="rule-bottom">
@@ -32,25 +135,13 @@ export default {
   data() {
     return {
       checkedSrc: false,
-      rule: '',
     };
   },
   components: { CButton },
-  mounted() {
-    this.getRule();
-  },
+  mounted() {},
   methods: {
-    getRule() {
-      this.$http.get(this.$api.rule, {}).then(res => {
-        if (res.data.status === 1) {
-          this.rule = res.data.data;
-          this.$utils._Storage.set('rule', res.data.data);
-        }
-      });
-    },
     handleTip() {
       this.checkedSrc = true;
-      this.$utils._Storage.set('ruleShow', this.checkedSrc);
     },
     toHome() {
       this.$router.push({ path: '/home' });
@@ -67,38 +158,23 @@ export default {
   height: 100%;
   padding: 0.4rem 0.2rem;
   .bgurl('../../assets/images/bg.jpg');
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   &-top {
     height: 1rem;
     color: #fff;
-    font-size: 0.48rem;
-    padding-left: 0.45rem;
+    font-size: 0.4rem;
+    text-align: center;
   }
   &-content {
     flex: 1;
     overflow: hidden;
     padding: 0 0.45rem;
-    font-size: 0.28rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    &_msg {
-      flex: 1;
-      overflow: hidden;
-      overflow-y: scroll;
-      p {
-        color: #fff;
-        line-height: 0.4rem;
-        word-wrap: break-word;
-        margin-top: 0.2rem;
-        span {
-          letter-spacing: 0.06rem;
-        }
-      }
-    }
     &_copyright {
       height: 0.7rem;
       line-height: 0.7rem;

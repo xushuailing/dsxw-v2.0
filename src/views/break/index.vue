@@ -44,7 +44,7 @@ export default {
       gradeData: [],
       helpData: {
         title: '闯关规则',
-        center: '<p>123123</p><p>123123</p><p>123123</p><p>123123</p><p>123123</p>',
+        center: '',
         isShow: false,
       },
     };
@@ -52,6 +52,7 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
+      this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
       this.getBreakInfo();
     },
     getBreakInfo() {
