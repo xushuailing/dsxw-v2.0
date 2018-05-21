@@ -55,10 +55,123 @@
       </div>
 
     </div>
-    <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
+    <c-help :title="helpData.title" :isShow.sync="helpData.isShow">
+      <div class="_rule">
+        <div>
+          <h3>一、2018年质量知识竞赛线上活动分为质量大闯关与倔匠挑战赛，各五关。</h3>
+          <h5>质量大闯关</h5>
+          <table border="1" cellspacing="0">
+            <tr>
+              <th>关卡名称</th>
+              <th>通关星星</th>
+              <th>轮数</th>
+              <th>每轮题数</th>
+              <th>通关金币奖励</th>
+            </tr>
+            <tr>
+              <td>坚韧黑铁</td>
+              <td>★</td>
+              <td>1</td>
+              <td>10</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>顽强青铜</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>10</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>傲气白银</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>10</td>
+              <td>150</td>
+            </tr>
+            <tr>
+              <td>无暇钻石</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>10</td>
+              <td>200</td>
+            </tr>
+            <tr>
+              <td>倔匠王者</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>10</td>
+              <td>250</td>
+            </tr>
+          </table>
+          <p>1.各专业练习题库内包含所有闯关题目，可以先练习再闯关；</p>
+          <p>2.每轮获胜点亮1星，<u>失败不亮星、不灭星</u>，星满通关得金币；</p>
+          <p>3.每题30秒，每轮超时或答错2题则闯关失败； </p>
+          <h5>倔匠挑战赛</h5>
+          <table border="1" cellspacing="0">
+            <tr>
+              <th>关卡名称</th>
+              <th>通关星星</th>
+              <th>轮数</th>
+              <th>每轮题数</th>
+              <th>通关金币奖励</th>
+            </tr>
+            <tr>
+              <td>聪慧黄金</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>巧思白银</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>无暇钻石</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>黑带大师</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>荣耀王者</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+          </table>
+          <p>1.傲气白银闯关通过后，倔匠挑战赛自动解锁；</p>
+          <p>2.可选择应战或者发起新挑战，每题<u>20秒</u>，正确率高者获胜；</p>
+          <p>3.每轮挑战获胜点亮1星，失败灭1星，每关灭到0星为止，星满通关得金币；</p>
+        </div>
+        <div>
+          <h3>二、金币获取方式与兑奖</h3>
+          <p><u>1.每成功邀请一位同事参与游戏即可获得10金币；</u></p>
+          <p>2.练习赢金币，正确一题得1金币，每天上限10金币；</p>
+          <p>3.金币在线兑换随机红包（每次最高50元），数量有限，先兑先得；</p>
+          <p>4.奖励质量大闯关每月专业前三名，倔匠挑战赛每周第一名。</p>
+        </div>
+        <div class="_rule-copyright">最终解释权归2018线上质量知识竞赛组委会所有。</div>
+      </div>
+    </c-help>
     <c-dialog :visiable.sync="pk.isInputName" class="home-pk">
       <div class="home-pk_rule">
-        {{pk.center}}
+        恭喜你顺利进入倔匠挑战赛环节！在这个环节你可以给自己起一个特色的昵称来进行游戏；
+        <br/>
+        <br/>
+        请注意，昵称不可更改当然请避免昵称中出现难以识别的字符。
       </div>
       <div class="home-pk_input">
         <input v-model="pk.nickname" type="text" maxlength="6" placeholder="请输入昵称">
@@ -83,17 +196,15 @@ export default {
       user: null,
       helpData: {
         isShow: false,
-        title: '闯关规则',
         center: '',
       },
       condition: {
         title: '解锁条件',
-        center: '',
+        center: 'XXXXXXXXXXXXXXXXXXX',
       },
       pk: {
         isChallengeBegins: false, // 未开始挑战
         isDare: false, // 显示解锁条件
-        center: '',
         isInputName: false,
         nickname: null,
         num: 0,
@@ -107,9 +218,8 @@ export default {
         this.userName = this.$utils._Storage.get('userAccount').name;
         this.pk.isChallengeBegins = Number(this.user.isopenpk);
         this.pk.num = this.user.pkcount;
-        this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
-        this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
-        this.pk.center = this.$utils._Storage.get('rule')[0].Pk_tips || '';
+        // this.helpData.center = this.$utils._Storage.get('rule')[0].passrule || '';
+        // this.condition.center = this.$utils._Storage.get('rule')[0].lock_condition || '';
       }); // 更新用户信息
     },
     /* 闯关 */
@@ -120,7 +230,6 @@ export default {
     /* 挑战赛 */
     onBeginDare() {
       if (this.pk.isChallengeBegins) {
-        console.log('1---', this.pk.isDare);
         if (this.pk.isDare) {
           this.$vux.toast.show({
             text: '未开始挑战~',
@@ -177,10 +286,7 @@ export default {
       this.$router.push('/rank');
     },
     onSetMoney() {
-      console.log(11111111);
-    },
-    onHelp() {
-      console.log(11111111);
+      console.log('红包');
     },
   },
   mounted() {
@@ -202,6 +308,9 @@ export default {
   padding: 0.4rem 0.2rem;
   .bgurl('../../views/home/bg.jpg');
   background-size: cover;
+  ._rule{
+    padding: 0 10px;
+  }
   &-top {
     height: 6.8rem/2;
     display: flex;
@@ -382,7 +491,7 @@ export default {
     &_rule {
       padding: 0.2rem;
       color: #fff;
-      font-size: 0.32rem;
+      font-size: 0.3rem;
     }
     &_input {
       text-align: center;

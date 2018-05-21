@@ -2,7 +2,11 @@
   <CAlert v-if="show">
     <div class="c-help" >
       <div :class="['c-help-title',{'alert':!center}]" v-if="title">{{title}}</div>
-      <div class="c-help-conter" v-if="center" v-html="center"></div>
+
+      <div class="c-help-conter" v-html="center" v-if="center"></div>
+      <div class="c-help-conter" v-else>
+        <slot></slot>
+      </div>
       <div @click="onClose" class="c-help-footer">
         <CButton :text="text"></CButton>
       </div>
