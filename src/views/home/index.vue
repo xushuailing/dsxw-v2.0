@@ -200,7 +200,7 @@ export default {
       },
       condition: {
         title: '解锁条件',
-        center: 'XXXXXXXXXXXXXXXXXXX',
+        center: '闯关通过第三关才可开启！',
       },
       pk: {
         isChallengeBegins: false, // 未开始挑战

@@ -29,39 +29,39 @@
               <th>通关金币奖励</th>
             </tr>
             <tr>
-              <td>坚韧黑铁</td>
-              <td>★</td>
-              <td>1</td>
-              <td>10</td>
-              <td>50</td>
-            </tr>
-            <tr>
-              <td>顽强青铜</td>
+              <td>聪慧黄金</td>
               <td>★★</td>
               <td>2</td>
-              <td>10</td>
-              <td>100</td>
+              <td>5</td>
+              <td>20</td>
             </tr>
             <tr>
-              <td>傲气白银</td>
+              <td>巧思白银</td>
               <td>★★</td>
               <td>2</td>
-              <td>10</td>
-              <td>150</td>
+              <td>5</td>
+              <td>20</td>
             </tr>
             <tr>
               <td>无暇钻石</td>
-              <td>★★★</td>
-              <td>3</td>
-              <td>10</td>
-              <td>200</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>30</td>
             </tr>
             <tr>
-              <td>倔匠王者</td>
+              <td>黑带大师</td>
               <td>★★★</td>
               <td>3</td>
-              <td>10</td>
-              <td>250</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>荣耀王者</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>5</td>
+              <td>30</td>
             </tr>
           </table>
           <p>1.傲气白银闯关通过后，倔匠挑战赛自动解锁；</p>

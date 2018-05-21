@@ -91,11 +91,13 @@ export default {
   methods: {
     init(data = {}) {
       this.user = this.$utils._Storage.get('userInfo') || {};
-      this.gameInfo.ID = data.id || this.$route.query.id;
+      this.typeid = this.$route.query.typeid || '';
+
+      // this.gameInfo.ID = data.id || this.$route.query.id;
+      this.gameInfo.ID = data.id || this.$utils._Storage.get('gameInfo').ID;
 
       this.getBreakInfo();
 
-      this.typeid = this.$route.query.typeid || '';
       this.addSubject();
 
       this.number = 1;
@@ -103,6 +105,37 @@ export default {
       this.errNum = 0;
       this.isCircle = false;
       this.notify.isShow = false;
+    },
+
+    // 获取游戏信息
+    getBreakInfo() {
+      this.$http
+        .get(this.$api.breakInfo, {
+          Userid: this.user.userid,
+          UID: this.user.uid,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.breakData = res.data.data;
+            res.data.data.forEach(e => {
+              if (this.gameInfo.ID === e.ID) {
+                this.gameInfo = e;
+                this.$utils._Storage.set('gameInfo', e);
+              }
+            });
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: `err__${err}`,
+            type: 'warn',
+          });
+        });
     },
     // 添加记录
     addSubject() {
@@ -141,6 +174,7 @@ export default {
           typeid: this.typeid,
         })
         .then(res => {
+          console.log('res.data---', res.data.data.Answer);
           if (res.data.status === 1) {
             this.handleData(res.data.data);
           } else {
@@ -181,8 +215,6 @@ export default {
         obj.ItemContent = ['错', '对'];
       }
       this.subject = obj;
-      console.log(this.subject.Answer);
-
       this.setTime();
     },
     // 验证答案
@@ -268,7 +300,6 @@ export default {
           }
         })
         .catch(err => {
-          console.log('1111res', err);
           this.$vux.toast.show({
             text: `err__${err}`,
             type: 'warn',
@@ -291,8 +322,6 @@ export default {
     // 提示框按钮事件
     onNotifyBtn() {
       if (this.notify.isPass) {
-        console.log('this.gameInfo---', this.gameInfo);
-
         if (Number(this.gameInfo.UserPassCount) + 1 < this.gameInfo.UserSubmitSum) {
           this.$router.go(0);
           return;
@@ -300,7 +329,6 @@ export default {
         const info = JSON.parse(JSON.stringify(this.gameInfo));
         this.breakData.forEach((e, i) => {
           if (info.ID === e.ID) {
-            console.log('i---', i);
             if (i + 1 >= this.breakData.length) {
               this.alert.isShow = true;
               this.alert.title = '恭喜您';
@@ -322,36 +350,6 @@ export default {
       } else {
         this.$router.go(0);
       }
-    },
-    // 获取游戏信息
-    getBreakInfo() {
-      this.$http
-        .get(this.$api.breakInfo, {
-          Userid: this.user.userid,
-          UID: this.user.uid,
-        })
-        .then(res => {
-          if (res.data.status === 1) {
-            this.breakData = res.data.data;
-            console.log('this.breakData---', this.breakData);
-            res.data.data.forEach(e => {
-              if (this.gameInfo.ID === e.ID) {
-                this.gameInfo = e;
-              }
-            });
-          } else {
-            this.$vux.toast.show({
-              text: res.data.msg,
-              type: 'warn',
-            });
-          }
-        })
-        .catch(err => {
-          this.$vux.toast.show({
-            text: `err__${err}`,
-            type: 'warn',
-          });
-        });
     },
   },
   mounted() {

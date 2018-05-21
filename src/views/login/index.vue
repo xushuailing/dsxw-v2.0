@@ -105,7 +105,7 @@ export default {
     },
   },
   mounted() {
-    // this.init();
+    this.init();
   },
   components: {
     CButton,
@@ -170,7 +170,6 @@ export default {
 }
 </style>
 <style lang="less">
-
 </style>
 
 

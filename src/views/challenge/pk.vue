@@ -1,6 +1,6 @@
 <template>
   <div class="pkview">
-    <div class="pkview_item_header"><c-header title="来自xx的挑战"></c-header></div>
+    <div class="pkview_item_header"><c-header :title="`来自${routerVal.NickName}的挑战`"></c-header></div>
     <div class="pkview_item_content">
       <div class="pkview_item_content_img">
         <div class="pkview_item_content_img_top">

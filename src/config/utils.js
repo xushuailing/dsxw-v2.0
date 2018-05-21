@@ -71,7 +71,7 @@ const _GetUrlParam = function(name) {
   return r ? decodeURIComponent(r[2]) : null;
 };
 const _LvType = function(num) {
-  console.log('num---', num)
+  console.log('num---', num);
   switch (Number(num)) {
     case 1:
       return '坚韧黑铁';
@@ -84,7 +84,7 @@ const _LvType = function(num) {
     case 5:
       return '倔匠王者';
     default:
-      return '倔匠王者';
+      return '未知';
       break;
   }
 };

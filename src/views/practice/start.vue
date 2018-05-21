@@ -1,6 +1,6 @@
 <template>
   <div class="start">
-      <c-header :title="title"></c-header>
+      <c-header :title="title" :isBtn="true" @onSubmit="onSubmit"></c-header>
       <div class="start-time">
         <p>剩余答题时间：{{time}}秒</p>
         <p>答题数：{{nownumber}}/{{totle}}</p>
@@ -47,7 +47,7 @@ export default {
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.title = this.$route.query.title;
-      this.typeId = this.$route.query.id || null;
+      this.typeId = this.$route.query.id || 0;
       const isPractice = this.$route.query.isPractice;
 
       if (Number(isPractice)) {
@@ -62,11 +62,12 @@ export default {
     getPractise() {
       let url = null;
       let data = null;
-      if (this.typeId === null) {
+      if (this.typeId === 0) {
         // 练习题
         url = this.$api.practiseErr;
         data = {
           userid: this.user.userid,
+          ordernum: this.nownumber,
         };
       } else {
         url = this.$api.practise;
@@ -77,12 +78,13 @@ export default {
           Uid: this.user.uid,
         };
       }
+      console.log('url---', url);
       this.$http
         .get(url, data)
         .then(res => {
           if (res.data.status === 1) {
             this.practiseId = res.data.data.ID;
-            this.totle = res.data.QuestionCount || 0;
+            this.totle = Number(res.data.QuestionCount) || 0;
             if (!this.totle) {
               this.$vux.toast.show({
                 text: '该题库没有题目~',
@@ -149,7 +151,7 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
-            this.totle = res.data.totle;
+            this.totle = Number(res.data.totle) + 1;
             this.nownumber = res.data.nownumber;
           } else {
             this.$vux.toast.show({
@@ -170,7 +172,6 @@ export default {
     },
     // 答题结束
     gameOver(data) {
-      console.log('data11111---', data);
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
@@ -197,6 +198,7 @@ export default {
     },
     // 提交记录
     checkPractise(data) {
+      console.log('this.nownumber---', this.nownumber);
       this.$http
         .get(this.$api.practiseEnd, {
           questionid: this.practiseId,
@@ -256,9 +258,13 @@ export default {
         this.getPractise();
       }
     },
+
+    onSubmit() {
+      // this.gameOver();
+    },
   },
   mounted() {
-    this.init();
+    // this.init();
   },
   components: {
     CHeader,

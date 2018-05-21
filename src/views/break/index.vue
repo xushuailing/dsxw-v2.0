@@ -112,8 +112,10 @@ export default {
   },
   methods: {
     init() {
-      this.user = this.$utils._Storage.get('userInfo') || {};
-      this.getBreakInfo();
+      this.$utils._UpdateUserInfo(this, data => {
+        this.user = data;
+        this.getBreakInfo();
+      });
     },
     getBreakInfo() {
       this.$http
@@ -146,7 +148,6 @@ export default {
       this.alert.isShow = !this.alert.isShow;
     },
     onStartBreak(item, index) {
-      console.log('1---', 1);
       if (Number(item.IsPass)) {
         this.alert.center = '请选择未通过的关卡~';
         this.alert.title = '闯关完成';
@@ -158,7 +159,8 @@ export default {
           this.showDialog = true;
           this.type = item;
         } else {
-          this.$router.push({ path: '/answer', query: { id: item.ID } });
+          this.$utils._Storage.set('gameInfo', { ID: item.ID });
+          this.$router.push({ path: '/answer' });
         }
       } else {
         this.alert.center = '下一卡关未到开启状态~';
@@ -167,7 +169,8 @@ export default {
       }
     },
     chooseType(e) {
-      this.$router.push({ path: '/answer', query: { id: this.type.ID, typeid: e.ID } });
+      this.$utils._Storage.set('gameInfo', { ID: this.type.ID });
+      this.$router.push({ path: '/answer', query: { typeid: e.ID } });
     },
   },
   mounted() {

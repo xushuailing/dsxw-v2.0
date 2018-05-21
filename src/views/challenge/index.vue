@@ -25,7 +25,68 @@
       <p class="challenge-p">点击 挑战列表中的挑战进行挑战</p>
       <c-button @click.native="onNewChallenge" text="发起挑战"></c-button>
     </div>
-    <c-help :center="helpData.center" :title="helpData.title" :isShow.sync="helpData.isShow"></c-help>
+    <c-help :title="helpData.title" :isShow.sync="helpData.isShow">
+      <div class="_rule">
+        <div>
+           <h3>一、游戏规则</h3>
+          <table border="1" cellspacing="0">
+            <tr>
+              <th>关卡名称</th>
+              <th>通关星星</th>
+              <th>轮数</th>
+              <th>每轮题数</th>
+              <th>通关金币奖励</th>
+            </tr>
+            <tr>
+              <td>聪慧黄金</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>巧思白银</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>无暇钻石</td>
+              <td>★★</td>
+              <td>2</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>黑带大师</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>荣耀王者</td>
+              <td>★★★</td>
+              <td>3</td>
+              <td>5</td>
+              <td>30</td>
+            </tr>
+          </table>
+          <p>1.傲气白银闯关通过后，倔匠挑战赛自动解锁；</p>
+          <p>2.可选择应战或者发起新挑战，每题20秒，正确率高者获胜；</p>
+          <p>3.每轮挑战获胜点亮1星，失败灭1星，每关灭到0星为止，星满通关得金币；</p>
+        </div>
+        <div>
+          <h3>二、金币获取方式与兑奖</h3>
+          <p>1.每成功邀请一位同事参与游戏即可获得10金币；</p>
+          <p>2.练习赢金币，正确一题得1金币，每天上限10金币；</p>
+          <p>3.金币在线兑换随机红包（每次最高50元），数量有限，先兑先得；</p>
+          <p>4.奖励质量大闯关每月专业前三名，倔匠挑战赛每周第一名。</p>
+        </div>
+        <div class="_rule-copyright">最终解释权归2018线上质量知识竞赛组委会所有。</div>
+      </div>
+    </c-help>
   </div>
 </template>
 <script>
@@ -37,23 +98,7 @@ export default {
   name: 'c-challenge',
   data() {
     return {
-      gradeData: [
-        // {
-        //   ID: 1,
-        //   NickName: '坚韧黑铁',
-        //   UserID: 1,
-        // },
-        // {
-        //   ID: 2,
-        //   NickName: '顽强青铜',
-        //   UserID: 2,
-        // },
-        // {
-        //   ID: 3,
-        //   NickName: '傲气白银',
-        //   UserID: 3,
-        // },
-      ],
+      gradeData: [],
       helpData: {
         isShow: false,
         title: '挑战规则',
@@ -66,9 +111,7 @@ export default {
     this.getPkList(this.$route.query.id);
   },
   methods: {
-    init() {
-      this.helpData.center = this.$utils._Storage.get('rule')[0].Pkrules || '';
-    },
+    init() {},
     onHelpShow() {
       this.helpData.isShow = !this.helpData.isShow;
     },
@@ -127,6 +170,9 @@ export default {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  ._rule {
+    padding: 0 0.2rem;
+  }
   &_item_header {
     height: 1.2rem;
     margin-bottom: 0.3rem;
