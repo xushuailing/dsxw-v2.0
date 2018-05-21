@@ -107,9 +107,10 @@ export default {
   },
   methods: {
     init() {
-      this.user = this.$utils._Storage.get('userInfo') || {};
-
-      this.getPkInfo();
+      this.$utils._UpdateUserInfo(this, data => {
+        this.user = data;
+        this.getPkInfo();
+      });
     },
     getPkInfo() {
       this.$http
@@ -180,7 +181,7 @@ export default {
 .pkinfo {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
-  ._rule{
+  ._rule {
     padding: 0 0.2rem;
   }
   &-grade {
