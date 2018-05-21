@@ -53,6 +53,9 @@ export default {
     JudgeCorrect() {
       // 判断选择是否正确
       const data = this.data;
+      let isError = false;
+      console.log(this.selectIndex, 'this.selectIndex选项');
+      console.log(data.Answer, 'this.data.Answer答案');
       if (data.ItemType === '1' || data.ItemType === '6') {
         if (data.Answer[0] === this.selectIndex[0]) {
           this.$set(this.userSelect, data.Answer[0], 'correct');
@@ -63,7 +66,22 @@ export default {
           this.gameOver(false, this.selectIndex[0]);
         }
       } else if (data.ItemType === '2') {
-        console.log('回家做');
+        if (data.Answer.length === this.selectIndex.length) {
+          this.selectIndex.forEach(key => {
+            if (!data.Answer.indexOf(key)) {
+              this.$set(this.userSelect, key, 'error');
+              isError = true;
+            }
+          });
+          data.Answer.forEach(v => {
+            this.$set(this.userSelect, v, 'correct');
+          });
+        }
+        if (isError) {
+          this.gameOver(false, this.selectIndex);
+        } else if (!isError && data.Answer.length === this.selectIndex.length) {
+          this.gameOver(true, this.selectIndex);
+        }
       }
     },
     onSelect(item, index) {
@@ -107,29 +125,16 @@ export default {
       } */
 
       if (!this.isTimeEnd) return; // 时间结束
-      // if (this.userSelect[index]) return; // 已经选择过
-      // this.click++;
+      this.click++;
 
       const data = this.data;
       if (data.ItemType === '1' || data.ItemType === '6') {
-        // if (this.click > 1) return;
-        this.initData();
+        this.userSelect = new Array(this.data.ItemContent.length);
+        this.selectIndex = [];
         this.selectIndex.push(index);
         this.$set(this.userSelect, index, 'active');
-        // data.Answer.forEach(e => {
-        // if (e === index) {
-        //   this.$set(this.userSelect, index, 'correct');
-        //   this.gameOver(true, [index]);
-        // } else {
-        //   this.$set(this.userSelect, e, 'correct');
-        //   this.$set(this.userSelect, index, 'error');
-        //   this.gameOver(false, [index]);
-        // }
-        // });
+        console.log(this.selectIndex, 'this.selectIndex单选');
       } else if (data.ItemType === '2') {
-        // if (this.click > data.Answer.length) return;
-        console.log(this.userSelect, 'this.userSelect');
-        console.log(this.userSelect[index], 'this.userSelect[index]');
         if (this.userSelect[index]) {
           this.$set(this.userSelect, index, '');
           this.selectIndex.splice(this.selectIndex.indexOf(index), 1);
@@ -137,24 +142,7 @@ export default {
           this.selectIndex.push(index);
           this.$set(this.userSelect, index, 'active');
         }
-        console.log(this.selectIndex, 'this.selectIndex');
-
-        // if (data.Answer.indexOf(index) > -1) {
-        //   this.$set(this.userSelect, index, 'active');
-        //   if (this.click === data.Answer.length) {
-        //     data.Answer.forEach(e => {
-        //       this.$set(this.userSelect, e, 'correct');
-        //     });
-        //     this.gameOver(true, this.selectIndex);
-        //   }
-        // } else {
-        //   data.Answer.forEach(e => {
-        //     this.$set(this.userSelect, e, 'correct');
-        //     this.$set(this.userSelect, index, 'error');
-        //   });
-
-        //   this.gameOver(false, this.selectIndex);
-        // }
+        console.log(this.selectIndex, 'this.selectIndex多选');
       }
     },
     gameOver(type, index) {
@@ -178,12 +166,16 @@ export default {
     isSubmit(val) {
       console.log(val, '测试');
       if (!val) return;
-      setTimeout(() => {
-        this.data.Answer.forEach(e => {
-          this.$set(this.userSelect, e, 'correct');
-        });
-        this.gameOver(false, []);
-      }, 500);
+      if (this.click) {
+        this.JudgeCorrect();
+      } else {
+        setTimeout(() => {
+          this.data.Answer.forEach(e => {
+            this.$set(this.userSelect, e, 'correct');
+          });
+          this.gameOver(false, []);
+        }, 500);
+      }
     },
   },
   mounted() {

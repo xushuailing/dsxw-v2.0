@@ -173,13 +173,13 @@ export default {
     },
     // 答题结束
     gameOver(data) {
-      console.log(data, '测试，点击submit!!');
+      console.log(data, 'this测试，点击submit!!');
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
-        console.log('正确');
+        console.log('this测试正确');
       } else {
-        console.log('错误');
+        console.log('this测试错误');
       }
       if (this.nownumber > this.totle) {
         this.$vux.toast.show({
