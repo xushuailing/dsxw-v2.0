@@ -30,6 +30,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isSubmit: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -44,45 +48,113 @@ export default {
       this.userSelect = new Array(this.data.ItemContent.length);
       this.selectIndex = [];
       this.click = 0;
+      console.log(this.data.Answer, 'this.data');
+    },
+    JudgeCorrect() {
+      // 判断选择是否正确
+      const data = this.data;
+      if (data.ItemType === '1' || data.ItemType === '6') {
+        if (data.Answer[0] === this.selectIndex[0]) {
+          this.$set(this.userSelect, data.Answer[0], 'correct');
+          this.gameOver(true, this.selectIndex[0]);
+        } else {
+          this.$set(this.userSelect, data.Answer[0], 'correct');
+          this.$set(this.userSelect, this.selectIndex[0], 'error');
+          this.gameOver(false, this.selectIndex[0]);
+        }
+      } else if (data.ItemType === '2') {
+        console.log('回家做');
+      }
     },
     onSelect(item, index) {
+      /* if (!this.isTimeEnd) return; // 时间结束
+        if (this.userSelect[index]) return; // 已经选择过
+        this.click++;
+
+        const data = this.data;
+        if (data.ItemType === '1' || data.ItemType === '6') {
+          if (this.click > 1) return;
+
+          data.Answer.forEach(e => {
+            if (e === index) {
+              this.$set(this.userSelect, index, 'correct');
+              this.gameOver(true, [index]);
+            } else {
+              this.$set(this.userSelect, e, 'correct');
+              this.$set(this.userSelect, index, 'error');
+              this.gameOver(false, [index]);
+            }
+          });
+        } else if (data.ItemType === '2') {
+          if (this.click > data.Answer.length) return;
+          this.selectIndex.push(index);
+          if (data.Answer.indexOf(index) > -1) {
+            this.$set(this.userSelect, index, 'active');
+            if (this.click === data.Answer.length) {
+              data.Answer.forEach(e => {
+                this.$set(this.userSelect, e, 'correct');
+              });
+              this.gameOver(true, this.selectIndex);
+            }
+          } else {
+            data.Answer.forEach(e => {
+              this.$set(this.userSelect, e, 'correct');
+              this.$set(this.userSelect, index, 'error');
+            });
+
+            this.gameOver(false, this.selectIndex);
+          }
+      } */
+
       if (!this.isTimeEnd) return; // 时间结束
-      if (this.userSelect[index]) return; // 已经选择过
-      this.click++;
+      // if (this.userSelect[index]) return; // 已经选择过
+      // this.click++;
 
       const data = this.data;
       if (data.ItemType === '1' || data.ItemType === '6') {
-        if (this.click > 1) return;
-
-        data.Answer.forEach(e => {
-          if (e === index) {
-            this.$set(this.userSelect, index, 'correct');
-            this.gameOver(true, [index]);
-          } else {
-            this.$set(this.userSelect, e, 'correct');
-            this.$set(this.userSelect, index, 'error');
-            this.gameOver(false, [index]);
-          }
-        });
-      } else if (data.ItemType === '2') {
-        if (this.click > data.Answer.length) return;
+        // if (this.click > 1) return;
+        this.initData();
         this.selectIndex.push(index);
-        if (data.Answer.indexOf(index) > -1) {
-          this.$set(this.userSelect, index, 'active');
-          if (this.click === data.Answer.length) {
-            data.Answer.forEach(e => {
-              this.$set(this.userSelect, e, 'correct');
-            });
-            this.gameOver(true, this.selectIndex);
-          }
+        this.$set(this.userSelect, index, 'active');
+        // data.Answer.forEach(e => {
+        // if (e === index) {
+        //   this.$set(this.userSelect, index, 'correct');
+        //   this.gameOver(true, [index]);
+        // } else {
+        //   this.$set(this.userSelect, e, 'correct');
+        //   this.$set(this.userSelect, index, 'error');
+        //   this.gameOver(false, [index]);
+        // }
+        // });
+      } else if (data.ItemType === '2') {
+        // if (this.click > data.Answer.length) return;
+        console.log(this.userSelect, 'this.userSelect');
+        console.log(this.userSelect[index], 'this.userSelect[index]');
+        if (this.userSelect[index]) {
+          this.$set(this.userSelect, index, '');
+          this.selectIndex.splice(this.selectIndex.indexOf(index), 1);
         } else {
-          data.Answer.forEach(e => {
-            this.$set(this.userSelect, e, 'correct');
-            this.$set(this.userSelect, index, 'error');
-          });
-
-          this.gameOver(false, this.selectIndex);
+          this.selectIndex.push(index);
+          this.$set(this.userSelect, index, 'active');
         }
+        console.log(this.selectIndex, 'this.selectIndex');
+
+        // if (data.Answer.indexOf(index) > -1) {
+        //   this.$set(this.userSelect, index, 'active');
+        //   if (this.click === data.Answer.length) {
+        //     data.Answer.forEach(e => {
+        //       this.$set(this.userSelect, e, 'correct');
+        //     });
+        //     this.gameOver(true, this.selectIndex);
+        //   }
+        // } else {
+        //   data.Answer.forEach(e => {
+        //     this.$set(this.userSelect, e, 'correct');
+        //     this.$set(this.userSelect, index, 'error');
+        //   });
+
+        //   this.gameOver(false, this.selectIndex);
+        // }
       }
     },
     gameOver(type, index) {
@@ -96,6 +168,16 @@ export default {
   watch: {
     isTimeEnd(val) {
       if (val) return;
+      setTimeout(() => {
+        this.data.Answer.forEach(e => {
+          this.$set(this.userSelect, e, 'correct');
+        });
+        this.gameOver(false, []);
+      }, 500);
+    },
+    isSubmit(val) {
+      console.log(val, '测试');
+      if (!val) return;
       setTimeout(() => {
         this.data.Answer.forEach(e => {
           this.$set(this.userSelect, e, 'correct');
@@ -133,17 +215,17 @@ export default {
       }
       &.active {
         .bgurl('../../components/option/select.png');
-      background-size: 100% 100%;
+        background-size: 100% 100%;
       }
       &.error {
         padding-left: 1rem;
         .bgurl('../../components/option/error.png');
-      background-size: 100% 100%;
+        background-size: 100% 100%;
       }
       &.correct {
         padding-right: 1rem;
         .bgurl('../../components/option/correct.png');
-      background-size: 100% 100%;
+        background-size: 100% 100%;
       }
     }
   }

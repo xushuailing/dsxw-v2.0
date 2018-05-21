@@ -10,7 +10,7 @@
         <div class="start_subject" >
           <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u>
         </div>
-        <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
+        <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>
       <c-parctise-dialog :nownumber="nownumber" :totle="totle" :visiable.sync="practiseLog.isShow" @onParctiseLog="onParctiseLog"></c-parctise-dialog>
   </div>
@@ -24,6 +24,7 @@ export default {
   name: 'start',
   data() {
     return {
+      onClickSubmit: false, // 点击提交按钮
       title: '',
       time: 20, // 时间
       totle: 0, // 题目总数
@@ -172,6 +173,7 @@ export default {
     },
     // 答题结束
     gameOver(data) {
+      console.log(data, '测试，点击submit!!');
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
@@ -194,6 +196,7 @@ export default {
         this.time = 20; // 初始化倒计时
         this.nownumber++;
         this.getPractise();
+        this.onClickSubmit = false;
       }, 1500);
     },
     // 提交记录
@@ -260,11 +263,12 @@ export default {
     },
 
     onSubmit() {
-      // this.gameOver();
+      this.onClickSubmit = true;
+      console.log('点击submit成功！');
     },
   },
   mounted() {
-    // this.init();
+    this.init();
   },
   components: {
     CHeader,
