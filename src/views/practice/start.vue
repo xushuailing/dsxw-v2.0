@@ -8,7 +8,7 @@
 
       <div class="start-center" v-if="subject&&!practiseLog.isShow">
         <div class="start_subject" >
-          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u>
+          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u><u>({{subject.Answer}})</u>
         </div>
         <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>
@@ -177,9 +177,9 @@ export default {
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
-        console.log('this测试正确');
+        // console.log('this测试正确');
       } else {
-        console.log('this测试错误');
+        // console.log('this测试错误');
       }
       if (this.nownumber > this.totle) {
         this.$vux.toast.show({
@@ -264,7 +264,7 @@ export default {
 
     onSubmit() {
       this.onClickSubmit = true;
-      console.log('点击submit成功！');
+      // console.log('点击submit成功！');
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <div class="pkview">
-    <div class="pkview_item_header"><c-header :title="`来自${routerVal.NickName}的挑战`"></c-header></div>
+    <div class="pkview_item_header"><c-header :title="`来自${routerVal.NickName}的挑战`" :isBtn="true" @onSubmit="onSubmit"></c-header></div>
     <div class="pkview_item_content">
       <div class="pkview_item_content_img">
         <div class="pkview_item_content_img_top">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="pkview_item_footer_middle">
-        <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
+        <c-option :data="subject" :isTimeEnd="Boolean(percent)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>
       <div class="pkview_item_footer_left">
         <div class="text">{{rtotalNumber}}</div>
@@ -86,6 +86,7 @@ export default {
   name: 'pkview',
   data() {
     return {
+      onClickSubmit: false, // 点击提交按钮
       user: {},
       routerVal: this.$route.query,
       isCircle: false, // 处理倒计时bug
@@ -145,6 +146,10 @@ export default {
     this.init();
   },
   methods: {
+    onSubmit() {
+      this.onClickSubmit = true;
+      // console.log('点击submit成功！');
+    },
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.addAnswerRecord();
@@ -265,6 +270,7 @@ export default {
           this.percent = 2000; // 初始化倒计时
           this.jifen = 100; // 初始化记分器
           this.startAnswer(this.arguments); // 请求题目
+          this.onClickSubmit = false;
         }, 1500);
       } else {
         setTimeout(() => {

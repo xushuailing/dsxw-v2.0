@@ -1,6 +1,6 @@
 <template>
   <div class="newpkview">
-    <div class="newpkview_item_header"><c-header title="发起挑战"></c-header></div>
+    <div class="newpkview_item_header"><c-header title="发起挑战" :isBtn="true" @onSubmit="onSubmit"></c-header></div>
     <div class="newpkview_item_content">
       <div class="newpkview_item_content_img">
         <div class="newpkview_item_content_img_top">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="newpkview_item_footer_middle">
-        <c-option :data="subject" :isTimeEnd="Boolean(percent)" @isSuccess="gameOver"></c-option>
+        <c-option :data="subject" :isTimeEnd="Boolean(percent)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>
       <div class="newpkview_item_footer_left">
 
@@ -50,6 +50,7 @@ export default {
   name: 'newpkview',
   data() {
     return {
+      onClickSubmit: false, // 点击提交按钮
       user: {},
       isCircle: false, // 处理倒计时bug
       percent: 2000, // 答题时长 ms
@@ -82,6 +83,10 @@ export default {
     this.init();
   },
   methods: {
+    onSubmit() {
+      this.onClickSubmit = true;
+      // console.log('点击submit成功！');
+    },
     init() {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.addAnswerRecord();
@@ -207,6 +212,7 @@ export default {
           this.percent = 2000; // 初始化倒计时
           this.jifen = 100; // 初始化记分器
           this.startAnswer(this.arguments); // 请求题目
+          this.onClickSubmit = false;
         }, 1500);
       } else {
         this.$vux.toast.show({

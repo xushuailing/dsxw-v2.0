@@ -41,6 +41,7 @@ export default {
       selectIndex: [],
       // ItemType: 1, // 1=单选题,6=判断,2=多项
       click: 0,
+      errSelect: [], // 错误选项
     };
   },
   methods: {
@@ -48,14 +49,14 @@ export default {
       this.userSelect = new Array(this.data.ItemContent.length);
       this.selectIndex = [];
       this.click = 0;
-      console.log(this.data.Answer, 'this.data');
     },
     JudgeCorrect() {
       // 判断选择是否正确
       const data = this.data;
-      let isError = false;
-      console.log(this.selectIndex, 'this.selectIndex选项');
-      console.log(data.Answer, 'this.data.Answer答案');
+      this.errSelect = [];
+      // console.log(this.selectIndex, 'this.selectIndex选项');
+      // console.log(data.Answer, 'this.data.Answer答案');
+      // console.log(data.ItemType, 'this.data类型');
       if (data.ItemType === '1' || data.ItemType === '6') {
         if (data.Answer[0] === this.selectIndex[0]) {
           this.$set(this.userSelect, data.Answer[0], 'correct');
@@ -66,20 +67,20 @@ export default {
           this.gameOver(false, this.selectIndex[0]);
         }
       } else if (data.ItemType === '2') {
-        if (data.Answer.length === this.selectIndex.length) {
-          this.selectIndex.forEach(key => {
-            if (!data.Answer.indexOf(key)) {
-              this.$set(this.userSelect, key, 'error');
-              isError = true;
-            }
-          });
-          data.Answer.forEach(v => {
-            this.$set(this.userSelect, v, 'correct');
-          });
-        }
-        if (isError) {
+        this.selectIndex.forEach(key => {
+          if (data.Answer.indexOf(key) === -1) {
+            this.$set(this.userSelect, key, 'error');
+            this.errSelect.push(key);
+          }
+        });
+        data.Answer.forEach(v => {
+          this.$set(this.userSelect, v, 'correct');
+        });
+        if (this.errSelect.length) {
           this.gameOver(false, this.selectIndex);
-        } else if (!isError && data.Answer.length === this.selectIndex.length) {
+        } else if (!this.errSelect.length && data.Answer.length !== this.selectIndex.length) {
+          this.gameOver(false, this.selectIndex);
+        } else if (!this.errSelect.length && data.Answer.length === this.selectIndex.length) {
           this.gameOver(true, this.selectIndex);
         }
       }
@@ -133,7 +134,7 @@ export default {
         this.selectIndex = [];
         this.selectIndex.push(index);
         this.$set(this.userSelect, index, 'active');
-        console.log(this.selectIndex, 'this.selectIndex单选');
+        // console.log(this.selectIndex, 'this.selectIndex单选');
       } else if (data.ItemType === '2') {
         if (this.userSelect[index]) {
           this.$set(this.userSelect, index, '');
@@ -142,7 +143,6 @@ export default {
           this.selectIndex.push(index);
           this.$set(this.userSelect, index, 'active');
         }
-        console.log(this.selectIndex, 'this.selectIndex多选');
       }
     },
     gameOver(type, index) {
@@ -164,8 +164,8 @@ export default {
       }, 500);
     },
     isSubmit(val) {
-      console.log(val, '测试');
       if (!val) return;
+      console.log(val, '点击提交测试');
       if (this.click) {
         this.JudgeCorrect();
       } else {
