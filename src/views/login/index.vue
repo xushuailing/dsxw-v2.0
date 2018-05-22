@@ -14,7 +14,7 @@
       </label>
       <label>
         <span>密码</span>
-        <input type="password" v-model="user.password" placeholder="身份证后六为">
+        <input type="text" v-model="user.password" placeholder="身份证后4位">
       </label>
       <div class="login-form_submit" @click="onUserLogin(user)">
         <c-button width="72%" text="登录"></c-button>
