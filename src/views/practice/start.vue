@@ -8,7 +8,7 @@
 
       <div class="start-center" v-if="subject&&!practiseLog.isShow">
         <div class="start_subject" >
-          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u><u>({{subject.Answer}})</u>
+          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u>
         </div>
         <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>

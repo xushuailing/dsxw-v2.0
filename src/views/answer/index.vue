@@ -1,6 +1,6 @@
 <template>
   <div class="answer">
-    <c-header :title="gameInfo.ActiveName" ></c-header>
+    <c-header :title="gameInfo.ActiveName" :isBtn="true" @onSubmit="onSubmit"></c-header>
     <div class="answer-time">
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
@@ -9,7 +9,7 @@
         <span v-html="subject.ItemTitle"></span>
         <u>({{subject.ItemTypeName}})</u>
       </div>
-      <c-option :data="subject" :isTimeEnd="Boolean(time)" @isSuccess="gameOver"></c-option>
+      <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
     </div>
     <c-notify
       :visiable.sync="notify.isShow"
@@ -52,6 +52,7 @@ export default {
   name: 'answer',
   data() {
     return {
+      onClickSubmit: false, // 点击提交按钮
       user: {},
       time: 3000, // 答题时长
       isCircle: false, // 处理倒计时bug
@@ -89,6 +90,10 @@ export default {
     };
   },
   methods: {
+    onSubmit() {
+      this.onClickSubmit = true;
+      // console.log('点击submit成功！');
+    },
     init(data = {}) {
       this.user = this.$utils._Storage.get('userInfo') || {};
       this.typeid = this.$route.query.typeid || '';
@@ -221,7 +226,7 @@ export default {
     gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
       this.isCircle = true; // 关闭倒计时圆圈
-
+      console.log(data.type, '是否正确');
       this.checkSubject(data);
 
       if (!data.type) this.errNum++; // 答错题
@@ -246,6 +251,7 @@ export default {
         this.isCircle = false; // 打开倒计时圆圈
         this.time = 3000; // 初始化倒计时
         this.getSubject(); // 请求题目
+        this.onClickSubmit = false;
       }, 1500);
     },
     // 提交答案

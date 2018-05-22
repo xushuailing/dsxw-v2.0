@@ -442,6 +442,10 @@ export default {
     font-size: 0.32rem;
     text-align: center;
     padding: 0.4rem 0.2rem 0;
+    u {
+      font-size: 0.24rem;
+      color: #ccc;
+    }
   }
   &_item_footer {
     flex: 1;
