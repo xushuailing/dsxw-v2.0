@@ -192,7 +192,7 @@ export default {
 .break {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
-  background-size: 100%;
+  background-size: cover;
   ._rule {
     padding: 0 0.2rem;
   }

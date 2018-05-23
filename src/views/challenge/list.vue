@@ -181,6 +181,8 @@ export default {
 .pkinfo {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
+
   ._rule {
     padding: 0 0.2rem;
   }

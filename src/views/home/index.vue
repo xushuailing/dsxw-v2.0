@@ -25,18 +25,18 @@
     </div>
     <div class="home-break" @click="onBeginBreak" v-if="user">
       <div class="home-break_start">
-        <span>质量大闯关</span>
+        <span class="title">质量大闯关</span>
       </div>
       <img src="./icon_01.png" alt="">
     </div>
     <div :class="['home-dare',{'active':pk.isChallengeBegins }]" @click="onBeginDare" v-if="user">
       <div class="home-dare_wait" v-if="pk.isDare">
-        <span>{{condition.title}}</span>
+        <span  class="title">{{condition.title}}</span>
         <p>{{condition.center}}</p>
       </div>
       <div v-else class="home-dare_start" >
         <div>
-          <span>倔匠挑战赛</span>
+          <span  class="title">倔匠挑战赛</span>
           <p>当前挑战池共有挑战<u>{{pk.num}}</u></p>
         </div>
         <img src="./icon_02.png" alt="">
@@ -105,7 +105,7 @@
             </tr>
           </table>
           <p>1.各专业练习题库内包含所有闯关题目，可以先练习再闯关；</p>
-          <p>2.每轮获胜点亮1星，<u>失败不亮星、不灭星</u>，星满通关得金币；</p>
+          <p>2.每轮获胜点亮1星，失败不亮星、不灭星，星满通关得金币；</p>
           <p>3.每题30秒，每轮超时或答错2题则闯关失败； </p>
           <h5>倔匠挑战赛</h5>
           <table border="1" cellspacing="0">
@@ -153,12 +153,12 @@
             </tr>
           </table>
           <p>1.傲气白银闯关通过后，倔匠挑战赛自动解锁；</p>
-          <p>2.可选择应战或者发起新挑战，每题<u>20秒</u>，正确率高者获胜；</p>
+          <p>2.可选择应战或者发起新挑战，每题20秒，正确率高者获胜；</p>
           <p>3.每轮挑战获胜点亮1星，失败灭1星，每关灭到0星为止，星满通关得金币；</p>
         </div>
         <div>
           <h3>二、金币获取方式与兑奖</h3>
-          <p><u>1.每成功邀请一位同事参与游戏即可获得10金币；</u></p>
+          <p>1.每成功邀请一位同事参与游戏即可获得10金币；</p>
           <p>2.练习赢金币，正确一题得1金币，每天上限10金币；</p>
           <p>3.金币在线兑换随机红包（每次最高50元），数量有限，先兑先得；</p>
           <p>4.奖励质量大闯关每月专业前三名，倔匠挑战赛每周第一名。</p>
@@ -308,7 +308,7 @@ export default {
   padding: 0.4rem 0.2rem;
   .bgurl('../../views/home/bg.jpg');
   background-size: cover;
-  ._rule{
+  ._rule {
     padding: 0 10px;
   }
   &-top {
@@ -420,7 +420,6 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        align-items: center;
       }
       p {
         font-size: 0.28rem;
@@ -433,7 +432,11 @@ export default {
         }
       }
     }
+    .title{
+      padding-left: 10px;
+    }
   }
+
   &-dare {
     &.active {
       .grayscale();

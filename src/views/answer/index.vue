@@ -376,6 +376,8 @@ export default {
 .answer {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
+
   display: flex;
   flex-direction: column;
   &-time {

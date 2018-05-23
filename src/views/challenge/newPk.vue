@@ -285,6 +285,7 @@ export default {
 .newpkview {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;

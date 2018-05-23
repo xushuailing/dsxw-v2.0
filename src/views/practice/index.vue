@@ -71,6 +71,7 @@ export default {
 .practice {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
   display: flex;
   flex-direction: column;
   padding-bottom: 0.4rem;

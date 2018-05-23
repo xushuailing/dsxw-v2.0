@@ -284,6 +284,7 @@ export default {
   display: flex;
   flex-direction: column;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
   &-time {
     display: flex;
     justify-content: space-between;

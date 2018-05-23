@@ -117,9 +117,13 @@ export default {
 @import '../../assets/css/index.less';
 
 .login {
-  height: 100%;
+  min-height: 100%;
   background: url('./login_bg.jpg') no-repeat center/cover;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // overflow: hidden;
   &-logo {
     img {
       width: 100%;
@@ -128,7 +132,7 @@ export default {
   &-form {
     display: flex;
     flex-direction: column;
-    padding: 0.4rem;
+    padding:0  0.4rem;
     label {
       display: flex;
       align-items: center;
@@ -157,11 +161,12 @@ export default {
     }
   }
   &-footer {
-    position: absolute;
-    bottom: 0.4rem;
-    left: 0;
-    right: 0;
+    // position: fixed;
+    // bottom: 0.4rem;
+    // left: 0;
+    // right: 0;
     text-align: center;
+    padding: 0.6rem 0;
     img {
       width: 3.7rem/2;
       height: 1.1rem/2;
