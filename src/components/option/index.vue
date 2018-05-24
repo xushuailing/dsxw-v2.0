@@ -165,7 +165,6 @@ export default {
     },
     isSubmit(val) {
       if (!val) return;
-      console.log(val, '点击提交测试');
       if (this.click) {
         this.JudgeCorrect();
       } else {

@@ -79,7 +79,6 @@ export default {
           Uid: this.user.uid,
         };
       }
-      console.log('url---', url);
       this.$http
         .get(url, data)
         .then(res => {
@@ -106,7 +105,7 @@ export default {
               this.$router.go(-1);
             }, 1000);
           }
-          console.log({ ...res.data.data });
+          console.log({ ...res.data.data.Answer });
         })
         .catch(err => {
           this.$vux.toast.show({
@@ -160,7 +159,6 @@ export default {
               type: 'warn',
             });
           }
-          console.log(res);
           // nownumber  上次答的题目
           // totle  总的题目数
         })
@@ -173,7 +171,6 @@ export default {
     },
     // 答题结束
     gameOver(data) {
-      console.log(data, 'this测试，点击submit!!');
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
       if (data.type) {
@@ -201,7 +198,6 @@ export default {
     },
     // 提交记录
     checkPractise(data) {
-      console.log('this.nownumber---', this.nownumber);
       this.$http
         .get(this.$api.practiseEnd, {
           questionid: this.practiseId,
@@ -212,7 +208,7 @@ export default {
           isright: data.type,
         })
         .then(res => {
-          console.log('res', res);
+          // console.log('res', res);
         })
         .catch(err => {
           console.log(err);
@@ -231,7 +227,6 @@ export default {
 
     // 继续答题||重新答题
     onParctiseLog(type) {
-      console.log('type---', type);
       // type == true 继续答题||重新答题
       if (!type) {
         this.$http
