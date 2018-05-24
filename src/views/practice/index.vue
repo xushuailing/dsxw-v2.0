@@ -110,7 +110,7 @@ export default {
     .flex();
     font-size: 0.44rem;
     color: @color3;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
   }
   .type1 {
     .practice-error {

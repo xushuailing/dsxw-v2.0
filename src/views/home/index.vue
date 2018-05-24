@@ -309,17 +309,17 @@ export default {
   .bgurl('../../views/home/bg.jpg');
   background-size: cover;
   ._rule {
-    padding: 0 10px;
+    padding: 0 0.2rem;
   }
   &-top {
-    height: 6.8rem/2;
+    height: 6.4rem/2;
     display: flex;
     &_pic {
-      width: 3.2rem;
+      width: 3.26rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 0.52rem;
+      padding-top: 0.54rem;
       img {
         border-radius: 50%;
         width: 1.5rem;
@@ -390,10 +390,11 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 4.9rem/2;
+    height: 4.7rem/2;
     padding: 0.4rem;
     margin-bottom: 0.2rem;
     .bgurl('../../assets/images/frame2.png');
+    background-size: 100% 100%;
     color: #fff;
     span {
       font-size: 0.48rem;

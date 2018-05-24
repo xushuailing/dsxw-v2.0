@@ -15,9 +15,10 @@
       </li>
     </ul>
     <p class="break-p">每通过完整一关才可获得相应的奖励</p>
-    <c-help :title="helpData.title" :isShow.sync="helpData.isShow">
+    <c-help  :isShow.sync="helpData.isShow">
       <div class="_rule">
         <div>
+          <h2>{{helpData.title}}</h2>
           <h3>一、游戏规则</h3>
           <table border="1" cellspacing="0">
             <tr>
