@@ -68,9 +68,7 @@ export default {
           })
           .then(res => {
             const data = res.data;
-            console.log('res---', res);
             if (data.status === 1) {
-              console.log('data---', data);
               this.isDaily = Number(data.isget);
               this.$utils._Storage.set('userInfo', data, () => {
                 this.$router.push({ path: this.goToRouter() });

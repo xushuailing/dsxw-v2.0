@@ -48,10 +48,7 @@ export default {
           const data = res.data;
           if (data.status === 1) {
             this.isHelp = true;
-
-            this.gold += Number(data.jifen);
-            this.user.jiFen = this.gold;
-            this.$utils._Storage.set('userInfo', this.user);
+            this.gold = Number(data.jifen);
           } else {
             this.$vux.toast.show({
               text: '今日已领取~~~',
@@ -80,7 +77,7 @@ export default {
     },
     onHelpShow() {
       const path = this.$utils._Storage.get('ruleShow') ? '/home' : '/rule';
-      this.$router.push({ path });
+      this.$router.replace({ path });
       this.isHelp = false;
     },
   },
