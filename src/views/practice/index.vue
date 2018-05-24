@@ -1,7 +1,7 @@
 <template>
   <div class="practice">
     <c-header title="练习赢金币"></c-header>
-    <ul :class="[practiceData.length>10?'type1':'type2']">
+    <ul v-if="practiceData.length" :class="[practiceData.length>10?'type1':'type2']">
       <li class="practice-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
       <!-- <li :class="['practice-item']" v-for="item in practiceData1" :key="item.id" @click="onGoPractice(item)"> -->
         <img :src="'./static/images/practice/icon_'+index+'.png'" alt="">
