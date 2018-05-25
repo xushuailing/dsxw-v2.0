@@ -122,10 +122,8 @@ export default {
 
 .rank {
   height: 100%;
-  background: url('../../assets/images/bg.jpg');
-  background-repeat: no-repeat;
+  .bgurl('../../assets/images/bg.jpg');
   background-size: cover;
-  background-position: center;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -138,7 +136,7 @@ export default {
     overflow: hidden;
   }
   &_item_footer {
-    margin: 0.2rem 0;
+    // margin: 0.1rem 0;
     display: flex;
     justify-content: space-around;
     padding: 0 0.4rem;

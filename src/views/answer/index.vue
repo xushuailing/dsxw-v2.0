@@ -284,7 +284,6 @@ export default {
         .then(res => {
           if (res.data.status === 1) {
             const data = res.data;
-            this.notify.star = data.starnum;
             this.notify.isShow = true;
             this.notify.star = Number(data.starnum);
             this.notify.gameLv = this.$utils._LvType(data.gamelevel);
@@ -296,7 +295,7 @@ export default {
               this.notify.type = 'fail1';
               this.notify.isPass = false;
             }
-
+            console.log('res.data---', res.data);
             this.$utils._UpdateUserInfo(this); // 更新用户信息
           } else {
             this.$vux.toast.show({
@@ -376,6 +375,8 @@ export default {
 .answer {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
+
   display: flex;
   flex-direction: column;
   &-time {

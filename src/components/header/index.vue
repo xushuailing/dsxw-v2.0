@@ -58,9 +58,10 @@ export default {
     color: #fff;
   }
   &-btn {
-    width:90px;
-    height: 30px;
+    width:1.8rem;
+    height: 0.8rem;
     border: none;
+    font-size: 0.32rem;
     color: #fff;
     .bgurl('../../assets/images/frame1.png');
     background-size: 100% 100%;

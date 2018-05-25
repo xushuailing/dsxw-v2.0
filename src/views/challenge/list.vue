@@ -16,9 +16,10 @@
 
     </ul>
     <p class="pkinfo-p">每通过完整一关才可获得相应的奖励</p>
-    <c-help :title="helpData.title" :isShow.sync="helpData.isShow">
+    <c-help :isShow.sync="helpData.isShow">
       <div class="_rule">
         <div>
+          <h2>{{helpData.title}}</h2>
            <h3>一、游戏规则</h3>
           <table border="1" cellspacing="0">
             <tr>
@@ -181,6 +182,8 @@ export default {
 .pkinfo {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
+
   ._rule {
     padding: 0 0.2rem;
   }

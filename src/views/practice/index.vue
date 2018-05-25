@@ -1,7 +1,7 @@
 <template>
   <div class="practice">
     <c-header title="练习赢金币"></c-header>
-    <ul :class="[practiceData.length>10?'type1':'type2']">
+    <ul v-if="practiceData.length" :class="[practiceData.length>10?'type1':'type2']">
       <li class="practice-item" v-for="(item,index) in practiceData" :key="item.id" @click="onGoPractice(item)">
       <!-- <li :class="['practice-item']" v-for="item in practiceData1" :key="item.id" @click="onGoPractice(item)"> -->
         <img :src="'./static/images/practice/icon_'+index+'.png'" alt="">
@@ -71,6 +71,7 @@ export default {
 .practice {
   height: 100%;
   .bgurl('../../assets/images/bg.jpg');
+  background-size: cover;
   display: flex;
   flex-direction: column;
   padding-bottom: 0.4rem;
@@ -109,7 +110,7 @@ export default {
     .flex();
     font-size: 0.44rem;
     color: @color3;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
   }
   .type1 {
     .practice-error {
