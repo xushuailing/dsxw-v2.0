@@ -8,7 +8,9 @@
 
       <div class="start-center" v-if="subject&&!practiseLog.isShow">
         <div class="start_subject" >
-          <span v-html="subject.ItemTitle"></span> <u>({{subject.ItemTypeName}})</u>
+          <span v-html="subject.ItemTitle"></span>
+          <img v-if="subject.PicUrl" :src="`http://saas.zeego.cn/UploadImg/Person/${subject.PicUrl}`" alt="">
+          <u>({{subject.ItemTypeName}})</u>
         </div>
         <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
       </div>
@@ -64,7 +66,7 @@ export default {
       let url = null;
       let data = null;
       if (this.typeId === 0) {
-        // 练习题
+        // 错题库
         url = this.$api.practiseErr;
         data = {
           userid: this.user.userid,
@@ -105,7 +107,6 @@ export default {
               this.$router.go(-1);
             }, 1000);
           }
-          console.log({ ...res.data.data.Answer });
         })
         .catch(err => {
           this.$vux.toast.show({
@@ -151,7 +152,7 @@ export default {
         })
         .then(res => {
           if (res.data.status === 1) {
-            this.totle = Number(res.data.totle) + 1;
+            this.totle = Number(res.data.totle);
             this.nownumber = res.data.nownumber;
           } else {
             this.$vux.toast.show({
@@ -173,12 +174,8 @@ export default {
     gameOver(data) {
       clearInterval(this.interval); // 关闭倒计时
       this.checkPractise(data);
-      if (data.type) {
-        // console.log('this测试正确');
-      } else {
-        // console.log('this测试错误');
-      }
-      if (this.nownumber > this.totle) {
+      console.log(this.nownumber, this.totle);
+      if (this.nownumber >= this.totle) {
         this.$vux.toast.show({
           text: '题目已经练习完毕~',
           type: 'warn',
@@ -207,7 +204,7 @@ export default {
           typeid: this.typeId,
           isright: data.type,
         })
-        .then(res => {
+        .then(() => {
           // console.log('res', res);
         })
         .catch(err => {
@@ -301,6 +298,10 @@ export default {
     font-size: 0.36rem;
     color: #fff;
     margin-bottom: 0.3rem;
+    img {
+      max-height: 1.6rem;
+      max-width: 1.6rem;
+    }
     u {
       font-size: 0.24rem;
       color: #ccc;

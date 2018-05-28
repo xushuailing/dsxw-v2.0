@@ -45,7 +45,7 @@
     <div class="home-footer" v-if="user">
       <div class="home-practice" @click="onBeginPractice">
         <span>练习赢金币</span>
-        <p>今日已获得<u>{{user.todayjifen}}</u>金币</p>
+        <p>今日练习获得<u>{{user.todayjifen}}</u>金币</p>
         <img src="./icon_03.png"
              alt="">
       </div>

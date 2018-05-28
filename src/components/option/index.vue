@@ -5,9 +5,9 @@
       <li v-for="(item,index) in data.ItemContent"
           @click="onSelect(item,index)"
           :key="index"
-          :class="['c-option-select_item',userSelect[index]]"
-          v-html="item">
-        <!-- {{item}} -->
+          v-html="item"
+          :class="['c-option-select_item',userSelect[index],[item.length>57?'long':'']]">
+          <!-- <span v-html="item"></span> -->
       </li>
     </ul>
   </div>
@@ -201,6 +201,9 @@ export default {
       .flex();
       font-size: 0.3rem;
       color: #fff;
+      &.long{
+        font-size: 0.24rem;
+      }
       & + & {
         margin-top: 0.2rem;
       }

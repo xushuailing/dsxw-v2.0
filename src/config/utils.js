@@ -78,7 +78,7 @@ const _LvType = function(num) {
     case 2:
       return '顽强青铜';
     case 3:
-      return '傲气白银';
+      return '傲气白金';
     case 4:
       return '无暇钻石';
     case 5:
