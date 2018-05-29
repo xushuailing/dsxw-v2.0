@@ -328,9 +328,11 @@ export default {
     onNotifyBtn() {
       if (this.notify.isPass) {
         if (Number(this.gameInfo.UserPassCount) + 1 < this.gameInfo.UserSubmitSum) {
+          this.notify.isShow = false;
           this.$router.go(0);
           return;
         }
+        this.onClickSubmit = false;
         const info = JSON.parse(JSON.stringify(this.gameInfo));
         this.breakData.forEach((e, i) => {
           if (info.ID === e.ID) {
@@ -353,6 +355,7 @@ export default {
           }
         });
       } else {
+        this.notify.isShow = false;
         this.$router.go(0);
       }
     },

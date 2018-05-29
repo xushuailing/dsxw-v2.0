@@ -3,7 +3,7 @@
       <template> -->
         <div class="redpack" >
           <div class="redpack-top">
-            <img src="/static/images/redpack/title.png" alt="">
+            <img src="static/images/redpack/title.png" alt="">
           </div>
           <div class="redpack-content">
             <div v-for="item in 5" :key="item" class="redpack-content_item" @click="onClick">
@@ -12,7 +12,7 @@
                 <div><span>{{item*50}}</span></div>
               </div>
               <div class="redpack-content_item_img">
-                <img src="/static/images/redpack/redpack.png" alt="">
+                <img src="static/images/redpack/redpack.png" alt="">
               </div>
               <div class="redpack-content_item_btn">
                 {{`剩余${item*100}`}}
