@@ -180,6 +180,7 @@
         <c-button @click.native="onSubmitName" fs="0.32rem" text="确定"></c-button>
       </div>
     </c-dialog>
+    <red-packet :isShow.sync="isRedPacket"></red-packet>
   </div>
 </template>
 <script>
@@ -187,11 +188,13 @@ import CStar from '../../components/star';
 import CHelp from '../../components/comment/help';
 import CDialog from '../../components/alert/dialog';
 import CButton from '../../components/comment/button';
+import RedPacket from '../redpacket';
 
 export default {
   name: 'home',
   data() {
     return {
+      isRedPacket: false,
       userName: null,
       user: null,
       helpData: {
@@ -232,7 +235,7 @@ export default {
       if (this.pk.isChallengeBegins) {
         if (this.pk.isDare) {
           this.$vux.toast.show({
-            text: '未开始挑战~',
+            text: '未开启挑战~',
             type: 'warn',
           });
         }
@@ -286,7 +289,7 @@ export default {
       this.$router.push('/rank');
     },
     onSetMoney() {
-      console.log('红包');
+      this.isRedPacket = true;
     },
   },
   mounted() {
@@ -297,6 +300,7 @@ export default {
     CHelp,
     CDialog,
     CButton,
+    RedPacket,
   },
 };
 </script>
@@ -433,7 +437,7 @@ export default {
         }
       }
     }
-    .title{
+    .title {
       padding-left: 10px;
     }
   }

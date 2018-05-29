@@ -33,10 +33,14 @@ import CDialog from '../../components/alert/dialog';
 
 export default {
   name: 'c-red-packet',
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
-    return {
-      isShow: true,
-    };
+    return {};
   },
   components: { CDialog },
 };

@@ -201,7 +201,10 @@ export default {
       .flex();
       font-size: 0.3rem;
       color: #fff;
-      &.long{
+      > img {
+        max-height: 1.2rem;
+      }
+      &.long {
         font-size: 0.24rem;
       }
       & + & {
