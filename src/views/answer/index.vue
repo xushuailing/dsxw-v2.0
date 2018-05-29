@@ -328,8 +328,10 @@ export default {
     onNotifyBtn() {
       if (this.notify.isPass) {
         if (Number(this.gameInfo.UserPassCount) + 1 < this.gameInfo.UserSubmitSum) {
+          // this.$router.go(0);
+          this.init();
+          this.onClickSubmit = false;
           this.notify.isShow = false;
-          this.$router.go(0);
           return;
         }
         this.onClickSubmit = false;
@@ -355,8 +357,11 @@ export default {
           }
         });
       } else {
+        // console.log('this.$router---', this.$router);
+        // this.$router.go(0);
+        this.init();
         this.notify.isShow = false;
-        this.$router.go(0);
+        this.onClickSubmit = false;
       }
     },
   },
