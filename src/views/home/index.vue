@@ -180,7 +180,10 @@
         <c-button @click.native="onSubmitName" fs="0.32rem" text="确定"></c-button>
       </div>
     </c-dialog>
-    <red-packet :isShow.sync="isRedPacket"></red-packet>
+
+    <c-dialog :visiable.sync="isRedPacket">
+      <red-packet></red-packet>
+    </c-dialog>
   </div>
 </template>
 <script>

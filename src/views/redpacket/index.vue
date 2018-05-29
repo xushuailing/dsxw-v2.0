@@ -1,7 +1,6 @@
 <template>
-  <!-- <div class="redpack"> -->
-    <c-dialog :visiable.sync="isShow">
-      <template>
+    <!-- <c-dialog :visiable.sync="isShow">
+      <template> -->
         <div class="redpack">
           <div class="redpack-top">
             <img src="/static/images/redpack/title.png" alt="">
@@ -24,25 +23,18 @@
             可根据个人所得金币，点击兑换的红包，兑换后会扣除相应的金币数.
           </div>
         </div>
-      </template>
-    </c-dialog>
-  <!-- </div> -->
+      <!-- </template>
+    </c-dialog> -->
 </template>
 <script>
-import CDialog from '../../components/alert/dialog';
 
 export default {
   name: 'c-red-packet',
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
-    return {};
+    return {
+      // isShow: true,
+    };
   },
-  components: { CDialog },
 };
 </script>
 
