@@ -1,21 +1,21 @@
 <template>
     <!-- <c-dialog :visiable.sync="isShow">
       <template> -->
-        <div class="redpack" >
+        <div class="redpack" v-if="list">
           <div class="redpack-top">
             <img src="static/images/redpack/title.png" alt="">
           </div>
           <div class="redpack-content">
-            <div v-for="item in 5" :key="item" class="redpack-content_item" @click="onClick">
+            <div v-for="item in list" :key="item.ID" class="redpack-content_item" @click="onClick">
               <div class="redpack-content_item_top">
                 <div><img src="../../assets/images/money.png" alt=""></div>
-                <div><span>{{item*50}}</span></div>
+                <div><span>{{item.Jifen}}</span></div>
               </div>
               <div class="redpack-content_item_img">
                 <img src="static/images/redpack/redpack.png" alt="">
               </div>
               <div class="redpack-content_item_btn">
-                {{`剩余${item*100}`}}
+                {{`剩余${item.MoneyLeftCount}`}}
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@ export default {
   name: 'c-red-packet',
   data() {
     return {
-      list: [],
+      list: null,
       // isShow: true,
     };
   },
@@ -47,7 +47,7 @@ export default {
         .get(this.$api.moneyPayList, {})
         .then(res => {
           if (res.data.status === 1) {
-            console.log('res---', res);
+            this.list = res.data.data;
           } else {
             this.$vux.toast.show({
               text: res.data.msg,
@@ -104,9 +104,12 @@ export default {
         }
       }
       &_img {
+        width: 1.68rem/2;
+        height: 2.42rem/2;
+        margin: 0 auto;
         img {
-          width: 1.68rem/2;
-          height: 2.42rem/2;
+          height: 100%;
+          width: 100%;
         }
       }
       &_btn {
