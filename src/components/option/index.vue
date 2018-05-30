@@ -196,11 +196,12 @@ export default {
     &_item {
       padding: 0 0.2rem;
       height: 2.64rem/2;
-      .bgurl('../../assets/images/frame11.png');
-      background-size: 100% 100%;
-      .flex();
+      text-align: center;
       font-size: 0.3rem;
       color: #fff;
+      .flex();
+      .bgurl('../../assets/images/frame11.png');
+      background-size: 100% 100%;
       > img {
         max-height: 1.2rem;
       }
