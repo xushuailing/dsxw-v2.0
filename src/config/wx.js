@@ -16,20 +16,12 @@ export default function shareFriend(title, desc, link, imgUrl, type, dataUrl) {
       imgUrl, // 分享图标
       type: type || '', // 分享类型,music、video或link，不填默认为link
       dataUrl: dataUrl || '', // 如果type是music或video，则要提供数据链接，默认为空
-      success(res) {},
-      cancel() {
-        // 用户取消分享后执行的回调函数
-      },
     });
 
     wx.onMenuShareTimeline({
       title, // 分享标题
       link, // 分享链接
       imgUrl, // 分享图标
-      success(res) {},
-      cancel() {
-        // 用户取消分享后执行的回调函数
-      },
     });
 
     wx.onMenuShareQQ({
@@ -37,10 +29,6 @@ export default function shareFriend(title, desc, link, imgUrl, type, dataUrl) {
       desc, // 分享描述
       link, // 分享链接
       imgUrl, // 分享图标
-      success(res) {},
-      cancel() {
-        // 用户取消分享后执行的回调函数
-      },
     });
 
     wx.onMenuShareQZone({
@@ -48,10 +36,6 @@ export default function shareFriend(title, desc, link, imgUrl, type, dataUrl) {
       desc, // 分享描述
       link, // 分享链接
       imgUrl, // 分享图标
-      success(res) {},
-      cancel() {
-        // 用户取消分享后执行的回调函数
-      },
     });
 
     wx.onMenuShareWeibo({
@@ -59,10 +43,6 @@ export default function shareFriend(title, desc, link, imgUrl, type, dataUrl) {
       desc, // 分享描述
       link, // 分享链接
       imgUrl, // 分享图标
-      success(res) {},
-      cancel() {
-        // 用户取消分享后执行的回调函数
-      },
     });
   });
 }

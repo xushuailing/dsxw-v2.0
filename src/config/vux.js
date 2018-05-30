@@ -10,6 +10,7 @@ Vue.use(ToastPlugin, { position: 'middle', width: '10em', isShowMask: true, time
 const wx = Vue.wechat;
 const url = `http://saas.zeego.cn/interface/WJApp/share.aspx?shareurl=${encodeURIComponent(window.location.href).split('?')[0]}`;
 
+
 http
   .get(url, {})
   .then(res => {
