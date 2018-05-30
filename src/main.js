@@ -41,7 +41,7 @@ const getWxInfo = () => {
     return null;
   }
   if (openid.id) return;
-  if (GetQueryString('openid') !== null) {
+  if (GetQueryString('openid') == null) {
     location.href = `http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=${encodeURIComponent(location.href.split('#')[0])}`;
     return;
   }
