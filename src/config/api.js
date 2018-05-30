@@ -20,6 +20,9 @@ export default {
   answerData: `${url}/WJ_QuestionsService.ashx?pagetype=infoQuestion`, // 获取题目(闯关)
   answerOver: `${url}/WJ_UserAnswerRecordService.ashx?pagetype=update`, // 结束答题(闯关)
   answerCheck: `${url}/WJ_QuestionAnswerService.ashx?pagetype=add`, // 提交答案
+
+  moneyPayList: `${url}/WJ_MoneyPayService.ashx?pagetype=listinfo&uid=107`, // 红包列表
+
   // pk挑战
   challenge: {
     index: `${url}/View_User_AnswerRecordService.ashx?pagetype=applist&issucess=1`, // 挑战列表

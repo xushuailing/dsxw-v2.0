@@ -31,6 +31,7 @@ export default {
   name: 'c-red-packet',
   data() {
     return {
+      list: [],
       // isShow: true,
     };
   },
@@ -41,6 +42,29 @@ export default {
         type: 'warn',
       });
     },
+    getList() {
+      this.$http
+        .get(this.$api.moneyPayList, {})
+        .then(res => {
+          if (res.data.status === 1) {
+            console.log('res---', res);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+        })
+        .catch(err => {
+          this.$vux.toast.show({
+            text: err,
+            type: 'warn',
+          });
+        });
+    },
+  },
+  mounted() {
+    this.getList();
   },
 };
 </script>
