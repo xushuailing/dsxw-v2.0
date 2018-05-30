@@ -390,7 +390,7 @@ export default {
     margin-bottom: 0.2rem;
   }
   &_item_content {
-    height: 4.4rem/2;
+    height: 4rem/2;
     display: flex;
     justify-content: space-between;
     &_img {
@@ -398,7 +398,7 @@ export default {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 4.4rem/2;
+      height: 4rem/2;
       width: 4.52rem/2;
       &_top {
         flex: 1;
@@ -437,11 +437,11 @@ export default {
     }
   }
   &_item_question {
-    height: 2rem;
+    height: 1.5rem;
     color: #fff;
     font-size: 0.32rem;
     text-align: center;
-    padding: 0.4rem 0.2rem 0;
+    padding: 0 0.2rem;
     u {
       font-size: 0.24rem;
       color: #ccc;
