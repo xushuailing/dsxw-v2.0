@@ -390,7 +390,7 @@ export default {
     margin-bottom: 0.2rem;
   }
   &_item_content {
-    height: 4.4rem/2;
+    height: 3.8rem/2;
     display: flex;
     justify-content: space-between;
     &_img {
@@ -398,7 +398,7 @@ export default {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 4.4rem/2;
+      height: 3.8rem/2;
       width: 4.52rem/2;
       &_top {
         flex: 1;
@@ -408,7 +408,7 @@ export default {
         align-items: center;
         .bgurl('../../../static/images/pk/left.png');
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 85%;
         background-position: center;
       }
       &_top.right{
@@ -419,7 +419,7 @@ export default {
         align-items: center;
         .bgurl('../../../static/images/pk/right.png');
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 85%;
         background-position: center;
       }
       &_bottom {
@@ -431,12 +431,12 @@ export default {
         display: inline-block;
         border-radius: 100%;
         overflow: hidden;
-        width: 2.4rem/2;
-        height: 2.4rem/2;
+        width: 1.8rem/2;
+        height: 1.8rem/2;
       }
       img {
-        width: 2.4rem/2;
-        height: 2.4rem/2;
+        width: 1.8rem/2;
+        height: 1.8rem/2;
       }
     }
     &_time {
