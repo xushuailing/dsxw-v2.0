@@ -15,7 +15,7 @@
         <c-circle :percent="percent" :isCircle="isCircle"></c-circle>
       </div>
       <div class="pkview_item_content_img">
-        <div class="pkview_item_content_img_top">
+        <div class="pkview_item_content_img_top right">
           <a href="javascript:;">
              <img v-if="Number(routerVal.sex)===1" src="../../assets/images/icon_man.png" alt="">
             <img v-else src="../../assets/images/icon_girl.png" alt="">
@@ -390,7 +390,7 @@ export default {
     margin-bottom: 0.2rem;
   }
   &_item_content {
-    height: 4rem/2;
+    height: 4.4rem/2;
     display: flex;
     justify-content: space-between;
     &_img {
@@ -398,7 +398,7 @@ export default {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 4rem/2;
+      height: 4.4rem/2;
       width: 4.52rem/2;
       &_top {
         flex: 1;
@@ -407,6 +407,17 @@ export default {
         justify-content: center;
         align-items: center;
         .bgurl('../../../static/images/pk/left.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+      &_top.right{
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .bgurl('../../../static/images/pk/right.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

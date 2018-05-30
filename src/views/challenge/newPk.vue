@@ -9,7 +9,7 @@
             <img v-else src="../../assets/images/icon_girl.png" alt="">
           </a>
         </div>
-        <div class="newpkview_item_content_img_bottom">{{user.nickname}}</div>
+        <div class="newpkview_item_content_img_bottom">{{user.nickname ? user.nickname : '123123'}}</div>
       </div>
       <div class="newpkview_item_content_time">
         <!-- <x-circle :trail-width='0' :percent="percent" :stroke-width="7" stroke-color="#01d2f4">
@@ -294,7 +294,7 @@ export default {
     margin-bottom: 0.2rem;
   }
   &_item_content {
-    height: 4rem/2;
+    height: 4.4rem/2;
     display: flex;
     justify-content: space-between;
     &_img {
@@ -302,7 +302,7 @@ export default {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 4rem/2;
+      height: 4.4rem/2;
       width: 4.52rem/2;
       &_top {
         flex: 1;
