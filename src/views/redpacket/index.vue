@@ -6,7 +6,7 @@
             <img src="static/images/redpack/title.png" alt="">
           </div>
           <div class="redpack-content">
-            <div v-for="item in list" :key="item.ID" class="redpack-content_item" @click="onClick">
+            <div v-for="item in list" :key="item.ID" class="redpack-content_item" @click="onClick(item)">
               <div class="redpack-content_item_top">
                 <div><img src="../../assets/images/money.png" alt=""></div>
                 <div><span>{{item.Jifen}}</span></div>
@@ -27,6 +27,8 @@
     </c-dialog> -->
 </template>
 <script>
+
+
 export default {
   name: 'c-red-packet',
   data() {
@@ -36,11 +38,51 @@ export default {
     };
   },
   methods: {
-    onClick() {
-      this.$vux.toast.show({
-        text: '敬请期待~',
-        type: 'warn',
-      });
+    init() {
+      this.user = this.$utils._Storage.get('userInfo') || {};
+      console.log('user---', this.user);
+    },
+    onClick(item) {
+      if (Number(item.MoneyLeftCount) < 1) {
+        this.$vux.toast.show({
+          text: '红包领取完毕!',
+          type: 'warn',
+        });
+        return;
+      }
+      if (Number(this.user.jiFen) < Number(item.Jifen)) {
+        this.$vux.toast.show({
+          text: '您的积分不够!',
+          type: 'warn',
+        });
+        return;
+      }
+      this.$http
+        .get(this.$api.moneyPayGet, {
+          userid: this.user.userid,
+          movestarnum: item.Jifen,
+          usertype: this.user.usertype,
+        })
+        .then(res => {
+          if (res.data.status === 1) {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              time: 2000,
+            });
+            setTimeout(() => {
+              this.updateUserInfo();
+            }, 2000);
+          } else {
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
+          }
+          console.log('res---', res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     getList() {
       this.$http
@@ -62,8 +104,12 @@ export default {
           });
         });
     },
+    updateUserInfo() {
+      this.$emit('updateUserInfo');
+    },
   },
   mounted() {
+    this.init();
     this.getList();
   },
 };

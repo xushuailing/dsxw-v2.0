@@ -22,6 +22,8 @@ export default {
   answerCheck: `${url}/WJ_QuestionAnswerService.ashx?pagetype=add`, // 提交答案
 
   moneyPayList: `${url}/WJ_MoneyPayService.ashx?pagetype=listinfo&uid=107`, // 红包列表
+  moneyPayGet: `${url}/WJ_MoneyPayRecordService.ashx?pagetype=add&uid=107`, // 红包获取
+
 
   // pk挑战
   challenge: {
