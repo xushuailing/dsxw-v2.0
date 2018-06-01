@@ -181,9 +181,9 @@
       </div>
     </c-dialog>
 
-    <c-dialog :visiable.sync="isRedPacket">
-      <red-packet></red-packet>
-    </c-dialog>
+      <red-packet @updateUserInfo="updateUserInfo" :visiable.sync="isRedPacket"></red-packet>
+    <!-- <c-dialog :visiable.sync="isRedPacket">
+    </c-dialog> -->
   </div>
 </template>
 <script>
@@ -280,6 +280,11 @@ export default {
             });
           });
       }
+    },
+    // 领取红包后
+    updateUserInfo() {
+      this.isRedPacket = false;
+      this.init();
     },
     // 显示弹框
     onHelpShow() {

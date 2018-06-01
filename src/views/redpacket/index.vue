@@ -1,46 +1,61 @@
 <template>
-    <!-- <c-dialog :visiable.sync="isShow">
-      <template> -->
-        <div class="redpack" v-if="list">
-          <div class="redpack-top">
-            <img src="static/images/redpack/title.png" alt="">
-          </div>
-          <div class="redpack-content">
-            <div v-for="item in list" :key="item.ID" class="redpack-content_item" @click="onClick(item)">
-              <div class="redpack-content_item_top">
-                <div><img src="../../assets/images/money.png" alt=""></div>
-                <div><span>{{item.Jifen}}</span></div>
-              </div>
-              <div class="redpack-content_item_img">
-                <img src="static/images/redpack/redpack.png" alt="">
-              </div>
-              <div class="redpack-content_item_btn">
-                {{`剩余${item.MoneyLeftCount}`}}
-              </div>
+<div v-if="list">
+  <c-dialog :visiable.sync="isShow">
+      <div class="redpack">
+        <div class="redpack-top">
+          <img src="static/images/redpack/title.png" alt="">
+        </div>
+        <div class="redpack-content">
+          <div v-for="item in list" :key="item.ID" class="redpack-content_item" @click="onClick(item)">
+            <div class="redpack-content_item_top">
+              <div><img src="../../assets/images/money.png" alt=""></div>
+              <div><span>{{item.Jifen}}</span></div>
+            </div>
+            <div class="redpack-content_item_img">
+              <img src="static/images/redpack/redpack.png" alt="">
+            </div>
+            <div class="redpack-content_item_btn">
+              {{`剩余${item.MoneyLeftCount}`}}
             </div>
           </div>
-          <div class="redpack-msg">
-            可根据个人所得金币，点击兑换的红包，兑换后会扣除相应的金币数.
-          </div>
         </div>
-      <!-- </template>
-    </c-dialog> -->
+        <div class="redpack-msg">
+          可根据个人所得金币，点击兑换的红包，兑换后会扣除相应的金币数.
+        </div>
+      </div>
+  </c-dialog>
+</div>
+
 </template>
 <script>
-
+import CDialog from '../../components/alert/dialog';
 
 export default {
   name: 'c-red-packet',
+  props: {
+    visiable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       list: null,
-      // isShow: true,
+      isShow: this.visiable,
     };
+  },
+  watch: {
+    visiable(val) {
+      this.isShow = val;
+    },
+    isShow(val) {
+      this.$emit('update:visiable', val);
+    },
   },
   methods: {
     init() {
+      console.log('this.isShow---', this.isShow);
       this.user = this.$utils._Storage.get('userInfo') || {};
-      console.log('user---', this.user);
     },
     onClick(item) {
       if (Number(item.MoneyLeftCount) < 1) {
@@ -111,6 +126,9 @@ export default {
   mounted() {
     this.init();
     this.getList();
+  },
+  components: {
+    CDialog,
   },
 };
 </script>
