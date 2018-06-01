@@ -28,7 +28,6 @@
 
 <script>
 import CButton from '../../components/comment/button';
-import shareFriend from '../../config/wx.js';
 
 export default {
   data() {
@@ -55,7 +54,7 @@ export default {
       // const open = r[1].split('&')[0].split('#')[0];
 
       // const open = this.$utils._GetUrlParam('openid');
-
+      console.log(' this.shareOpenId---', this.shareOpenId);
       if (!user.cardId || !user.name || !user.password) {
         this.$vux.toast.show({
           text: '请填写信息~',
@@ -79,7 +78,6 @@ export default {
                 this.$router.push({ path: this.goToRouter() });
               });
               this.$utils._Storage.set('userAccount', { cardId: this.user.cardId, name: this.user.name });
-              shareFriend('这是标题', '这是描述', `http://saas.zeego.cn/project/DeSaiExam/test/index.html?shareId=${this.openid}`, 'http://placehold.it/200x200');
             } else {
               this.$vux.toast.show({
                 text: data.msg,

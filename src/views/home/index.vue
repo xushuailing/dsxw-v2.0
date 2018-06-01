@@ -15,7 +15,7 @@
             <i class="iconfont icon-help"></i>
           </div>
         </div>
-        <div class="info-lv">{{Number(user.gamelevels)>Number(user.pkgamelevels)?user.GameName:user.PkGameName}}</div>
+        <div class="info-lv">{{Number(user.pkgamelevels)>Number(user.gamelevels)?user.PkGameName:user.GameName}}</div>
         <c-star :number="Number(user.starnum)" :star="Number(user.activenum)" class="info-star"></c-star>
         <div class="info-integral">
           <img src="../../assets/images/money.png" alt="">

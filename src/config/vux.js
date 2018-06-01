@@ -10,7 +10,6 @@ Vue.use(ToastPlugin, { position: 'middle', width: '10em', isShowMask: true, time
 const wx = Vue.wechat;
 const url = `http://saas.zeego.cn/interface/WJApp/share.aspx?shareurl=${encodeURIComponent(window.location.href).split('?')[0]}`;
 
-
 http
   .get(url, {})
   .then(res => {
@@ -59,7 +58,12 @@ http
         'openCard',
       ], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
-    shareFriend('这是标题', '这是描述', 'http://saas.zeego.cn/project/DeSaiExam/test', 'http://placehold.it/200x200');
+    shareFriend(
+      '质量月线上知识竞赛游戏',
+      '据说这里既好玩，又能学到知识，你还不快来？！',
+      'http://saas.zeego.cn/project/DeSaiExam/test/index.html',
+      `${location.origin}/Project/DeSaiExam/test/share1.png`,
+    );
   })
   .catch(err => {
     console.log(err);
