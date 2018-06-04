@@ -404,6 +404,10 @@ export default {
     font-size: 0.36rem;
     color: #fff;
     margin-bottom: 0.3rem;
+    img {
+      max-height: 1.6rem;
+      max-width: 1.6rem;
+    }
     u {
       font-size: 0.24rem;
       color: #ccc;

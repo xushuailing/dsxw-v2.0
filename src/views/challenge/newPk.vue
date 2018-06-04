@@ -346,6 +346,10 @@ export default {
     font-size: 0.32rem;
     text-align: center;
     padding: 0 0.2rem;
+    img {
+      max-height: 1.4rem;
+      max-width: 1.4rem;
+    }
     u {
       font-size: 0.24rem;
       color: #ccc;

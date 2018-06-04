@@ -141,7 +141,8 @@ export default {
   mounted() {},
   methods: {
     handleTip() {
-      this.checkedSrc = true;
+      this.checkedSrc = !this.checkedSrc;
+      this.$utils._Storage.set('ruleShow', this.checkedSrc);
     },
     toHome() {
       this.$router.push({ path: '/home' });
