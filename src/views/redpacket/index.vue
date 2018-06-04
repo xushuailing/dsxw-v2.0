@@ -84,6 +84,7 @@ export default {
               text: res.data.msg,
               time: 2000,
             });
+            this.getList();
             setTimeout(() => {
               this.updateUserInfo();
             }, 2000);
