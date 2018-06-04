@@ -54,7 +54,7 @@ export default {
       // const open = r[1].split('&')[0].split('#')[0];
 
       // const open = this.$utils._GetUrlParam('openid');
-      console.log(' this.shareOpenId---', this.shareOpenId);
+      console.log(' this.shareOpenId---', this.openId);
       if (!user.cardId || !user.name || !user.password) {
         this.$vux.toast.show({
           text: '请填写信息~',
@@ -67,7 +67,7 @@ export default {
             username: user.name,
             userpass: user.password,
             // openid: 'ocpe8wWEY2bB2Cl4LiPmSUTkvpIY',
-            openid: this.openid,
+            openid: this.openid.id,
             openidshare: this.shareOpenId,
           })
           .then(res => {
