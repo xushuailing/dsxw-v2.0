@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="rank_item_content">
-      <ul class="rank-grade">
+      <ul class="rank-grade" v-if="gradeData.length">
         <li v-for="(item, index) in gradeData" :key="item.id">
           <div class="rank-grade_num" >
             {{index+1}}
@@ -30,6 +30,7 @@
           </div>
         </li>
       </ul>
+      <div v-else class="rank-noData">暂无数据</div>
     </div>
   </div>
 </template>
@@ -69,14 +70,19 @@ export default {
         .then(res => {
           if (res.data.status) {
             const data = res.data.data;
-            console.log(data);
             this.gradeData = data;
           } else {
-            console.log('res---', res);
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
           }
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: `err__${err}`,
+            type: 'warn',
+          });
         });
     },
     getPkTopList() {
@@ -87,14 +93,19 @@ export default {
         .then(res => {
           if (res.data.status) {
             const data = res.data.data;
-            console.log('getPkTopListadasdasd', data);
             this.gradeData = data;
           } else {
-            console.log('getPkTopList---', res);
+            this.$vux.toast.show({
+              text: res.data.msg,
+              type: 'warn',
+            });
           }
         })
         .catch(err => {
-          console.log(err);
+          this.$vux.toast.show({
+            text: `err__${err}`,
+            type: 'warn',
+          });
         });
     },
     handleClick() {
@@ -121,7 +132,7 @@ export default {
 @import '../../assets/css/mixin.less';
 
 .rank {
-  height: 100%;
+  min-height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   background-size: cover;
   display: flex;
@@ -140,9 +151,9 @@ export default {
     display: flex;
     justify-content: space-around;
     padding: 0 0.4rem;
+    height: 1.9rem/2;
+    line-height: 1.9rem/2;
     &_top {
-      height: 1.9rem/2;
-      line-height: 1.9rem/2;
       text-align: center;
       width: 50%;
       font-size: 0.36rem;
@@ -163,15 +174,18 @@ export default {
     }
   }
   &-grade {
+    height: 90%;
     padding: 0 0.3rem;
     margin-top: 0.2rem;
+    display: flex;
+    flex-direction: column;
     li {
       background: url('../../assets/images/frame11.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center;
       display: flex;
-      height: 1.6rem;
+      flex:1;
       padding: 0 0.4rem;
       justify-content: flex-start;
       align-items: center;
@@ -213,6 +227,12 @@ export default {
       color: #fff;
       font-size: 0.32rem;
     }
+  }
+  &-noData {
+    font-size: 0.4rem;
+    text-align: center;
+    padding: 0.8rem 0;
+    color: #fff;
   }
 }
 </style>
