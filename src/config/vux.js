@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { ToastPlugin, WechatPlugin, AjaxPlugin } from 'vux';
 import shareFriend from './wx';
 import http from './http';
+import utils from './utils';
 
 Vue.use(WechatPlugin);
 Vue.use(AjaxPlugin);
@@ -58,16 +59,29 @@ http
         'openCard',
       ], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
+
+    const name = utils._Storage.get('userAccount') || {};
+    const openid = utils._Storage.get('openid') || {};
+    let link = '';
+    let title = '';
+    if (openid.id && name.name) {
+      title = `${name.name}邀请你参加质量月线上知识竞赛游戏`;
+      link = `http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=http://saas.zeego.cn/project/DeSaiExam/index.html?shareId=${openid.id}`;
+    } else {
+      title = '质量月线上知识竞赛游戏';
+      link = 'http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=http://saas.zeego.cn/project/DeSaiExam/index.html';
+    }
     shareFriend(
-      '质量月线上知识竞赛游戏',
+      title,
+      // name.name ? `${name.name}邀请你参加质量月线上知识竞赛游戏` : '质量月线上知识竞赛游戏',
       '据说这里既好玩，又能学到知识，你还不快来？！',
-      'http://saas.zeego.cn/project/DeSaiExam/test/index.html',
-      `${location.origin}/Project/DeSaiExam/test/share1.png`,
+      link,
+      // `http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=http://saas.zeego.cn/project/DeSaiExam/index.html?shareId=${openid.id}`,
+      // `http://saas.zeego.cn/project/DeSaiExam/index.html?shareId=${openid.id}`,
+      `${location.origin}/Project/DeSaiExam/share1.png`,
     );
   })
-  .catch(err => {
-    console.log(err);
-  });
+  .catch(() => {});
 // http.get(url, ({ data }) => {
 
 // });

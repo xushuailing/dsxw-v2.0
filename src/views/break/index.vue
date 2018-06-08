@@ -191,7 +191,7 @@ export default {
 @import '../../assets/css/mixin.less';
 
 .break {
-  height: 100%;
+  min-height: 100%;
   .bgurl('../../assets/images/bg.jpg');
   background-size: cover;
   ._rule {

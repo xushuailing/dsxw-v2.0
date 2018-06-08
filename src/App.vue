@@ -15,8 +15,9 @@ export default {
         shareFriend(
           '质量月线上知识竞赛游戏',
           '据说这里既好玩，又能学到知识，你还不快来？！',
-          'http://saas.zeego.cn/project/DeSaiExam/test/index.html',
-          `${location.origin}/Project/DeSaiExam/test/share1.png`,
+          'http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=http://saas.zeego.cn/project/DeSaiExam/index.html',
+          // 'http://saas.zeego.cn/project/DeSaiExam/index.html',
+          `${location.origin}/Project/DeSaiExam/share1.png`,
         );
       } else {
         const name = this.$utils._Storage.get('userAccount') || {};
@@ -24,8 +25,9 @@ export default {
         shareFriend(
           name.name ? `${name.name}邀请你参加质量月线上知识竞赛游戏` : '质量月线上知识竞赛游戏',
           '据说这里既好玩，又能学到知识，你还不快来？！',
-          `http://saas.zeego.cn/project/DeSaiExam/test/index.html?shareId=${openid.id}`,
-          `${location.origin}/Project/DeSaiExam/test/share1.png`,
+          `http://saas.zeego.cn/interface/WJApp/WXAuth.aspx?info=1&backurl=http://saas.zeego.cn/project/DeSaiExam/index.html?shareId=${openid.id}`,
+          // `http://saas.zeego.cn/project/DeSaiExam/index.html?shareId=${openid.id}`,
+          `${location.origin}/Project/DeSaiExam/share1.png`,
         );
       }
     },
