@@ -110,6 +110,7 @@ export default {
     },
     handleClick() {
       this.isChecked = !this.isChecked;
+      this.gradeData = [];
       if (this.isChecked) {
         this.getTopList();
       } else {
@@ -185,7 +186,7 @@ export default {
       background-size: 100% 100%;
       background-position: center;
       display: flex;
-      flex:1;
+      flex: 1;
       padding: 0 0.4rem;
       justify-content: flex-start;
       align-items: center;
