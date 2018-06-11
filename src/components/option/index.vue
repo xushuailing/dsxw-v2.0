@@ -6,7 +6,7 @@
           @click="onSelect(item,index)"
           :key="index"
           v-html="item"
-          :class="['c-option-select_item',userSelect[index],[item.length>57?'long':'']]">
+          :class="['c-option-select_item',userSelect[index],[item.length>57?'long':''],[item.length>40 && isPkRouter?'long':'']]">
           <!-- <span v-html="item"></span> -->
       </li>
     </ul>
@@ -43,6 +43,15 @@ export default {
       click: 0,
       errSelect: [], // 错误选项
     };
+  },
+  computed: {
+    isPkRouter() {
+      let isPK = false;
+      if (this.$route.path === '/newPk' || this.$route.path === '/pk') {
+        isPK = true;
+      }
+      return isPK;
+    },
   },
   methods: {
     initData() {
