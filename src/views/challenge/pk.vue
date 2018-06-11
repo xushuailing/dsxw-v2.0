@@ -25,7 +25,9 @@
       </div>
     </div>
     <div v-if="subject" class="pkview_item_question">
-      <span v-html="subject.ItemTitle"></span><u>({{subject.ItemTypeName}})</u>
+      <span v-html="subject.ItemTitle"></span>
+      <img v-if="subject.PicUrl" :src="`http://saas.zeego.cn/UploadImg/Person/${subject.PicUrl}`" alt="">
+      <u>({{subject.ItemTypeName}})</u>
     </div>
     <div v-if="subject" class="pkview_item_footer">
       <div class="pkview_item_footer_left">
