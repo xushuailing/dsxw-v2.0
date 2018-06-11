@@ -5,8 +5,9 @@
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
     <div class="answer-center" v-if="subject">
-      <div class="answer_subject">
+      <div :class="['answer_subject',[item.length>50?'long':'']]">
         <span v-html="subject.ItemTitle"></span>
+        <img v-if="subject.PicUrl" :src="`http://saas.zeego.cn/UploadImg/Person/${subject.PicUrl}`" alt="">
         <u>({{subject.ItemTypeName}})</u>
       </div>
       <c-option :data="subject" :isTimeEnd="Boolean(time)" :isSubmit="onClickSubmit" @isSuccess="gameOver"></c-option>
@@ -411,6 +412,9 @@ export default {
     u {
       font-size: 0.24rem;
       color: #ccc;
+    }
+    .long {
+      font-size: 0.3rem;
     }
   }
   &-frame {
