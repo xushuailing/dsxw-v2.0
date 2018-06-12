@@ -21,7 +21,7 @@
 
       </div>
     </div>
-    <div v-if="subject" class="newpkview_item_question">
+    <div v-if="subject" :class="['newpkview_item_question',[subject.ItemTitle.length>50?'long':'']]">
       <span v-html="subject.ItemTitle"></span>
       <img v-if="subject.PicUrl" :src="`http://saas.zeego.cn/UploadImg/Person/${subject.PicUrl}`" alt="">
       <u>({{subject.ItemTypeName}})</u>
@@ -355,6 +355,9 @@ export default {
     u {
       font-size: 0.24rem;
       color: #ccc;
+    }
+    .long {
+      font-size: 0.28rem;
     }
   }
   &_item_footer {
