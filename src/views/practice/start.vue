@@ -28,7 +28,7 @@ export default {
     return {
       onClickSubmit: false, // 点击提交按钮
       title: '',
-      time: 40, // 时间
+      time: 20, // 时间
       totle: 0, // 题目总数
       nownumber: 1, // 当前题目数
       practiseId: null, // 题目id
@@ -187,7 +187,7 @@ export default {
         return;
       }
       setTimeout(() => {
-        this.time = 40; // 初始化倒计时
+        this.time = 20; // 初始化倒计时
         this.nownumber++;
         this.getPractise();
         this.onClickSubmit = false;
