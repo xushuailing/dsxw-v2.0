@@ -47,7 +47,7 @@ const getWxInfo = () => {
   }
   utils._Storage.set('openid', { id: GetQueryString('openid') });
 };
-getWxInfo();
+// getWxInfo();
 
 /* eslint-disable no-new */
 new Vue({
