@@ -5,7 +5,7 @@
       <c-circle :percent="time" :isCircle="isCircle"></c-circle>
     </div>
     <div class="answer-center" v-if="subject">
-      <div :class="['answer_subject',[item.length>50?'long':'']]">
+      <div :class="['answer_subject',[subject.ItemTitle.length>50?'long':'']]">
         <span v-html="subject.ItemTitle"></span>
         <img v-if="subject.PicUrl" :src="`http://saas.zeego.cn/UploadImg/Person/${subject.PicUrl}`" alt="">
         <u>({{subject.ItemTypeName}})</u>
@@ -414,7 +414,7 @@ export default {
       color: #ccc;
     }
     .long {
-      font-size: 0.3rem;
+      font-size: 0.32rem;
     }
   }
   &-frame {
