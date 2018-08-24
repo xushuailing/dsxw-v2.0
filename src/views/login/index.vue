@@ -43,7 +43,7 @@ export default {
   methods: {
     init() {
       this.user = this.$utils._Storage.get('userAccount') || {};
-      this.openid = this.$utils._Storage.get('openid') || '';
+      this.openid = this.$utils._Storage.get('openid') || {};
       this.shareOpenId = this.$utils._GetUrlParam('shareId') || '';
     },
 
@@ -67,7 +67,7 @@ export default {
             username: user.name,
             userpass: user.password,
             // openid: 'ocpe8wWEY2bB2Cl4LiPmSUTkvpIY',
-            openid: this.openid.id,
+            // openid: this.openid.id,
             openidshare: this.shareOpenId,
           })
           .then(res => {
